@@ -7,12 +7,23 @@
   <meta name="theme-color" content="#0b1020">
   <link rel="stylesheet" href="styles.css">
   <script>
-    // Меню (мобильное/десктоп)
+    // Меню + плавное появление секций
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+
+      // Reveal-on-scroll (для секций ниже героя)
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+        });
+      }, {threshold: 0.12});
+      document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+      // Герой — задержка по кадрам, чтобы анимация не "съедалась" кешем
+      requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
     });
   </script>
 </head>
@@ -38,17 +49,17 @@
   <section class="hero" style="--bg:url('images/hero.jpg')">
     <div class="hero-overlay"></div>
     <div class="hero-content container">
-      <h1>Питьевая вода в&nbsp;вашем доме</h1>
-      <p class="subtitle">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
-      <div class="cta">
-        <a class="btn primary" href="services.html">Посмотреть услуги</a>
-        <a class="btn" href="#about">Узнать больше</a>
+      <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
+      <p class="subtitle hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
+      <div class="cta hero-cta">
+        <a class="btn primary" href="services.html">Услуги</a>
+        <a class="btn" href="#about">Подробнее</a>
       </div>
     </div>
   </section>
 
-  <!-- О компании (краткая выжимка) -->
-  <section id="about" class="section container split">
+  <!-- О компании -->
+  <section id="about" class="section container split reveal">
     <div class="text">
       <h2>Кто мы</h2>
       <p>Мы проектируем, поставляем и обслуживаем станции подготовки воды для жилых домов и комплексов. Наша задача — чтобы вода из вашего крана была пригодной для питья и стабильной по качеству круглый год.</p>
@@ -61,28 +72,28 @@
     <div class="media bg-photo" style="--bg:url('images/about.jpg')"></div>
   </section>
 
-  <!-- Фильтросистемы (без углублений) -->
-  <section id="systems" class="section container">
+  <!-- Фильтросистемы -->
+  <section id="systems" class="section container reveal">
     <h2>Наши фильтросистемы</h2>
     <p class="lead">Комбинация ступеней под качество исходной воды и цель — «питьевая из-под крана».</p>
 
     <div class="cards">
-      <article class="card">
+      <article class="card reveal">
         <div class="card-photo" style="--bg:url('images/mech.jpg')"></div>
         <h3>Механическая и сорбционная подготовка</h3>
         <p>Удаление песка и взвесей, снижение мутности и запахов на угольных колоннах.</p>
       </article>
-      <article class="card">
+      <article class="card reveal">
         <div class="card-photo" style="--bg:url('images/uf.jpg')"></div>
         <h3>Микро/ультрафильтрация</h3>
         <p>Барьер для коллоидов и микробиологии; стабилизация качества перед тонкими мембранами.</p>
       </article>
-      <article class="card">
+      <article class="card reveal">
         <div class="card-photo" style="--bg:url('images/nf.jpg')"></div>
         <h3>Нанофильтрация (NF)</h3>
         <p>Селективно снижает жёсткость и органику, сохраняя полезные минералы. Даёт мягкий вкус.</p>
       </article>
-      <article class="card">
+      <article class="card reveal">
         <div class="card-photo" style="--bg:url('images/uv.jpg')"></div>
         <h3>УФ-обеззараживание</h3>
         <p>Финальный барьер по микробиологическим показателям без внесения химии.</p>
@@ -90,23 +101,23 @@
     </div>
   </section>
 
-  <!-- Соответствие СанПиН (без углублений) -->
-  <section id="compliance" class="section container split">
+  <!-- СанПиН -->
+  <section id="compliance" class="section container split reveal">
     <div class="text">
       <h2>Соответствие СанПиН</h2>
       <p>Проект и подбор оборудования выполняются с учётом предельных значений показателей качества питьевой воды по действующим нормам (СанПиН). На этапе пусконаладки и эксплуатации мы выполняем контрольные анализы аккредитованной лаборатории.</p>
       <ul class="bullets">
         <li>Контроль мутности, цветности, запаха</li>
-        <li>Жёсткость и растворённые вещества в целевых пределах</li>
+        <li>Жёсткость и TDS в целевых пределах</li>
         <li>Микробиологическая безопасность (УФ финальная ступень)</li>
       </ul>
-      <p class="note">Подробные протоколы и ссылки на нормы предоставляем по запросу заказчика.</p>
+      <p class="note">Подробные протоколы и ссылки на нормы — по запросу.</p>
     </div>
     <div class="media bg-photo" style="--bg:url('images/lab.jpg')"></div>
   </section>
 
-  <!-- Почему вода будет вкусной -->
-  <section id="taste" class="section container">
+  <!-- Вкус -->
+  <section id="taste" class="section container reveal">
     <h2>Почему вода — вкусная</h2>
     <div class="pill-list">
       <span class="pill">Баланс минерализации</span>
@@ -114,16 +125,16 @@
       <span class="pill">Устранение запахов и привкусов</span>
       <span class="pill">Свежесть за счёт УФ</span>
     </div>
-    <p class="lead">Нанофильтрация снимает «лишнюю» минерализацию и органику, но оставляет естественный профиль и «тело» воды. Поэтому вода мягкая, нейтральная и приятная на вкус — её хочется пить.</p>
+    <p class="lead">Нанофильтрация убирает излишнюю минерализацию и органику, но сохраняет природный профиль воды. Поэтому вода мягкая, нейтральная и приятная на вкус — её хочется пить.</p>
     <div class="gallery">
-      <div class="g-item" style="--bg:url('images/glass.jpg')"></div>
-      <div class="g-item" style="--bg:url('images/plant.jpg')"></div>
-      <div class="g-item" style="--bg:url('images/steel.jpg')"></div>
+      <div class="g-item reveal" style="--bg:url('images/glass.jpg')"></div>
+      <div class="g-item reveal" style="--bg:url('images/plant.jpg')"></div>
+      <div class="g-item reveal" style="--bg:url('images/steel.jpg')"></div>
     </div>
   </section>
 
-  <!-- Контакты / призыв -->
-  <section id="contact" class="section container cta-block">
+  <!-- Контакты -->
+  <section id="contact" class="section container cta-block reveal">
     <h2>Готовы обсудить проект</h2>
     <p>Скажем честную стоимость и сроки, поможем подобрать схему под ваш дом.</p>
     <a class="btn primary" href="mailto:info@example.com">Написать нам</a>
