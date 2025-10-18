@@ -2,67 +2,47 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Услуги — [название компании]</title>
+  <title>Услуги — Fresh Systems</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1020">
-  <link rel="stylesheet" href="styles.css">
-  <style>.hero{min-height:32vh}.hero::before{opacity:.22}</style>
+  <base href="/Fresh-Systems/">
+  <link rel="stylesheet" href="styles.css?v=10">
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('menuBtn');
-      const panel = document.getElementById('menuPanel');
-      btn.addEventListener('click', () => panel.classList.toggle('open'));
-      panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+    document.addEventListener('DOMContentLoaded',()=>{
+      const btn=document.getElementById('menuBtn');const panel=document.getElementById('menuPanel');
+      btn.addEventListener('click',()=>panel.classList.toggle('open'));
+      panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('open')));
     });
   </script>
 </head>
 <body>
   <header class="site-header">
-    <div class="brand">
-      <div class="logo">💧</div>
-      <div class="brand-text">[название компании]</div>
-    </div>
+    <div class="brand"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></div>
     <button id="menuBtn" class="menu-btn">Меню</button>
     <nav id="menuPanel" class="menu-panel">
-      <a href="index.html#about">О компании</a>
-      <a href="index.html#systems">Фильтросистемы</a>
-      <a href="index.html#compliance">СанПиН</a>
-      <a href="index.html#taste">Почему вкусная</a>
+      <a href="index.html">Главная</a>
+      <a href="about.html">О компании</a>
       <a href="services.html">Услуги</a>
-      <a href="index.html#contact">Контакты</a>
+      <a href="contact.html">Контакты</a>
     </nav>
   </header>
 
-  <section class="hero" style="--bg:url('images/services.jpg')">
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-      <h1>Услуги</h1>
-      <p class="subtitle">Эту секцию детализируем вместе: пресейл-аудит, проектирование, поставка, пусконаладка, сервис.</p>
-    </div>
-  </section>
+  <section class="section container">
+    <h1>Услуги</h1>
+    <p class="section-intro">Под ключ: от анализа воды и проектирования — до поставки, монтажа и сервиса.</p>
 
-  <section class="section container cards">
-    <article class="card">
-      <h3>Аудит воды и ТЗ</h3>
-      <p>Отбор проб, анализ, рекомендации по схеме, расчёт производительности и хранилища.</p>
-    </article>
-    <article class="card">
-      <h3>Проектирование</h3>
-      <p>Гидравлика, планы размещения, спецификации, согласование с эксплуатацией.</p>
-    </article>
-    <article class="card">
-      <h3>Поставка и монтаж</h3>
-      <p>Серийные и заказные решения, шеф-монтаж, ПНР, обучение персонала.</p>
-    </article>
-    <article class="card">
-      <h3>Сервис и мониторинг</h3>
-      <p>Регламентные работы, оперативные выезды, удалённый контроль параметров.</p>
-    </article>
+    <div class="cards services">
+      <article class="card"><h3>Аудит и анализ воды</h3><p>Отбор проб, лаборатория, интерпретация.</p></article>
+      <article class="card"><h3>Проектирование</h3><p>BIM, гидравлика, размещение оборудования.</p></article>
+      <article class="card"><h3>Поставка и монтаж</h3><p>UF/NF, УФ-реакторы, насосы, дозирование.</p></article>
+      <article class="card"><h3>ПНР и обучение</h3><p>Пуск системы, обучение персонала.</p></article>
+      <article class="card"><h3>Сервис и реагенты</h3><p>Регламент, мембраны, расходники, выезд.</p></article>
+      <article class="card"><h3>Мониторинг</h3><p>Онлайн-контроль параметров и SLA.</p></article>
+    </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>© [название компании], 2025</div>
+      <div>© Fresh Systems, 2025</div>
       <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
     </div>
   </footer>
