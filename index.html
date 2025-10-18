@@ -8,19 +8,22 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // меню
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 
+      // reveal-on-scroll
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
-          if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}
+          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
         });
-      },{threshold:0.1});
-      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      }, {threshold:0.12});
+      document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-      requestAnimationFrame(()=>document.body.classList.add('hero-ready'));
+      // запуск анимации героя
+      requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
     });
   </script>
 </head>
@@ -52,38 +55,63 @@
     </div>
   </section>
 
-  <!-- Раздел фильтросистем -->
+  <!-- Фильтросистемы (с фото на карточках) -->
   <section id="systems" class="section container reveal">
     <h2>Фильтросистемы</h2>
+    <p class="section-intro">Комбинация ступеней обеспечивает получение питьевой воды прямо из-под крана.</p>
+
     <div class="cards">
-      <div class="card dim">
+      <article class="card">
+        <div class="card-photo dim" style="background-image:url('images/production-2.jpg')"></div>
+        <h3>Механическая очистка</h3>
+        <p>Удаляет песок, ржавчину и взвеси. Подготавливает воду к последующим ступеням.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-photo dim" style="background-image:url('images/uf-module.jpg')"></div>
+        <h3>Ультрафильтрация</h3>
+        <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-photo dim" style="background-image:url('images/hero-water.jpg')"></div>
         <h3>Нанофильтрация (NF)</h3>
-        <p>Технология тонкой очистки воды, сохраняющая природные минералы. Оптимальна для жилых комплексов.</p>
-      </div>
-      <div class="card dim">
-        <h3>Ультрафильтрация (UF)</h3>
-        <p>Удаляет органику, бактерии и взвеси. Высокая надёжность и долговечность мембранных модулей.</p>
-      </div>
-      <div class="card dim">
+        <p>Снижает жёсткость и органику, сохраняя минералы. Формирует мягкий вкус воды.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-photo dim" style="background-image:url('images/uv-tubes.jpg')"></div>
         <h3>УФ-обеззараживание</h3>
-        <p>Безопасное уничтожение микроорганизмов без реагентов. Используется в системах питьевого водоснабжения.</p>
-      </div>
+        <p>Финальная защита от микроорганизмов без применения химии.</p>
+      </article>
     </div>
   </section>
 
-  <!-- СанПиН -->
+  <!-- СанПиН (с фото микроскопа) -->
   <section id="compliance" class="section container reveal">
     <h2>Соответствие СанПиН</h2>
-    <p>Наши системы проектируются и сертифицируются в соответствии с действующими санитарными нормами РФ (СанПиН 1.2.3685-21). Контроль качества воды проводится на каждом этапе.</p>
+    <p class="section-intro">Проектирование и контроль качества воды — согласно действующим санитарным нормам РФ. На этапе пуска выполняем лабораторные анализы по ключевым показателям.</p>
     <div class="image-block">
-      <img src="images/microscope.jpg" alt="Лабораторный контроль качества воды" class="dim-strong">
+      <img src="images/microscope.jpg" alt="Лабораторный контроль качества воды" class="img-fluid">
     </div>
   </section>
 
-  <!-- Почему вода вкусная -->
+  <!-- Почему вода вкусная (вернул прежний блок с «пилюлями» и галереей) -->
   <section id="taste" class="section container reveal">
     <h2>Почему вода вкусная</h2>
-    <p>Благодаря оптимальному подбору мембран и фильтров вода сохраняет природные минералы и баланс pH. Она приятна на вкус и безопасна для ежедневного употребления.</p>
+    <div class="pill-list">
+      <span class="pill">Баланс минерализации</span>
+      <span class="pill">Мягкость без пересушивания</span>
+      <span class="pill">Свежий вкус</span>
+      <span class="pill">Отсутствие запаха</span>
+    </div>
+    <p class="section-intro">Нанофильтрация сохраняет естественный профиль воды, делая её мягкой и приятной на вкус. Вы получаете питьевую воду прямо из-под крана.</p>
+
+    <div class="gallery">
+      <div class="g-item dim" style="background-image:url('images/tap-splash.jpg')"></div>
+      <div class="g-item dim" style="background-image:url('images/kid-drink.jpg')"></div>
+      <div class="g-item dim" style="background-image:url('images/production-2.jpg')"></div>
+    </div>
   </section>
 
   <!-- Контакты -->
