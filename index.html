@@ -2,31 +2,29 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Питьевая вода в вашем доме — Fresh Systems</title>
+  <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
   <link rel="stylesheet" href="styles.css">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Меню
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 
-      // reveal-on-scroll
       const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }});
-      }, {threshold:0.12});
-      document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+        entries.forEach(e=>{
+          if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}
+        });
+      },{threshold:0.1});
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-      // запуск анимации героя
-      requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
+      requestAnimationFrame(()=>document.body.classList.add('hero-ready'));
     });
   </script>
 </head>
 <body>
-  <!-- Шапка -->
   <header class="site-header">
     <div class="brand">
       <div class="logo">💧</div>
@@ -42,105 +40,41 @@
     </nav>
   </header>
 
-  <!-- Герой: фон + размытие краёв -->
-  <section class="hero"
-           style="background-image:
-             radial-gradient(1200px 600px at 70% 0%,rgba(56,189,248,.12),transparent 60%),
-             linear-gradient(180deg,rgba(11,16,32,.5),rgba(11,16,32,.85)),
-             url('images/hero-water.jpg');">
+  <!-- Герой -->
+  <section class="hero" style="background-image:url('images/hero-water.jpg');">
+    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg');"></div>
     <div class="hero-overlay"></div>
-
-    <!-- слой, который размывает ТОЛЬКО края (копия фона с blur и маской) -->
-    <div class="hero-blur-edges"
-         style="background-image: url('images/hero-water.jpg');"></div>
-
     <div class="hero-content container">
       <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
-      <p class="subtitle hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
-      <div class="cta hero-cta">
-        <a class="btn primary" href="#about">Подробнее</a>
-      </div>
+      <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
+      <a href="#about" class="btn primary">Подробнее</a>
     </div>
   </section>
 
   <!-- О компании -->
-  <section id="about" class="section container split reveal">
-    <div class="text">
-      <h2>Кто мы</h2>
-      <p>Мы создаём системы очистки воды для жилых домов и комплексов, чтобы вода из вашего крана была пригодна для питья. Разрабатываем решения под конкретные параметры воды, подбираем оборудование и обеспечиваем сервис.</p>
-      <ul class="bullets">
-        <li>Проектирование и подбор под реальные анализы</li>
-        <li>Сертифицированные компоненты</li>
-        <li>Плановое обслуживание и онлайн-мониторинг</li>
-      </ul>
-    </div>
-    <div class="media bg-photo dim-strong"
-         style="background-image: url('images/production-1.jpg');"></div>
-  </section>
-
-  <!-- Системы -->
-  <section id="systems" class="section container reveal">
-    <h2>Наши фильтросистемы</h2>
-    <p class="lead">Комбинация ступеней обеспечивает получение питьевой воды прямо из-под крана.</p>
-
-    <div class="cards">
-      <article class="card reveal">
-        <div class="card-photo dim" style="background-image:url('images/production-2.jpg')"></div>
-        <h3>Механическая очистка</h3>
-        <p>Удаляет песок, ржавчину и взвеси. Подготавливает воду к последующим ступеням.</p>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-photo dim" style="background-image:url('images/uf-module.jpg')"></div>
-        <h3>Ультрафильтрация</h3>
-        <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-photo dim" style="background-image:url('images/hero-water.jpg')"></div>
-        <h3>Нанофильтрация (NF)</h3>
-        <p>Снижает жёсткость и органику, сохраняя минералы. Формирует мягкий вкус воды.</p>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-photo dim" style="background-image:url('images/uv-tubes.jpg')"></div>
-        <h3>УФ-обеззараживание</h3>
-        <p>Финальная защита от микроорганизмов без применения химии.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- СанПиН -->
-  <section id="compliance" class="section container split reveal">
-    <div class="text">
-      <h2>Соответствие СанПиН</h2>
-      <p>Все решения Fresh Systems соответствуют нормативам по качеству питьевой воды. На пуске проводится контроль и лабораторный анализ по показателям мутности, жёсткости и микробиологии.</p>
-      <ul class="bullets">
-        <li>Контроль мутности, цветности, запаха</li>
-        <li>Жёсткость и минерализация в норме</li>
-        <li>Микробиологическая безопасность (УФ-стадия)</li>
-      </ul>
-      <p class="note">Сертификаты и протоколы предоставляются по запросу.</p>
-    </div>
-    <div class="media bg-photo dim"
-         style="background-image:url('images/microscope.jpg')"></div>
-  </section>
-
-  <!-- Вкус -->
-  <section id="taste" class="section container reveal">
-    <h2>Почему вода вкусная</h2>
-    <div class="pill-list">
-      <span class="pill">Баланс минерализации</span>
-      <span class="pill">Мягкость без пересушивания</span>
-      <span class="pill">Свежий вкус</span>
-      <span class="pill">Отсутствие запаха</span>
-    </div>
-    <p class="lead">Нанофильтрация сохраняет естественный профиль воды, делая её мягкой и приятной на вкус. Вы получаете питьевую воду прямо из-под крана.</p>
-
-    <div class="gallery">
-      <div class="g-item dim" style="background-image:url('images/tap-splash.jpg')"></div>
-      <div class="g-item dim" style="background-image:url('images/kid-drink.jpg')"></div>
-      <div class="g-item dim" style="background-image:url('images/production-2.jpg')"></div>
+  <section id="about" class="section container reveal">
+    <h2>О компании</h2>
+    <div class="about-grid">
+      <div class="about-text cardish">
+        <p><strong>Fresh Systems</strong> — инженерная компания полного цикла, создающая системы водоподготовки для жилых домов и комплексов. Наша цель — чтобы вода из-под крана была безопасной, вкусной и полностью соответствовала нормам СанПиН и ГОСТ.</p>
+        <ul class="bullets">
+          <li>Проектирование и подбор оборудования под реальные анализы воды</li>
+          <li>Инжиниринг размещения: BIM-модели, гидравлические расчёты</li>
+          <li>Модульные станции UF/NF, УФ-обеззараживание, сорбция и реагентные системы</li>
+          <li>Монтаж, пуско-наладка и обучение персонала эксплуатации</li>
+          <li>Сервис, реагенты и запасные части — в наличии</li>
+          <li>Лабораторный контроль, паспорта качества, соответствие СанПиН</li>
+        </ul>
+        <div class="about-stats">
+          <div class="stat"><div class="stat-num">5+ лет</div><div class="stat-label">опыта в водоподготовке</div></div>
+          <div class="stat"><div class="stat-num">30+ объектов</div><div class="stat-label">жилые комплексы и дома</div></div>
+          <div class="stat"><div class="stat-num">270–1500 м³/сут</div><div class="stat-label">производительность станций</div></div>
+          <div class="stat"><div class="stat-num">99,5%</div><div class="stat-label">доступность систем (SLA)</div></div>
+        </div>
+        <p class="note">Работаем с застройщиками и управляющими компаниями. Москва и регионы России.</p>
+      </div>
+      <figure class="about-photo dim-strong" style="background-image:url('images/about-structure.jpg');"></figure>
+      <figure class="about-photo dim" style="background-image:url('images/about-moscow.jpg');"></figure>
     </div>
   </section>
 
