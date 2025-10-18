@@ -21,23 +21,22 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Bli
 /* Hero */
 .hero{
   position:relative;min-height:68vh;display:grid;place-items:center;
-  background:
-    radial-gradient(1200px 600px at 70% 0%,rgba(56,189,248,.12),transparent 60%),
-    linear-gradient(180deg,rgba(11,16,32,.5),rgba(11,16,32,.85)),
-    #0b1020;
+  background-size:cover;background-position:center;
 }
-.hero::before{content:"";position:absolute;inset:0;background-image:var(--bg);background-size:cover;background-position:center;opacity:.34;filter:saturate(.6) contrast(.9) brightness(.9)}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,32,.18),rgba(11,16,32,.85))}
+.hero-overlay{position:absolute;inset:0;background:
+  radial-gradient(1200px 600px at 70% 0%,rgba(56,189,248,.12),transparent 60%),
+  linear-gradient(180deg,rgba(11,16,32,.5),rgba(11,16,32,.85));}
 .hero-content{position:relative;text-align:center}
 
-/* Мягкий blur по краям воды */
-.hero-edge-blur{
+/* Размываем края воды: отдельный слой с тем же фоном + blur + маска */
+.hero-blur-edges{
   position:absolute; inset:0; pointer-events:none;
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
-  /* маска: прозрачный центр, размытие по краям */
+  background-size:cover; background-position:center;
+  filter: blur(6px);
+  /* Прозрачный центр → виден только по краям */
   -webkit-mask-image: radial-gradient(closest-side, rgba(0,0,0,0) 58%, rgba(0,0,0,1) 100%);
           mask-image: radial-gradient(closest-side, rgba(0,0,0,0) 58%, rgba(0,0,0,1) 100%);
+  opacity:.9;
 }
 
 /* Hero text */
@@ -68,7 +67,7 @@ body.hero-ready .hero-cta{opacity:1;transform:none;filter:none}
 .section{padding:48px 0}
 .split{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
 .split .media{border:1px solid var(--border);border-radius:16px;min-height:240px}
-.bg-photo{background-image:var(--bg);background-size:cover;background-position:center;position:relative}
+.bg-photo{background-size:cover;background-position:center;position:relative}
 .bg-photo::after{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(180deg,rgba(11,16,32,.1),rgba(11,16,32,.35))}
 
 /* Приглушение */
@@ -82,7 +81,7 @@ body.hero-ready .hero-cta{opacity:1;transform:none;filter:none}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;opacity:0;transform:translateY(12px);filter:blur(6px);transition:opacity .6s ease,transform .6s ease,filter .6s ease}
 .card.show{opacity:1;transform:none;filter:none}
 .card h3{margin:8px 0}
-.card-photo{height:120px;border-radius:10px;background-image:var(--bg);background-size:cover;background-position:center;margin-bottom:10px;border:1px solid var(--border)}
+.card-photo{height:120px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:10px;border:1px solid var(--border)}
 
 /* Reveal-on-scroll */
 .reveal{opacity:0;transform:translateY(12px);filter:blur(6px);transition:opacity .6s ease,transform .6s ease,filter .6s ease}
@@ -96,7 +95,7 @@ body.hero-ready .hero-cta{opacity:1;transform:none;filter:none}
 .pill-list{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
 .pill{border:1px solid var(--border);padding:6px 10px;border-radius:999px;background:rgba(56,189,248,.06)}
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-.g-item{height:160px;border-radius:12px;background-image:var(--bg);background-size:cover;background-position:center;border:1px solid var(--border);opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .6s ease,transform .6s ease,filter .6s ease}
+.g-item{height:160px;border-radius:12px;background-size:cover;background-position:center;border:1px solid var(--border);opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .6s ease,transform .6s ease,filter .6s ease}
 .g-item.show{opacity:1;transform:none;filter:none}
 
 /* CTA & footer */
