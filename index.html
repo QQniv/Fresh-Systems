@@ -5,24 +5,19 @@
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Меню
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 
-      // Плавное появление секций
       const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
-        });
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }});
       }, {threshold:0.12});
       document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-      // Анимация героя
       requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
     });
   </script>
@@ -45,11 +40,9 @@
   </header>
 
   <!-- Герой -->
-  <section class="hero" style="background-image:url('images/hero-water.jpg');">
-    <!-- слой для мягкого размытия краёв фона -->
-    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg');"></div>
+  <section class="hero" style="background-image:url('images/hero-water.jpg?v=3');">
+    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=3');"></div>
     <div class="hero-overlay"></div>
-
     <div class="hero-content container">
       <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
       <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
@@ -64,25 +57,25 @@
 
     <div class="cards">
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/production-2.jpg')"></div>
+        <div class="card-photo dim" style="background-image:url('images/production-2.jpg?v=3')"></div>
         <h3>Механическая очистка</h3>
         <p>Удаляет песок, ржавчину и взвеси. Подготавливает воду к последующим ступеням.</p>
       </article>
 
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/uf-module.jpg')"></div>
+        <div class="card-photo dim" style="background-image:url('images/uf-module.jpg?v=3')"></div>
         <h3>Ультрафильтрация</h3>
         <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
       </article>
 
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/hero-water.jpg')"></div>
+        <div class="card-photo dim" style="background-image:url('images/hero-water.jpg?v=3')"></div>
         <h3>Нанофильтрация (NF)</h3>
         <p>Снижает жёсткость и органику, сохраняя минералы. Формирует мягкий вкус воды.</p>
       </article>
 
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/uv-tubes.jpg')"></div>
+        <div class="card-photo dim" style="background-image:url('images/uv-tubes.jpg?v=3')"></div>
         <h3>УФ-обеззараживание</h3>
         <p>Финальная защита от микроорганизмов без применения химии.</p>
       </article>
@@ -94,7 +87,7 @@
     <h2>Соответствие СанПиН</h2>
     <p class="section-intro">Проектирование и контроль качества воды — согласно действующим санитарным нормам РФ. На этапе пуска выполняем лабораторные анализы по ключевым показателям.</p>
     <div class="image-block">
-      <img src="images/microscope.jpg" alt="Лабораторный контроль качества воды" class="img-fluid">
+      <img src="images/microscope.jpg?v=3" alt="Лабораторный контроль качества воды" class="img-fluid">
     </div>
   </section>
 
@@ -110,9 +103,9 @@
     <p class="section-intro">Нанофильтрация сохраняет естественный профиль воды, делая её мягкой и приятной на вкус. Вы получаете питьевую воду прямо из-под крана.</p>
 
     <div class="gallery">
-      <div class="g-item dim" style="background-image:url('images/tap-splash.jpg')"></div>
-      <div class="g-item dim" style="background-image:url('images/kid-drink.jpg')"></div>
-      <div class="g-item dim" style="background-image:url('images/production-2.jpg')"></div>
+      <div class="g-item dim" style="background-image:url('images/tap-splash.jpg?v=3')"></div>
+      <div class="g-item dim" style="background-image:url('images/kid-drink.jpg?v=3')"></div>
+      <div class="g-item dim" style="background-image:url('images/production-2.jpg?v=3')"></div>
     </div>
   </section>
 
