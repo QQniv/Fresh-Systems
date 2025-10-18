@@ -1,8 +1,8 @@
 :root{
-  --bg:#0b1020; --fg:#e5e7eb; --muted:#b6bdc7;
+  --bg:#0b1020; --fg:#ffffff; --muted:#cbd5e1;
   --card:#0f172a; --border:#1f2a44; --accent:#38bdf8; --accent-ghost:rgba(56,189,248,.12);
-  --sub-delay: 2800ms; /* задаётся из JS по длине слогана */
-  --cta-delay: 3700ms;
+  --sub-delay: 2800ms; --cta-delay: 3700ms;
+  --hero-oy: 0px; /* параллакс фона */
 }
 
 *{box-sizing:border-box}
@@ -21,6 +21,7 @@ a:hover{opacity:.92}
 @keyframes pageFade{to{opacity:1}}
 @keyframes pageFadeOut{to{opacity:0}}
 
+/* Header */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(31,42,68,.6);display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
 .brand{display:flex;align-items:center;gap:10px}
 .logo{width:28px;height:28px;display:grid;place-items:center;background:#0b1020;border:1px solid var(--border);border-radius:10px}
@@ -31,10 +32,10 @@ a:hover{opacity:.92}
 .menu-panel a{display:block;padding:8px 10px;border-radius:8px}
 .menu-panel a:hover{background:rgba(56,189,248,.1)}
 
-/* HERO — дыхание воды + свет */
+/* HERO — дыхание воды + свет + параллакс */
 .hero{
   position:relative;min-height:68vh;display:grid;place-items:center;
-  background-size:cover;background-position:center;
+  background-size:cover;background-position:center calc(50% + var(--hero-oy));
   animation:breathe 14s ease-in-out infinite alternate;
 }
 @keyframes breathe{
@@ -44,25 +45,51 @@ a:hover{opacity:.92}
 }
 .hero-overlay{position:absolute;inset:0;background:
   radial-gradient(1200px 600px at 70% 0%,rgba(56,189,248,.12),transparent 60%),
-  linear-gradient(180deg,rgba(11,16,32,.55),rgba(11,16,32,.92))}
+  linear-gradient(180deg,rgba(11,16,32,.58),rgba(11,16,32,.93))}
 .hero-blur-edges{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(8px);
   -webkit-mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%);
   mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%);opacity:.9}
+/* мягкий луч */
 .hero-light{position:absolute;inset:0;pointer-events:none;background:
   radial-gradient(40% 25% at 65% 20%, rgba(56,189,248,.18), transparent 70%);
   mix-blend-mode:screen;animation:lightMove 18s ease-in-out infinite alternate}
 @keyframes lightMove{0%{transform:translate3d(-2%,0,0)}100%{transform:translate3d(2%,1%,0)}}
+/* бегущие блики */
+.hero-glints{
+  position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.15;
+  background:
+    radial-gradient(60px 20px at -10% 40%, rgba(255,255,255,.8), transparent 60%),
+    radial-gradient(80px 28px at -20% 60%, rgba(56,189,248,.7), transparent 65%);
+  animation:glints 13s linear infinite;
+}
+@keyframes glints{
+  0%{background-position:-10% 40%, -20% 60%}
+  100%{background-position:110% 50%, 120% 70%}
+}
 
 .hero-content{position:relative;text-align:center;z-index:1}
 
-/* «светящийся» слоган с мягкой подсветкой */
+/* Слоган — белый + отражение на воде */
 .hero-title{
-  font-size:clamp(40px,6.5vw,78px);font-weight:900;margin:0 0 10px;letter-spacing:-.02em;
-  display:inline-block;white-space:nowrap;
-  text-shadow:0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(56,189,248,.08);
-  background-image:linear-gradient(180deg,#ffffff, #e5f7ff 60%, #bfeaff);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  color:#fff;font-size:clamp(40px,6.5vw,78px);font-weight:900;margin:0 0 10px;letter-spacing:-.02em;
+  display:inline-block;white-space:nowrap;text-shadow:0 6px 20px rgba(56,189,248,.12);
+  position:relative;
 }
+/* отражение: перевёрнутый текст, размытый и приглушённый */
+.hero-title::after{
+  content:attr(data-title);
+  position:absolute;left:0;right:0;top:100%;transform:scaleY(-1) translateY(8px);
+  color:#9ccff8;opacity:.18;filter:blur(6px);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,0));
+  pointer-events:none;mix-blend-mode:screen;
+  animation:ripple 6s ease-in-out infinite;
+}
+@keyframes ripple{
+  0%,100%{transform:scaleY(-1) translateY(8px) skewX(0deg)}
+  50%{transform:scaleY(-1) translateY(10px) skewX(1.5deg)}
+}
+
+/* слова слогана всплывают снизу */
 .hero-title .word{
   display:inline-block;transform:translateY(50px) scale(.96);opacity:0;filter:blur(12px);
   animation:floatUp 1.8s cubic-bezier(.25,.85,.25,1) forwards;animation-delay:var(--d,0ms);
@@ -74,7 +101,7 @@ a:hover{opacity:.92}
   100%{opacity:1;transform:none;filter:none}
 }
 
-/* описание + кнопки после слогана */
+/* описание и кнопки после слогана */
 .hero-sub,.hero-actions{opacity:0;transform:translateY(40px);filter:blur(10px)}
 .hero-ready .hero-sub{
   transition:opacity 1.5s ease var(--sub-delay),transform 1.5s ease var(--sub-delay),filter 1.5s ease var(--sub-delay);
@@ -87,6 +114,12 @@ a:hover{opacity:.92}
 .hero-sub{color:var(--muted);max-width:760px;margin:0 auto 18px}
 .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 
+/* hint прокрутки */
+.scroll-hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);opacity:.7}
+.scroll-hint span{display:block;width:20px;height:32px;border:2px solid #94d9ff;border-radius:12px;position:relative}
+.scroll-hint span::after{content:'';position:absolute;left:50%;top:6px;width:4px;height:6px;background:#94d9ff;border-radius:2px;transform:translateX(-50%);animation:hint 1.6s ease-in-out infinite}
+@keyframes hint{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}100%{opacity:0;transform:translate(-50%,8px)}}
+
 /* кнопки */
 .btn{border:1px solid var(--border);padding:12px 18px;border-radius:12px;font-weight:600;display:inline-block}
 .btn.primary{background:var(--accent);color:#001019;border:none;box-shadow:0 8px 22px rgba(56,189,248,.25)}
@@ -94,44 +127,28 @@ a:hover{opacity:.92}
 .btn.ghost{background:var(--accent-ghost)}
 .btn.linklike{border-color:transparent;background:transparent;padding:8px 0}
 
-/* секции */
+/* секции и остальное */
 .section{padding:44px 0}
 .section h2,.section h1{margin:0 0 10px}
 .section .section-intro{color:var(--fg)}
-
-/* карточки */
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;will-change:transform}
 .card h3{margin:8px 0}
 .card-img-wrap{height:120px;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:#0b1224}
 .card-img{width:100%;height:100%;object-fit:cover;display:block}
-
-/* параллакс для карточек и изображений */
 .parallax{transform:translateY(var(--py,0px));transition:transform .2s ease}
-
-/* галерея */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
 .g-item{border:1px solid var(--border);border-radius:12px;overflow:hidden;will-change:transform}
 .g-img{display:block;width:100%;height:160px;object-fit:cover}
-
-/* блок-изображение */
 .image-block{margin-top:12px;border:1px solid var(--border);border-radius:16px;overflow:hidden;will-change:transform}
 .img-fluid{display:block;width:100%;height:auto}
-
-/* пилюли */
 .pill-list{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
 .pill{border:1px solid var(--border);padding:6px 10px;border-radius:999px;background:rgba(56,189,248,.06)}
-
-/* мягкий эмоциональный блок */
 .cta-soft{background:linear-gradient(180deg, rgba(56,189,248,.06), rgba(56,189,248,.02));border:1px solid var(--border);border-radius:16px;text-align:center}
 .cta-soft h2{margin-top:0}
-
-/* футер */
 .site-footer{border-top:1px solid var(--border);padding:20px 0;background:#0a0f1f}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
-.minor{color:var(--muted);font-size:13px}
-
-/* reveal-секции */
+.minor{color:#94a3b8;font-size:13px}
 .reveal{opacity:0;transform:translateY(12px);filter:blur(6px);transition:opacity .6s,transform .6s,filter .6s}
 .reveal.show{opacity:1;transform:none;filter:none}
 
@@ -147,5 +164,5 @@ a:hover{opacity:.92}
 /* reduce motion */
 @media (prefers-reduced-motion:reduce){
   .hero-title .word{animation:none;opacity:1;transform:none;filter:none}
-  .reveal,.hero-sub,.hero-actions,.hero{animation:none!important;transition:none!important}
+  .reveal,.hero-sub,.hero-actions,.hero,.hero-glints,.hero-light{animation:none!important;transition:none!important}
 }
