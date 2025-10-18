@@ -6,16 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
   <base href="/Fresh-Systems/">
-  <link rel="stylesheet" href="styles.css?v=13">
+  <link rel="stylesheet" href="styles.css?v=14">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // меню
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
-      panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+      panel.querySelectorAll('a').forEach(a =>
+        a.addEventListener('click', () => panel.classList.remove('open'))
+      );
 
-      // разрезаем слоган на слова и анимируем каскадом
+      // анимация слогана по словам
       const title = document.querySelector('.hero-title');
       const words = title.textContent.trim().split(/\s+/);
       title.textContent = '';
@@ -23,38 +24,39 @@
         const span = document.createElement('span');
         span.className = 'word';
         span.textContent = w;
-        // задержка для каждого слова (медленнее)
-        span.style.setProperty('--d', (i * 110) + 'ms');
+        span.style.setProperty('--d', (i * 180) + 'ms'); // медленнее
         title.appendChild(span);
-        if (i < words.length - 1) title.appendChild(document.createTextNode(' ')); // ← сохраняем пробел
+        if (i < words.length - 1) title.appendChild(document.createTextNode(' '));
       });
 
-      // считаем общую задержку для описания и кнопок
-      const lastDelayMs = words.length * 110 + 400; // после последнего слова небольшая пауза
+      const lastDelayMs = words.length * 180 + 600;
       document.documentElement.style.setProperty('--sub-delay', lastDelayMs + 'ms');
-      document.documentElement.style.setProperty('--cta-delay', (lastDelayMs + 350) + 'ms');
+      document.documentElement.style.setProperty('--cta-delay', (lastDelayMs + 600) + 'ms');
 
-      // reveal секции
-      const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}}),{threshold:.12});
-      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      // плавное появление остальных блоков
+      const io = new IntersectionObserver((es) =>
+        es.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('show');
+            io.unobserve(e.target);
+          }
+        }), { threshold: .12 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-      // запускаем анимации героя
-      requestAnimationFrame(()=>document.body.classList.add('hero-ready'));
+      requestAnimationFrame(() => document.body.classList.add('hero-ready'));
     });
 
-    // заглушка для отсутствующих изображений
-    function fallback(img){
-      img.onerror=null;
-      img.src='data:image/svg+xml;utf8,'+encodeURIComponent(
+    function fallback(img) {
+      img.onerror = null;
+      img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
         '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui" font-size="28">Фото будет добавлено</text></svg>'
       );
     }
   </script>
 </head>
 <body>
-  <!-- Шапка -->
   <header class="site-header">
-    <!-- логотип ведёт на главную -->
     <a href="index.html" class="brand" aria-label="На главную">
       <div class="logo">💧</div><div class="brand-text">Fresh Systems</div>
     </a>
@@ -70,12 +72,11 @@
   </header>
 
   <!-- Герой -->
-  <section class="hero" style="background-image:url('images/hero-water.jpg?v=13');">
-    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=13');"></div>
+  <section class="hero" style="background-image:url('images/hero-water.jpg?v=14');">
+    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=14');"></div>
     <div class="hero-overlay"></div>
 
     <div class="hero-content container">
-      <!-- одна строка на десктопе, каскад слов -->
       <h1 class="hero-title">Питьевая вода в вашем доме</h1>
       <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
       <div class="hero-actions">
@@ -85,27 +86,15 @@
     </div>
   </section>
 
-  <!-- Краткие блоки -->
+  <!-- остальные блоки оставляем -->
   <section class="section container reveal">
     <h2>Фильтросистемы</h2>
     <p class="section-intro">Тезисно о ступенях. Подробная страница — во вкладке.</p>
     <div class="cards">
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/production-2.jpg?v=13" alt="Механическая очистка" onerror="fallback(this)"></div>
-        <h3>Механическая очистка</h3><p>Удаляет взвесь и ржавчину.</p>
-      </article>
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/uf-module.jpg?v=13" alt="Ультрафильтрация" onerror="fallback(this)"></div>
-        <h3>Ультрафильтрация</h3><p>Задерживает коллоиды и бактерии.</p>
-      </article>
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/hero-water.jpg?v=13" alt="Нанофильтрация" onerror="fallback(this)"></div>
-        <h3>Нанофильтрация</h3><p>Сохраняет минералы, смягчает вкус.</p>
-      </article>
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/uv-tubes.jpg?v=13" alt="УФ-обеззараживание" onerror="fallback(this)"></div>
-        <h3>УФ-обеззараживание</h3><p>Финальная защита без реагентов.</p>
-      </article>
+      <article class="card"><div class="card-img-wrap"><img class="card-img" src="images/production-2.jpg?v=14" alt="Механическая очистка" onerror="fallback(this)"></div><h3>Механическая очистка</h3><p>Удаляет взвесь и ржавчину.</p></article>
+      <article class="card"><div class="card-img-wrap"><img class="card-img" src="images/uf-module.jpg?v=14" alt="Ультрафильтрация" onerror="fallback(this)"></div><h3>Ультрафильтрация</h3><p>Задерживает коллоиды и бактерии.</p></article>
+      <article class="card"><div class="card-img-wrap"><img class="card-img" src="images/hero-water.jpg?v=14" alt="Нанофильтрация" onerror="fallback(this)"></div><h3>Нанофильтрация</h3><p>Сохраняет минералы, смягчает вкус.</p></article>
+      <article class="card"><div class="card-img-wrap"><img class="card-img" src="images/uv-tubes.jpg?v=14" alt="УФ-обеззараживание" onerror="fallback(this)"></div><h3>УФ-обеззараживание</h3><p>Финальная защита без реагентов.</p></article>
     </div>
     <p><a class="btn linklike" href="systems.html">Читать подробно →</a></p>
   </section>
@@ -114,7 +103,7 @@
     <h2>СанПиН</h2>
     <p class="section-intro">Проектирование и контроль качества согласно нормативам РФ.</p>
     <div class="image-block">
-      <img class="img-fluid" src="images/microscope.jpg?v=13" alt="Лабораторный контроль" onerror="fallback(this)">
+      <img class="img-fluid" src="images/microscope.jpg?v=14" alt="Лабораторный контроль" onerror="fallback(this)">
     </div>
     <p><a class="btn linklike" href="compliance.html">Подробнее о соответствии →</a></p>
   </section>
@@ -124,9 +113,9 @@
     <div class="pill-list"><span class="pill">Баланс минералов</span><span class="pill">Мягкость</span><span class="pill">Свежий вкус</span><span class="pill">Без запаха</span></div>
     <p class="section-intro">NF сохраняет естественный профиль воды — пить приятно ежедневно.</p>
     <div class="gallery">
-      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=13" alt="Вода из крана" onerror="fallback(this)"></div>
-      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=13" alt="Питьевая вода" onerror="fallback(this)"></div>
-      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=13" alt="Производство" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=14" alt="Вода из крана" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=14" alt="Питьевая вода" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=14" alt="Производство" onerror="fallback(this)"></div>
     </div>
     <p><a class="btn linklike" href="taste.html">Раскрыть тему вкуса →</a></p>
   </section>
