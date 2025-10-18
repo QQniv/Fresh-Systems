@@ -10,18 +10,15 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,Inter,Roboto,Segoe UI,Arial}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-/* ссылки */
 a{color:var(--fg);text-decoration:none}
 a:hover{opacity:.92}
 
-/* плавная смена страниц */
 .page-enter{opacity:0}
 .page-enter.page-enter-done{animation:pageFade .45s ease forwards}
 .page-leave{animation:pageFadeOut .2s ease forwards}
 @keyframes pageFade{to{opacity:1}}
 @keyframes pageFadeOut{to{opacity:0}}
 
-/* Header */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(31,42,68,.6);display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
 .brand{display:flex;align-items:center;gap:10px}
 .logo{width:28px;height:28px;display:grid;place-items:center;background:#0b1020;border:1px solid var(--border);border-radius:10px}
@@ -32,7 +29,7 @@ a:hover{opacity:.92}
 .menu-panel a{display:block;padding:8px 10px;border-radius:8px}
 .menu-panel a:hover{background:rgba(56,189,248,.1)}
 
-/* HERO — дыхание воды + свет + параллакс */
+/* HERO */
 .hero{
   position:relative;min-height:68vh;display:grid;place-items:center;
   background-size:cover;background-position:center calc(50% + var(--hero-oy));
@@ -49,47 +46,46 @@ a:hover{opacity:.92}
 .hero-blur-edges{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(8px);
   -webkit-mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%);
   mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%);opacity:.9}
-/* мягкий луч */
 .hero-light{position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(40% 25% at 65% 20%, rgba(56,189,248,.18), transparent 70%);
+  radial-gradient(40% 25% at 65% 20%, rgba(56,189,248,.20), transparent 70%);
   mix-blend-mode:screen;animation:lightMove 18s ease-in-out infinite alternate}
 @keyframes lightMove{0%{transform:translate3d(-2%,0,0)}100%{transform:translate3d(2%,1%,0)}}
-/* бегущие блики */
+
+/* Блики на воде — ярче и многослойные */
 .hero-glints{
-  position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.15;
+  position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.32;
   background:
-    radial-gradient(60px 20px at -10% 40%, rgba(255,255,255,.8), transparent 60%),
-    radial-gradient(80px 28px at -20% 60%, rgba(56,189,248,.7), transparent 65%);
-  animation:glints 13s linear infinite;
+    radial-gradient(80px 26px at -15% 42%, rgba(255,255,255,.95), transparent 62%),
+    radial-gradient(120px 38px at -25% 64%, rgba(120,200,255,.85), transparent 68%),
+    radial-gradient(60px 22px at -10% 58%, rgba(56,189,248,.85), transparent 60%);
+  animation:glints 12s linear infinite;
+  filter:saturate(1.1);
 }
 @keyframes glints{
-  0%{background-position:-10% 40%, -20% 60%}
-  100%{background-position:110% 50%, 120% 70%}
+  0%{background-position:-15% 42%, -25% 64%, -10% 58%}
+  100%{background-position:115% 52%, 125% 72%, 110% 66%}
 }
 
 .hero-content{position:relative;text-align:center;z-index:1}
 
-/* Слоган — белый + отражение на воде */
+/* Слоган (белый) + отражение */
 .hero-title{
   color:#fff;font-size:clamp(40px,6.5vw,78px);font-weight:900;margin:0 0 10px;letter-spacing:-.02em;
   display:inline-block;white-space:nowrap;text-shadow:0 6px 20px rgba(56,189,248,.12);
   position:relative;
 }
-/* отражение: перевёрнутый текст, размытый и приглушённый */
 .hero-title::after{
   content:attr(data-title);
   position:absolute;left:0;right:0;top:100%;transform:scaleY(-1) translateY(8px);
-  color:#9ccff8;opacity:.18;filter:blur(6px);
-  mask-image:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,0));
-  pointer-events:none;mix-blend-mode:screen;
-  animation:ripple 6s ease-in-out infinite;
+  color:#d6efff;opacity:.26;filter:blur(5px);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,0));
+  pointer-events:none;mix-blend-mode:screen;animation:ripple 6s ease-in-out infinite;
 }
 @keyframes ripple{
   0%,100%{transform:scaleY(-1) translateY(8px) skewX(0deg)}
-  50%{transform:scaleY(-1) translateY(10px) skewX(1.5deg)}
+  50%{transform:scaleY(-1) translateY(10px) skewX(1.6deg)}
 }
 
-/* слова слогана всплывают снизу */
 .hero-title .word{
   display:inline-block;transform:translateY(50px) scale(.96);opacity:0;filter:blur(12px);
   animation:floatUp 1.8s cubic-bezier(.25,.85,.25,1) forwards;animation-delay:var(--d,0ms);
@@ -101,7 +97,6 @@ a:hover{opacity:.92}
   100%{opacity:1;transform:none;filter:none}
 }
 
-/* описание и кнопки после слогана */
 .hero-sub,.hero-actions{opacity:0;transform:translateY(40px);filter:blur(10px)}
 .hero-ready .hero-sub{
   transition:opacity 1.5s ease var(--sub-delay),transform 1.5s ease var(--sub-delay),filter 1.5s ease var(--sub-delay);
@@ -114,20 +109,20 @@ a:hover{opacity:.92}
 .hero-sub{color:var(--muted);max-width:760px;margin:0 auto 18px}
 .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 
-/* hint прокрутки */
-.scroll-hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);opacity:.7}
+/* Блок-подсказка прокрутки между секциями */
+.scroll-hint-block{display:flex;justify-content:center;padding:10px 0 6px}
+.scroll-hint{opacity:.8}
 .scroll-hint span{display:block;width:20px;height:32px;border:2px solid #94d9ff;border-radius:12px;position:relative}
 .scroll-hint span::after{content:'';position:absolute;left:50%;top:6px;width:4px;height:6px;background:#94d9ff;border-radius:2px;transform:translateX(-50%);animation:hint 1.6s ease-in-out infinite}
 @keyframes hint{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}100%{opacity:0;transform:translate(-50%,8px)}}
 
-/* кнопки */
+/* кнопки / секции / карточки и т.д. */
 .btn{border:1px solid var(--border);padding:12px 18px;border-radius:12px;font-weight:600;display:inline-block}
 .btn.primary{background:var(--accent);color:#001019;border:none;box-shadow:0 8px 22px rgba(56,189,248,.25)}
 .btn.primary:hover{transform:translateY(-1px)}
 .btn.ghost{background:var(--accent-ghost)}
 .btn.linklike{border-color:transparent;background:transparent;padding:8px 0}
 
-/* секции и остальное */
 .section{padding:44px 0}
 .section h2,.section h1{margin:0 0 10px}
 .section .section-intro{color:var(--fg)}
@@ -152,7 +147,6 @@ a:hover{opacity:.92}
 .reveal{opacity:0;transform:translateY(12px);filter:blur(6px);transition:opacity .6s,transform .6s,filter .6s}
 .reveal.show{opacity:1;transform:none;filter:none}
 
-/* адаптив */
 @media (max-width:1100px){ .hero-title{white-space:normal} }
 @media (max-width:960px){ .cards{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:520px){
@@ -161,7 +155,6 @@ a:hover{opacity:.92}
   .hero-title{font-size:34px}
 }
 
-/* reduce motion */
 @media (prefers-reduced-motion:reduce){
   .hero-title .word{animation:none;opacity:1;transform:none;filter:none}
   .reveal,.hero-sub,.hero-actions,.hero,.hero-glints,.hero-light{animation:none!important;transition:none!important}
