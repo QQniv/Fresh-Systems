@@ -1,77 +1,61 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <title>О компании — Fresh Systems</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b1020" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/Fresh-Systems/">
+  <link rel="stylesheet" href="styles.css?v=10">
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('menuBtn');
-      const panel = document.getElementById('menuPanel');
-      btn.addEventListener('click', () => panel.classList.toggle('open'));
-      panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
-
-      const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}}),{threshold:0.1});
+    document.addEventListener('DOMContentLoaded',()=>{
+      const btn=document.getElementById('menuBtn');const panel=document.getElementById('menuPanel');
+      btn.addEventListener('click',()=>panel.classList.toggle('open'));
+      panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('open')));
+      const io=new IntersectionObserver((e)=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('show');io.unobserve(x.target);}}),{threshold:.12});
       document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     });
+    function fallback(img){img.onerror=null;img.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui" font-size="28">Фото будет добавлено</text></svg>');}
   </script>
 </head>
 <body>
-  <!-- Шапка -->
   <header class="site-header">
-    <div class="brand">
-      <div class="logo">💧</div>
-      <div class="brand-text">Fresh Systems</div>
-    </div>
+    <div class="brand"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></div>
     <button id="menuBtn" class="menu-btn">Меню</button>
     <nav id="menuPanel" class="menu-panel">
       <a href="index.html">Главная</a>
       <a href="about.html">О компании</a>
-      <a href="index.html#systems">Фильтросистемы</a>
-      <a href="index.html#compliance">СанПиН</a>
-      <a href="index.html#taste">Почему вода вкусная</a>
-      <a href="index.html#contact">Контакты</a>
+      <a href="services.html">Услуги</a>
+      <a href="contact.html">Контакты</a>
     </nav>
   </header>
 
-  <!-- Небольшой герой для страницы "О компании" -->
-  <section class="hero" style="background-image:url('images/about-moscow.jpg')">
+  <section class="hero small" style="background-image:url('images/about-moscow.jpg?v=10')">
     <div class="hero-overlay"></div>
     <div class="hero-content container">
       <h1 class="hero-title">О компании</h1>
-      <p class="hero-sub">Инжиниринговые решения для питьевой воды в жилых домах.</p>
+      <p class="hero-sub">Инжиниринг и сервис систем питьевой воды для ЖК.</p>
     </div>
   </section>
 
-  <!-- Основной блок "О компании" -->
   <section class="section container reveal">
     <div class="about-grid">
       <div class="about-text cardish">
-        <p><strong>Fresh Systems</strong> — инженерная компания полного цикла, создающая системы водоподготовки для жилых домов и комплексов. Наша цель — чтобы вода из-под крана была безопасной, вкусной и полностью соответствовала нормам СанПиН и ГОСТ.</p>
-
+        <p><strong>Fresh Systems</strong> — инженерная компания полного цикла. Мы проектируем, поставляем и обслуживаем системы водоподготовки, чтобы вода из крана была пригодна для питья и вкусна.</p>
         <ul class="bullets">
-          <li>Проектирование и подбор оборудования под реальные анализы воды</li>
-          <li>Инжиниринг размещения: BIM-модели, гидравлические расчёты</li>
-          <li>Модульные станции UF/NF, УФ-обеззараживание, сорбция и реагентные системы</li>
-          <li>Монтаж, пуско-наладка и обучение персонала эксплуатации</li>
-          <li>Сервис, реагенты и запасные части — в наличии</li>
-          <li>Лабораторный контроль, паспорта качества, соответствие СанПиН</li>
+          <li>Проектирование под анализы воды и потребление</li>
+          <li>UF/NF, УФ-обеззараживание, сорбция, реагенты</li>
+          <li>Монтаж, ПНР, регламентный сервис</li>
+          <li>Сертификаты, лабораторный контроль, СанПиН</li>
         </ul>
-
         <div class="about-stats">
-          <div class="stat"><div class="stat-num">5+ лет</div><div class="stat-label">опыта в водоподготовке</div></div>
-          <div class="stat"><div class="stat-num">30+ объектов</div><div class="stat-label">жилые комплексы и дома</div></div>
-          <div class="stat"><div class="stat-num">270–1500 м³/сут</div><div class="stat-label">производительность станций</div></div>
-          <div class="stat"><div class="stat-num">99,5%</div><div class="stat-label">доступность систем (SLA)</div></div>
+          <div class="stat"><div class="stat-num">5+ лет</div><div class="stat-label">опыта</div></div>
+          <div class="stat"><div class="stat-num">30+ объектов</div><div class="stat-label">ЖК и дома</div></div>
+          <div class="stat"><div class="stat-num">270–1500 м³/сут</div><div class="stat-label">производительность</div></div>
+          <div class="stat"><div class="stat-num">99,5%</div><div class="stat-label">доступность (SLA)</div></div>
         </div>
-
-        <p class="note">Работаем с застройщиками и управляющими компаниями. Москва и регионы России.</p>
       </div>
-
-      <figure class="about-photo dim-strong" style="background-image:url('images/about-structure.jpg')"></figure>
-      <figure class="about-photo dim" style="background-image:url('images/about-moscow.jpg')"></figure>
+      <figure class="about-photo dim-strong"><img class="fill" src="images/about-structure.jpg?v=10" alt="" onerror="fallback(this)"></figure>
+      <figure class="about-photo dim"><img class="fill" src="images/about-moscow.jpg?v=10" alt="" onerror="fallback(this)"></figure>
     </div>
   </section>
 
