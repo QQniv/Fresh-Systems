@@ -8,13 +8,13 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // меню
+      // Меню
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 
-      // reveal-on-scroll
+      // Плавное появление секций
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
           if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
@@ -22,7 +22,7 @@
       }, {threshold:0.12});
       document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-      // запуск анимации героя
+      // Анимация героя
       requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
     });
   </script>
@@ -46,8 +46,10 @@
 
   <!-- Герой -->
   <section class="hero" style="background-image:url('images/hero-water.jpg');">
+    <!-- слой для мягкого размытия краёв фона -->
     <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg');"></div>
     <div class="hero-overlay"></div>
+
     <div class="hero-content container">
       <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
       <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
@@ -55,7 +57,7 @@
     </div>
   </section>
 
-  <!-- Фильтросистемы (с фото на карточках) -->
+  <!-- Фильтросистемы -->
   <section id="systems" class="section container reveal">
     <h2>Фильтросистемы</h2>
     <p class="section-intro">Комбинация ступеней обеспечивает получение питьевой воды прямо из-под крана.</p>
@@ -87,7 +89,7 @@
     </div>
   </section>
 
-  <!-- СанПиН (с фото микроскопа) -->
+  <!-- Соответствие СанПиН -->
   <section id="compliance" class="section container reveal">
     <h2>Соответствие СанПиН</h2>
     <p class="section-intro">Проектирование и контроль качества воды — согласно действующим санитарным нормам РФ. На этапе пуска выполняем лабораторные анализы по ключевым показателям.</p>
@@ -96,7 +98,7 @@
     </div>
   </section>
 
-  <!-- Почему вода вкусная (вернул прежний блок с «пилюлями» и галереей) -->
+  <!-- Почему вода вкусная -->
   <section id="taste" class="section container reveal">
     <h2>Почему вода вкусная</h2>
     <div class="pill-list">
