@@ -5,11 +5,9 @@
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
-
-  <!-- ВАЖНО: фиксируем базовый путь для GitHub Pages -->
+  <!-- базовый путь для GitHub Pages -->
   <base href="/Fresh-Systems/">
-
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=10">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('menuBtn');
@@ -17,13 +15,18 @@
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }});
-      }, {threshold:0.12});
-      document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
-
-      requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
+      const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}}),{threshold:0.12});
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      requestAnimationFrame(()=>document.body.classList.add('hero-ready'));
     });
+
+    // Универсальная заглушка для картинок (если файла нет)
+    function fallback(img){
+      img.onerror=null;
+      img.src='data:image/svg+xml;utf8,'+encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui, -apple-system, Segoe UI, Roboto" font-size="28">Фото будет добавлено</text></svg>'
+      );
+    }
   </script>
 </head>
 <body>
@@ -36,16 +39,17 @@
     <button id="menuBtn" class="menu-btn">Меню</button>
     <nav id="menuPanel" class="menu-panel">
       <a href="about.html" target="_blank" rel="noopener">О компании</a>
+      <a href="services.html">Услуги</a>
       <a href="#systems">Фильтросистемы</a>
       <a href="#compliance">СанПиН</a>
       <a href="#taste">Почему вода вкусная</a>
-      <a href="#contact">Контакты</a>
+      <a href="contact.html">Контакты</a>
     </nav>
   </header>
 
   <!-- Герой -->
-  <section class="hero" style="background-image:url('images/hero-water.jpg?v=5');">
-    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=5');"></div>
+  <section class="hero" style="background-image:url('images/hero-water.jpg?v=10');">
+    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=10');"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content container">
       <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
@@ -61,18 +65,78 @@
 
     <div class="cards">
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/production-2.jpg?v=5')"></div>
+        <div class="card-img-wrap">
+          <img class="card-img" src="images/production-2.jpg?v=10" alt="Механическая очистка" loading="lazy" onerror="fallback(this)">
+        </div>
         <h3>Механическая очистка</h3>
         <p>Удаляет песок, ржавчину и взвеси. Подготавливает воду к последующим ступеням.</p>
       </article>
 
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/uf-module.jpg?v=5')"></div>
+        <div class="card-img-wrap">
+          <img class="card-img" src="images/uf-module.jpg?v=10" alt="Ультрафильтрация" loading="lazy" onerror="fallback(this)">
+        </div>
         <h3>Ультрафильтрация</h3>
         <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
       </article>
 
       <article class="card">
-        <div class="card-photo dim" style="background-image:url('images/hero-water.jpg?v=5')"></div>
+        <div class="card-img-wrap">
+          <img class="card-img" src="images/hero-water.jpg?v=10" alt="Нанофильтрация" loading="lazy" onerror="fallback(this)">
+        </div>
         <h3>Нанофильтрация (NF)</h3>
-        <p>Снижает жёсткость и органику, сохраняя минералы. Формирует
+        <p>Снижает жёсткость и органику, сохраняя минералы. Формирует мягкий вкус воды.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img class="card-img" src="images/uv-tubes.jpg?v=10" alt="УФ-обеззараживание" loading="lazy" onerror="fallback(this)">
+        </div>
+        <h3>УФ-обеззараживание</h3>
+        <p>Финальная защита от микроорганизмов без применения химии.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- СанПиН -->
+  <section id="compliance" class="section container reveal">
+    <h2>Соответствие СанПиН</h2>
+    <p class="section-intro">Проектирование и контроль качества воды — согласно действующим санитарным нормам РФ. На этапе пуска выполняем лабораторные анализы по ключевым показателям.</p>
+    <div class="image-block">
+      <img class="img-fluid" src="images/microscope.jpg?v=10" alt="Лабораторный контроль" onerror="fallback(this)">
+    </div>
+  </section>
+
+  <!-- Почему вода вкусная -->
+  <section id="taste" class="section container reveal">
+    <h2>Почему вода вкусная</h2>
+    <div class="pill-list">
+      <span class="pill">Баланс минерализации</span>
+      <span class="pill">Мягкость без пересушивания</span>
+      <span class="pill">Свежий вкус</span>
+      <span class="pill">Отсутствие запаха</span>
+    </div>
+    <p class="section-intro">Нанофильтрация сохраняет естественный профиль воды, делая её мягкой и приятной на вкус. Вы получаете питьевую воду прямо из-под крана.</p>
+
+    <div class="gallery">
+      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=10" alt="Вода из крана" loading="lazy" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=10" alt="Питьевая вода" loading="lazy" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=10" alt="Производство" loading="lazy" onerror="fallback(this)"></div>
+    </div>
+  </section>
+
+  <!-- Контакты (CTA на отдельную страницу) -->
+  <section id="contact" class="section container cta-block reveal">
+    <h2>Свяжитесь с нами</h2>
+    <p>Мы рассчитаем решение под ваш дом и поможем с проектом водоочистки.</p>
+    <a class="btn primary" href="contact.html">Оставить заявку</a>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© Fresh Systems, 2025</div>
+      <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
+    </div>
+  </footer>
+</body>
+</html>
