@@ -17,20 +17,19 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Bli
 .menu-panel.open{display:block}
 .menu-panel a{display:block;padding:8px 10px;border-radius:8px;color:var(--fg);text-decoration:none}
 .menu-panel a:hover{background:rgba(56,189,248,.1)}
+.menu-panel.static{display:flex;gap:10px;background:transparent;border:none;position:static}
 
 /* Hero */
-.hero{
-  position:relative;min-height:68vh;display:grid;place-items:center;
-  background-size:cover;background-position:center;
-}
+.hero{position:relative;min-height:64vh;display:grid;place-items:center;background-size:cover;background-position:center}
+.hero.small{min-height:40vh}
 .hero-overlay{position:absolute;inset:0;background:
   radial-gradient(1200px 600px at 70% 0%,rgba(56,189,248,.12),transparent 60%),
   linear-gradient(180deg,rgba(11,16,32,.5),rgba(11,16,32,.9))}
 .hero-blur-edges{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(8px);
   -webkit-mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 60%,rgba(0,0,0,1) 100%);
-          mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 60%,rgba(0,0,0,1) 100%);opacity:.9}
+  mask-image:radial-gradient(closest-side,rgba(0,0,0,0) 60%,rgba(0,0,0,1) 100%);opacity:.9}
 .hero-content{position:relative;text-align:center;z-index:1}
-.hero-title{font-size:clamp(36px,6vw,64px);font-weight:900;margin:0 0 10px;letter-spacing:-0.02em;text-shadow:0 10px 30px rgba(0,0,0,.6);
+.hero-title{font-size:clamp(36px,6vw,64px);font-weight:900;margin:0 0 10px;letter-spacing:-.02em;text-shadow:0 10px 30px rgba(0,0,0,.6);
   opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
 .hero-sub{color:var(--muted);max-width:760px;margin:0 auto 18px;opacity:0;transform:translateY(10px);transition:opacity .6s .08s,transform .6s .08s}
 .hero-ready .hero-title,.hero-ready .hero-sub{opacity:1;transform:none}
@@ -39,32 +38,46 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Bli
 .btn{border:1px solid var(--border);background:transparent;color:var(--fg);padding:10px 14px;border-radius:12px;text-decoration:none}
 .btn.primary{background:var(--accent);color:#001019;border:none}
 
-/* Sections — текст белый */
+/* Sections (текст белый) */
 .section{padding:48px 0}
-.section h2{margin:0 0 10px}
-.section p, .section .section-intro{color:var(--fg)}
-.bullets{margin:10px 0 0 18px}
-.bullets li{margin:4px 0}
+.section h2,.section h1{margin:0 0 10px}
+.section .section-intro{color:var(--fg)}
 
 /* Cards */
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
+.cards.services{grid-template-columns:repeat(3,1fr)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px}
 .card h3{margin:8px 0}
-.card-photo{height:120px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:10px;border:1px solid var(--border);position:relative;overflow:hidden}
-.dim::before,.dim-strong::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
-.dim::before{background:linear-gradient(180deg,rgba(11,16,32,.22),rgba(11,16,32,.4))}
-.dim-strong::before{background:linear-gradient(180deg,rgba(11,16,32,.32),rgba(11,16,32,.56))}
+.card-img-wrap{height:120px;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:#0b1224}
+.card-img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
+/* Галерея */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.g-item{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.g-img{display:block;width:100%;height:160px;object-fit:cover}
 
 /* Image block */
 .image-block{margin-top:12px;border:1px solid var(--border);border-radius:16px;overflow:hidden}
 .img-fluid{display:block;width:100%;height:auto}
 
-/* Taste pills & gallery */
+/* About */
+.cardish{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:18px;align-items:stretch;margin-top:16px}
+.about-photo{border:1px solid var(--border);border-radius:16px;min-height:260px;position:relative;overflow:hidden}
+.about-photo .fill{width:100%;height:100%;object-fit:cover;display:block}
+.about-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 8px}
+.stat{background:rgba(56,189,248,.06);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center}
+.stat-num{font-weight:800;font-size:18px}
+.stat-label{color:var(--muted);font-size:12px;margin-top:4px}
+
+/* Pills */
 .pill-list{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
 .pill{border:1px solid var(--border);padding:6px 10px;border-radius:999px;background:rgba(56,189,248,.06)}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-.g-item{height:160px;border-radius:12px;background-size:cover;background-position:center;border:1px solid var(--border);position:relative;overflow:hidden}
-.g-item.dim::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(11,16,32,.18),rgba(11,16,32,.3));pointer-events:none}
+
+/* Forms */
+.contact-form{max-width:760px}
+.contact-form .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#0b1224;color:var(--fg);outline:none}
+.input:focus{border-color:#2f86b4;box-shadow:0 0 0 2px rgba(56,189,248,.2)}
 
 /* CTA & footer */
 .cta-block{text-align:center}
@@ -79,11 +92,15 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Bli
 /* Responsive */
 @media (max-width:960px){
   .cards{grid-template-columns:repeat(2,1fr)}
+  .cards.services{grid-template-columns:repeat(2,1fr)}
+  .about-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:520px){
-  .cards{grid-template-columns:1fr}
+  .cards,.cards.services{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
   .hero-title{font-size:34px}
   .gallery{grid-template-columns:1fr}
+  .contact-form .grid{grid-template-columns:1fr}
 }
 
 /* Reduced motion */
