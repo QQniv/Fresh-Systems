@@ -6,27 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
   <base href="/Fresh-Systems/">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
   <script>
+    // стэггер-анимация слогана по словам
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
       panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 
+      // разрезаем слоган на слова и анимируем по очереди
+      const title = document.querySelector('.hero-title');
+      const words = title.textContent.trim().split(/\s+/);
+      title.textContent = '';
+      words.forEach((w,i)=>{
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = w + (i < words.length-1 ? ' ' : '');
+        span.style.setProperty('--d', i*60+'ms'); // задержка
+        title.appendChild(span);
+      });
+
+      // reveal секции
       const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}}),{threshold:.12});
       document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
       requestAnimationFrame(()=>document.body.classList.add('hero-ready'));
     });
+
     function fallback(img){
       img.onerror=null;
-      img.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui" font-size="28">Фото будет добавлено</text></svg>');
+      img.src='data:image/svg+xml;utf8,'+encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui, -apple-system" font-size="28">Фото будет добавлено</text></svg>'
+      );
     }
   </script>
 </head>
 <body>
-  <!-- Шапка (логотип кликабелен: ведёт на главную) -->
+  <!-- Шапка -->
   <header class="site-header">
+    <!-- логотип кликабелен: на главную -->
     <a href="index.html" class="brand" aria-label="На главную">
       <div class="logo">💧</div><div class="brand-text">Fresh Systems</div>
     </a>
@@ -42,48 +61,53 @@
   </header>
 
   <!-- Герой -->
-  <section class="hero" style="background-image:url('images/hero-water.jpg?v=11');">
-    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=11');"></div>
+  <section class="hero" style="background-image:url('images/hero-water.jpg?v=12');">
+    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=12');"></div>
     <div class="hero-overlay"></div>
+
     <div class="hero-content container">
-      <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
+      <!-- в одну строку на десктопе, с анимацией слов -->
+      <h1 class="hero-title">Питьевая вода в вашем доме</h1>
       <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
-      <a href="systems.html" class="btn primary">Подробнее</a>
+      <div class="hero-actions">
+        <a href="systems.html" class="btn primary">Подробнее</a>
+        <a href="contact.html" class="btn ghost">Оставить заявку</a>
+      </div>
     </div>
   </section>
 
-  <!-- Краткие блоки (тезисно) -->
+  <!-- Краткие блоки (остались как были, чуть плотнее) -->
   <section class="section container reveal">
     <h2>Фильтросистемы</h2>
     <p class="section-intro">Тезисно о ступенях. Подробная страница — во вкладке.</p>
     <div class="cards">
       <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/production-2.jpg?v=11" alt="Механическая очистка" onerror="fallback(this)"></div>
+        <div class="card-img-wrap"><img class="card-img" src="images/production-2.jpg?v=12" alt="Механическая очистка" onerror="fallback(this)"></div>
         <h3>Механическая очистка</h3><p>Удаляет взвесь и ржавчину.</p>
       </article>
       <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/uf-module.jpg?v=11" alt="Ультрафильтрация" onerror="fallback(this)"></div>
+        <div class="card-img-wrap"><img class="card-img" src="images/uf-module.jpg?v=12" alt="Ультрафильтрация" onerror="fallback(this)"></div>
         <h3>Ультрафильтрация</h3><p>Задерживает коллоиды и бактерии.</p>
       </article>
       <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/hero-water.jpg?v=11" alt="Нанофильтрация" onerror="fallback(this)"></div>
+        <div class="card-img-wrap"><img class="card-img" src="images/hero-water.jpg?v=12" alt="Нанофильтрация" onerror="fallback(this)"></div>
         <h3>Нанофильтрация</h3><p>Сохраняет минералы, смягчает вкус.</p>
       </article>
       <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/uv-tubes.jpg?v=11" alt="УФ-обеззараживание" onerror="fallback(this)"></div>
+        <div class="card-img-wrap"><img class="card-img" src="images/uv-tubes.jpg?v=12" alt="УФ-обеззараживание" onerror="fallback(this)"></div>
         <h3>УФ-обеззараживание</h3><p>Финальная защита без реагентов.</p>
       </article>
     </div>
-    <p><a class="btn" href="systems.html">Читать подробно →</a></p>
+    <p><a class="btn linklike" href="systems.html">Читать подробно →</a></p>
   </section>
 
   <section class="section container reveal">
     <h2>СанПиН</h2>
     <p class="section-intro">Проектирование и контроль качества согласно нормативам РФ.</p>
     <div class="image-block">
-      <img class="img-fluid" src="images/microscope.jpg?v=11" alt="Лабораторный контроль" onerror="fallback(this)">
+      <img class="img-fluid" src="images/microscope.jpg?v=12" alt="Лабораторный контроль" onerror="fallback(this)">
     </div>
-    <p><a class="btn" href="compliance.html">Подробнее о соответствии →</a></p>
+    <p><a class="btn linklike" href="compliance.html">Подробнее о соответствии →</a></p>
   </section>
 
   <section class="section container reveal">
@@ -91,17 +115,20 @@
     <div class="pill-list"><span class="pill">Баланс минералов</span><span class="pill">Мягкость</span><span class="pill">Свежий вкус</span><span class="pill">Без запаха</span></div>
     <p class="section-intro">NF сохраняет естественный профиль воды — пить приятно ежедневно.</p>
     <div class="gallery">
-      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=11" alt="Вода из крана" onerror="fallback(this)"></div>
-      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=11" alt="Питьевая вода" onerror="fallback(this)"></div>
-      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=11" alt="Производство" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=12" alt="Вода из крана" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=12" alt="Питьевая вода" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=12" alt="Производство" onerror="fallback(this)"></div>
     </div>
-    <p><a class="btn" href="taste.html">Раскрыть тему вкуса →</a></p>
+    <p><a class="btn linklike" href="taste.html">Раскрыть тему вкуса →</a></p>
   </section>
 
   <section class="section container cta-block reveal" id="contact">
     <h2>Свяжитесь с нами</h2>
     <p>Рассчитаем решение под ваш дом и поможем с проектом.</p>
-    <a class="btn primary" href="contact.html">Оставить заявку</a>
+    <div class="hero-actions">
+      <a class="btn primary" href="contact.html">Оставить заявку</a>
+      <a class="btn ghost" href="services.html">Услуги</a>
+    </div>
   </section>
 
   <footer class="site-footer">
