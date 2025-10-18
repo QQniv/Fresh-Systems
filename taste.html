@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Почему вода вкусная — Fresh Systems</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/Fresh-Systems/">
+  <link rel="stylesheet" href="styles.css?v=11">
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const btn=document.getElementById('menuBtn');const panel=document.getElementById('menuPanel');
+      btn.addEventListener('click',()=>panel.classList.toggle('open'));
+      panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('open')));
+    });
+    function fallback(img){img.onerror=null;img.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui" font-size="28">Фото будет добавлено</text></svg>');}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="brand" aria-label="На главную"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></a>
+    <button id="menuBtn" class="menu-btn">Меню</button>
+    <nav id="menuPanel" class="menu-panel">
+      <a href="about.html" target="_blank" rel="noopener">О компании</a>
+      <a href="systems.html">Фильтросистемы</a>
+      <a href="compliance.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
+      <a href="services.html">Услуги</a>
+      <a href="contact.html">Контакты</a>
+    </nav>
+  </header>
+
+  <section class="section container">
+    <h1>Почему вода вкусная</h1>
+    <p class="section-intro">Раскроем тему: минерализация, pH, редокс-потенциал, органолептика и роль NF.</p>
+
+    <div class="gallery">
+      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=11" alt="Вода из крана" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=11" alt="Питьевая вода" onerror="fallback(this)"></div>
+      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=11" alt="Производство" onerror="fallback(this)"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© Fresh Systems, 2025</div>
+      <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
+    </div>
+  </footer>
+</body>
+</html>
