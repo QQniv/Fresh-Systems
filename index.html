@@ -7,10 +7,30 @@
   <meta name="theme-color" content="#0b1020">
   <base href="/Fresh-Systems/">
 
-  <link rel="stylesheet" href="styles.css?v=19">
-  <script src="site.js?v=18" defer></script>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Fresh Systems — Питьевая вода в вашем доме">
+  <meta property="og:description" content="Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://qqniv.github.io/Fresh-Systems/">
+  <meta property="og:image" content="https://qqniv.github.io/Fresh-Systems/images/hero-water.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon (чистая SVG-капля как data URI) -->
+  <link rel="icon" href='data:image/svg+xml;utf8,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="%2338bdf8"/><stop offset="1" stop-color="%2393c5fd"/></linearGradient>
+    </defs>
+    <path d="M32 6C24 18 14 28 14 38a18 18 0 1 0 36 0c0-10-10-20-18-32z" fill="url(%23g)"/>
+  </svg>'>
+
+  <link rel="stylesheet" href="styles.css?v=20">
+  <script src="site.js?v=20" defer></script>
 </head>
 <body class="page-enter">
+  <!-- тонкая шумовая текстура поверх всего сайта -->
+  <div class="grain" aria-hidden="true"></div>
+
   <header class="site-header">
     <a href="index.html" class="brand" aria-label="На главную">
       <div class="logo">💧</div><div class="brand-text">Fresh Systems</div>
@@ -27,8 +47,8 @@
     </nav>
   </header>
 
-  <section class="hero" style="background-image:url('images/hero-water.jpg?v=19');">
-    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=19');"></div>
+  <section class="hero" style="background-image:url('images/hero-water.jpg?v=20');">
+    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=20');"></div>
     <div class="hero-overlay"></div>
     <div class="hero-light"></div>
     <div class="hero-glints"></div>
@@ -37,13 +57,13 @@
       <h1 class="hero-title">Питьевая вода в вашем доме</h1>
       <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
       <div class="hero-actions">
-        <a href="systems.html" class="btn primary">Подробнее</a>
-        <a href="contact.html" class="btn ghost">Оставить заявку</a>
+        <a href="systems.html" class="btn primary ripple">Подробнее</a>
+        <a href="contact.html" class="btn ghost ripple">Оставить заявку</a>
       </div>
     </div>
   </section>
 
-  <!-- подсказка прокрутки — теперь в отдельном блоке между секциями -->
+  <!-- прокрутка-хинт между героями и картами -->
   <div class="scroll-hint-block" aria-hidden="true">
     <div class="scroll-hint"><span></span></div>
   </div>
@@ -54,36 +74,44 @@
 
     <div class="cards">
       <article class="card parallax">
-        <div class="card-img-wrap"><img class="card-img" src="images/production-2.jpg?v=19" alt="Механическая очистка" onerror="fallback(this)"></div>
+        <div class="card-img-wrap skel">
+          <img class="card-img img-skel" loading="lazy" src="images/production-2.jpg?v=20" alt="Механическая очистка" onerror="fallback(this)">
+        </div>
         <h3>Механическая очистка</h3><p>Удаляет взвесь и ржавчину.</p>
       </article>
 
       <article class="card parallax">
-        <div class="card-img-wrap"><img class="card-img" src="images/uf-module.jpg?v=19" alt="Ультрафильтрация" onerror="fallback(this)"></div>
+        <div class="card-img-wrap skel">
+          <img class="card-img img-skel" loading="lazy" src="images/uf-module.jpg?v=20" alt="Ультрафильтрация" onerror="fallback(this)">
+        </div>
         <h3>Ультрафильтрация</h3><p>Задерживает коллоиды и бактерии.</p>
       </article>
 
       <article class="card parallax">
-        <div class="card-img-wrap"><img class="card-img" src="images/hero-water.jpg?v=19" alt="Нанофильтрация" onerror="fallback(this)"></div>
+        <div class="card-img-wrap skel">
+          <img class="card-img img-skel" loading="lazy" src="images/hero-water.jpg?v=20" alt="Нанофильтрация" onerror="fallback(this)">
+        </div>
         <h3>Нанофильтрация</h3><p>Сохраняет минералы, смягчает вкус.</p>
       </article>
 
       <article class="card parallax">
-        <div class="card-img-wrap"><img class="card-img" src="images/uv-tubes.jpg?v=19" alt="УФ-обеззараживание" onerror="fallback(this)"></div>
+        <div class="card-img-wrap skel">
+          <img class="card-img img-skel" loading="lazy" src="images/uv-tubes.jpg?v=20" alt="УФ-обеззараживание" onerror="fallback(this)">
+        </div>
         <h3>УФ-обеззараживание</h3><p>Финальная защита без реагентов.</p>
       </article>
     </div>
 
-    <p><a class="btn linklike" href="systems.html">Читать подробно →</a></p>
+    <p><a class="btn linklike ripple" href="systems.html">Читать подробно →</a></p>
   </section>
 
   <section class="section container reveal">
     <h2>СанПиН</h2>
     <p class="section-intro">Проектирование и контроль качества согласно нормативам РФ.</p>
-    <div class="image-block parallax">
-      <img class="img-fluid" src="images/microscope.jpg?v=19" alt="Лабораторный контроль" onerror="fallback(this)">
+    <div class="image-block parallax skel">
+      <img class="img-fluid img-skel" loading="lazy" src="images/microscope.jpg?v=20" alt="Лабораторный контроль" onerror="fallback(this)">
     </div>
-    <p><a class="btn linklike" href="compliance.html">Подробнее о соответствии →</a></p>
+    <p><a class="btn linklike ripple" href="compliance.html">Подробнее о соответствии →</a></p>
   </section>
 
   <section class="section container reveal">
@@ -94,11 +122,11 @@
     </div>
     <p class="section-intro">NF сохраняет естественный профиль воды — пить приятно ежедневно.</p>
     <div class="gallery">
-      <div class="g-item parallax"><img class="g-img" src="images/tap-splash.jpg?v=19" alt="Вода из крана" onerror="fallback(this)"></div>
-      <div class="g-item parallax"><img class="g-img" src="images/kid-drink.jpg?v=19" alt="Питьевая вода" onerror="fallback(this)"></div>
-      <div class="g-item parallax"><img class="g-img" src="images/production-2.jpg?v=19" alt="Производство" onerror="fallback(this)"></div>
+      <div class="g-item parallax skel"><img class="g-img img-skel" loading="lazy" src="images/tap-splash.jpg?v=20" alt="Вода из крана" onerror="fallback(this)"></div>
+      <div class="g-item parallax skel"><img class="g-img img-skel" loading="lazy" src="images/kid-drink.jpg?v=20" alt="Питьевая вода" onerror="fallback(this)"></div>
+      <div class="g-item parallax skel"><img class="g-img img-skel" loading="lazy" src="images/production-2.jpg?v=20" alt="Производство" onerror="fallback(this)"></div>
     </div>
-    <p><a class="btn linklike" href="taste.html">Раскрыть тему вкуса →</a></p>
+    <p><a class="btn linklike ripple" href="taste.html">Раскрыть тему вкуса →</a></p>
   </section>
 
   <section class="section container cta-soft reveal">
