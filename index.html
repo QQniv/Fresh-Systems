@@ -7,8 +7,8 @@
   <meta name="theme-color" content="#0b1020">
   <link rel="stylesheet" href="styles.css">
   <script>
-    // Меню + lazy-load + анимации
     document.addEventListener('DOMContentLoaded', () => {
+      // Меню
       const btn = document.getElementById('menuBtn');
       const panel = document.getElementById('menuPanel');
       btn.addEventListener('click', () => panel.classList.toggle('open'));
@@ -16,13 +16,11 @@
 
       // reveal-on-scroll
       const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
-        });
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }});
       }, {threshold:0.12});
       document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-      // lazy-load background images
+      // lazy-load background images из --bg
       const lazy = document.querySelectorAll('[style*="--bg"]');
       const io2 = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
@@ -36,7 +34,6 @@
       }, {rootMargin:'200px 0px'});
       lazy.forEach(el=> io2.observe(el));
 
-      // hero animation start
       requestAnimationFrame(()=> document.body.classList.add('hero-ready'));
     });
   </script>
@@ -61,6 +58,9 @@
   <!-- Герой -->
   <section class="hero" style="--bg:url('images/hero-water.jpg')">
     <div class="hero-overlay"></div>
+    <!-- edge blur у краёв воды -->
+    <div class="hero-edge-blur"></div>
+
     <div class="hero-content container">
       <h1 class="hero-title">Питьевая вода<br>в вашем доме</h1>
       <p class="subtitle hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
@@ -88,24 +88,28 @@
   <section id="systems" class="section container reveal">
     <h2>Наши фильтросистемы</h2>
     <p class="lead">Комбинация ступеней обеспечивает получение питьевой воды прямо из-под крана.</p>
+
     <div class="cards">
       <article class="card reveal">
         <div class="card-photo dim" style="--bg:url('images/production-2.jpg')"></div>
         <h3>Механическая очистка</h3>
         <p>Удаляет песок, ржавчину и взвеси. Подготавливает воду к последующим ступеням.</p>
       </article>
+
       <article class="card reveal">
-        <div class="card-photo dim" style="--bg:url('images/drop.jpg')"></div>
+        <div class="card-photo dim" style="--bg:url('images/uf-module.jpg')"></div>
         <h3>Ультрафильтрация</h3>
         <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
       </article>
+
       <article class="card reveal">
         <div class="card-photo dim" style="--bg:url('images/hero-water.jpg')"></div>
         <h3>Нанофильтрация (NF)</h3>
         <p>Снижает жёсткость и органику, сохраняя минералы. Формирует мягкий вкус воды.</p>
       </article>
+
       <article class="card reveal">
-        <div class="card-photo dim" style="--bg:url('images/production-1.jpg')"></div>
+        <div class="card-photo dim" style="--bg:url('images/uv-tubes.jpg')"></div>
         <h3>УФ-обеззараживание</h3>
         <p>Финальная защита от микроорганизмов без применения химии.</p>
       </article>
@@ -117,13 +121,14 @@
     <div class="text">
       <h2>Соответствие СанПиН</h2>
       <p>Все решения Fresh Systems соответствуют нормативам по качеству питьевой воды. На пуске проводится контроль и лабораторный анализ по показателям мутности, жёсткости и микробиологии.</p>
-      <ul class="bullets">
+    <ul class="bullets">
         <li>Контроль мутности, цветности, запаха</li>
         <li>Жёсткость и минерализация в норме</li>
-        <li>Микробиологическая безопасность (УФ-фильтр)</li>
+        <li>Микробиологическая безопасность (УФ-стадия)</li>
       </ul>
       <p class="note">Сертификаты и протоколы предоставляются по запросу.</p>
     </div>
+    <!-- жёсткая привязка к images/microscope.jpg -->
     <div class="media bg-photo dim" style="--bg:url('images/microscope.jpg')"></div>
   </section>
 
@@ -137,6 +142,7 @@
       <span class="pill">Отсутствие запаха</span>
     </div>
     <p class="lead">Нанофильтрация сохраняет естественный профиль воды, делая её мягкой и приятной на вкус. Вы получаете питьевую воду прямо из-под крана.</p>
+
     <div class="gallery">
       <div class="g-item dim" style="--bg:url('images/tap-splash.jpg')"></div>
       <div class="g-item dim" style="--bg:url('images/kid-drink.jpg')"></div>
