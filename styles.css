@@ -12,7 +12,7 @@
 /* База */
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,Inter,Roboto,Segoe UI,Arial;cursor:none}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,Inter,Roboto,Segoe UI,Arial}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
 a{color:var(--fg);text-decoration:none}
 a:hover{opacity:.92}
@@ -27,13 +27,7 @@ a:hover{opacity:.92}
 .page-leave{animation:pageFadeOut .2s ease forwards}
 @keyframes pageFade{to{opacity:1}} @keyframes pageFadeOut{to{opacity:0}}
 
-/* Умный курсор */
-.cursor{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.35); backdrop-filter:blur(6px) saturate(140%);
-  background:radial-gradient(closest-side,rgba(255,255,255,.2),rgba(255,255,255,.05));
-  mix-blend-mode:screen; pointer-events:none; z-index:99999; transform:translate(-50%,-50%);}
-
-/* Header + стеклянный логотип (преломление) */
+/* Header + стеклянный логотип */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.6);backdrop-filter:blur(6px);
   border-bottom:1px solid rgba(31,42,68,.6);display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
 @media (prefers-color-scheme: light){ .site-header{background:rgba(255,255,255,.6);border-bottom:1px solid #e6eef7} }
@@ -71,7 +65,7 @@ a:hover{opacity:.92}
 .hero-fog{position:absolute;left:0;right:0;bottom:-10px;height:140px;pointer-events:none;
   background:radial-gradient(60% 80% at 50% 100%, rgba(255,255,255,.18), transparent 60%);filter:blur(14px);opacity:.5}
 
-/* Слоган (белый) + отражение */
+/* Слоган и анимации */
 .hero-content{text-align:center;position:relative;z-index:1}
 .hero-title{color:#fff;font-size:clamp(40px,6.5vw,78px);font-weight:900;margin:0 0 10px;letter-spacing:-.02em;display:inline-block;white-space:nowrap;position:relative;text-shadow:0 6px 20px rgba(56,189,248,.12)}
 .hero-title::after{content:attr(data-title);position:absolute;left:0;right:0;top:100%;transform:scaleY(-1) translateY(8px);color:#d6efff;opacity:.26;filter:blur(5px);mask-image:linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,0));pointer-events:none;mix-blend-mode:screen;animation:ripple 6s ease-in-out infinite}
@@ -84,13 +78,6 @@ a:hover{opacity:.92}
 .hero-sub{color:var(--muted);max-width:760px;margin:0 auto 18px}
 .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 
-/* Scroll-hint */
-.scroll-hint-block{display:flex;justify-content:center;padding:10px 0 6px}
-.scroll-hint{opacity:.8}
-.scroll-hint span{display:block;width:20px;height:32px;border:2px solid #94d9ff;border-radius:12px;position:relative}
-.scroll-hint span::after{content:'';position:absolute;left:50%;top:6px;width:4px;height:6px;background:#94d9ff;border-radius:2px;transform:translateX(-50%);animation:hint 1.6s ease-in-out infinite}
-@keyframes hint{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}100%{opacity:0;transform:translate(-50%,8px)}}
-
 /* Кнопки с ripple */
 .btn{border:1px solid var(--border);padding:12px 18px;border-radius:12px;font-weight:600;display:inline-block;position:relative;overflow:hidden}
 .btn.primary{background:var(--accent);color:#001019;border:none;box-shadow:0 8px 22px rgba(56,189,248,.25)}
@@ -100,7 +87,7 @@ a:hover{opacity:.92}
 .ripple-btn:active::after{content:'';position:absolute;left:var(--rx,50%);top:var(--ry,50%);width:10px;height:10px;background:rgba(255,255,255,.45);border-radius:50%;transform:translate(-50%,-50%) scale(1);animation:rippleWave .6s ease-out}
 @keyframes rippleWave{to{opacity:0;transform:translate(-50%,-50%) scale(18)}}
 
-/* Секции + деликатные разделители */
+/* Секции + визуальные разделители */
 .section{padding:44px 0;position:relative}
 .section + .section::before{content:'';position:absolute;left:0;right:0;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(148,163,184,.35),transparent)}
 @media (prefers-color-scheme: light){ .section + .section::before{background:linear-gradient(90deg,transparent,#d7e4f3,transparent)} }
@@ -153,14 +140,12 @@ a:hover{opacity:.92}
 .site-footer{border-top:1px solid var(--border);padding:20px 0;background:#0a0f1f;position:relative}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
 .minor{color:#94a3b8;font-size:13px}
-.reflect::after{content:attr(data-reflect); content: ''; position:absolute;left:0;right:0;bottom:-26px;height:26px;pointer-events:none;opacity:.12;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0))}
-.reflect .footer-inner::after{content:''}
+.reflect::after{content: ''; position:absolute;left:0;right:0;bottom:-26px;height:26px;pointer-events:none;opacity:.12;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0))}
 
 /* Адаптив */
 @media (max-width:1100px){ .hero-title{white-space:normal} }
 @media (max-width:960px){ .cards{grid-template-columns:repeat(2,1fr)} .flow-card{width:46vw} }
 @media (max-width:520px){
-  body{cursor:auto} .cursor{display:none}
   .cards{grid-template-columns:1fr}
   .gallery{grid-template-columns:1fr}
   .hero-title{font-size:34px}
