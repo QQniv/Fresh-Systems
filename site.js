@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // меню
+  // мобильное меню
   const btn = document.getElementById('menuBtn');
   const panel = document.getElementById('menuPanel');
   if (btn && panel) {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else img.addEventListener('load', ()=>img.classList.add('loaded'));
   });
 
-  // ripple координаты (для кнопок)
+  // ripple координаты
   document.querySelectorAll('.ripple-btn').forEach(el=>{
     el.addEventListener('pointerdown', e=>{
       const rect = el.getBoundingClientRect();
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, {passive:true});
   });
 
-  // модалка капель знаний
+  // модалка «капля знаний»
   const modal = document.getElementById('infoModal');
   const modalTitle = modal ? modal.querySelector('.modal-title') : null;
   const modalText = modal ? modal.querySelector('.modal-text') : null;
