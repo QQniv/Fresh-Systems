@@ -5,22 +5,18 @@
   <title>Фильтросистемы — Fresh Systems</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/Fresh-Systems/">
-  <link rel="stylesheet" href="styles.css?v=11">
-  <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const btn=document.getElementById('menuBtn');const panel=document.getElementById('menuPanel');
-      btn.addEventListener('click',()=>panel.classList.toggle('open'));
-      panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('open')));
-    });
-    function fallback(img){img.onerror=null;img.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui" font-size="28">Фото будет добавлено</text></svg>');}
-  </script>
+  <link rel="stylesheet" href="styles.css?v=21">
+  <script src="site.js?v=21" defer></script>
 </head>
-<body>
+<body class="page-enter">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
   <header class="site-header">
-    <a href="index.html" class="brand" aria-label="На главную"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></a>
+    <a href="index.html" class="brand"><div class="logo glass-logo">💧</div><div class="brand-text">Fresh Systems</div></a>
     <button id="menuBtn" class="menu-btn">Меню</button>
     <nav id="menuPanel" class="menu-panel">
-      <a href="about.html" target="_blank" rel="noopener">О компании</a>
+      <a href="about.html">О компании</a>
       <a href="systems.html">Фильтросистемы</a>
       <a href="compliance.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
@@ -29,42 +25,44 @@
     </nav>
   </header>
 
-  <section class="section container">
+  <main class="container section">
     <h1>Фильтросистемы</h1>
-    <p class="section-intro">Подробное описание всех ступеней, схемы и аргументация выбора под ЖК.</p>
+    <p class="section-intro">Ниже — основные ступени. Нажимайте на 💧, чтобы раскрыть детали.</p>
 
     <div class="cards">
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/production-2.jpg?v=11" alt="Механическая очистка" onerror="fallback(this)"></div>
-        <h3>Механическая очистка</h3>
-        <p>Сетки/картриджи/песчаные фильтры. Диапазоны, потери напора, регламенты промывок.</p>
+      <article class="card glass">
+        <h3>Механическая очистка <button class="drop-info small" data-title="Механическая очистка" data-text="Сетки/картриджи 50–5 мкм снимают песок, ил, ржавчину. Потери давления минимальны при правильном подборе." aria-label="Подробнее">💧</button></h3>
+        <p>Удаляет взвеси, защищает последующие ступени.</p>
       </article>
-
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/uf-module.jpg?v=11" alt="Ультрафильтрация" onerror="fallback(this)"></div>
-        <h3>Ультрафильтрация (UF)</h3>
-        <p>Поры 0.01–0.1 мкм, лог-редукция бактерий/вирусов, CIP-регламенты, ресурсы модулей.</p>
+      <article class="card glass">
+        <h3>Ультрафильтрация <button class="drop-info small" data-title="Ультрафильтрация" data-text="Поры 0,01–0,1 мкм: задержка бактерий и коллоидов. Хорошая восстановимость промывками." aria-label="Подробнее">💧</button></h3>
+        <p>Высокая производительность, стабильность.</p>
       </article>
-
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/hero-water.jpg?v=11" alt="Нанофильтрация" onerror="fallback(this)"></div>
-        <h3>Нанофильтрация (NF)</h3>
-        <p>Снижение жёсткости и органики с сохранением минерализации. Подбор мембран, солевой баланс.</p>
+      <article class="card glass">
+        <h3>Нанофильтрация <button class="drop-info small" data-title="Нанофильтрация" data-text="Селективная деминерализация: сохраняет вкус, снижает жёсткость и органику." aria-label="Подробнее">💧</button></h3>
+        <p>Баланс минералов и мягкости.</p>
       </article>
-
-      <article class="card">
-        <div class="card-img-wrap"><img class="card-img" src="images/uv-tubes.jpg?v=11" alt="УФ-обеззараживание" onerror="fallback(this)"></div>
-        <h3>УФ-обеззараживание</h3>
-        <p>Дозы, ресурс ламп, датчики интенсивности, комплаенс с СанПиН.</p>
+      <article class="card glass">
+        <h3>УФ-обеззараживание <button class="drop-info small" data-title="УФ-обеззараживание" data-text="254 нм, финальная стадия безопасности без реагентов. Важно поддерживать прозрачность воды." aria-label="Подробнее">💧</button></h3>
+        <p>Финальная безопасность без хлора.</p>
       </article>
     </div>
-  </section>
+  </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer reflect">
     <div class="container footer-inner">
       <div>© Fresh Systems, 2025</div>
       <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
     </div>
   </footer>
+
+  <div class="modal" id="infoModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card glass">
+      <button class="modal-close" aria-label="Закрыть">×</button>
+      <h3 class="modal-title">Заголовок</h3>
+      <p class="modal-text">Текст</p>
+    </div>
+  </div>
 </body>
 </html>
