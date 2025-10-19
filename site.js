@@ -1,19 +1,10 @@
-// меню + закрытие
 document.addEventListener('DOMContentLoaded', () => {
+  // меню
   const btn = document.getElementById('menuBtn');
   const panel = document.getElementById('menuPanel');
   if (btn && panel) {
     btn.addEventListener('click', () => panel.classList.toggle('open'));
     panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
-  }
-
-  // умный курсор (на десктопе)
-  const cursor = document.querySelector('.cursor');
-  if (cursor) {
-    let x = window.innerWidth/2, y = window.innerHeight/2, tx = x, ty = y;
-    const raf = () => { x += (tx - x)*0.18; y += (ty - y)*0.18; cursor.style.transform = `translate(${x-13}px,${y-13}px)`; requestAnimationFrame(raf); };
-    raf();
-    window.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; }, {passive:true});
   }
 
   // слоган по словам + отражение
@@ -87,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else img.addEventListener('load', ()=>img.classList.add('loaded'));
   });
 
-  // ripple координаты
+  // ripple координаты (для кнопок)
   document.querySelectorAll('.ripple-btn').forEach(el=>{
     el.addEventListener('pointerdown', e=>{
       const rect = el.getBoundingClientRect();
