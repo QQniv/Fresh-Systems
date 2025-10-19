@@ -4,12 +4,10 @@
   --sub-delay:2800ms; --cta-delay:3700ms; --hero-oy:0px;
 }
 
-/* Светлая тема */
 @media (prefers-color-scheme: light){
   :root{--bg:#f7fbff; --fg:#0b1220; --muted:#415066; --card:#ffffff; --border:#dbe6f3; --accent:#0ea5e9; --accent-ghost:rgba(14,165,233,.08)}
 }
 
-/* База */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,Inter,Roboto,Segoe UI,Arial}
@@ -17,31 +15,44 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Bli
 a{color:var(--fg);text-decoration:none}
 a:hover{opacity:.92}
 
-/* Текстура */
+/* шум */
 .grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.08;mix-blend-mode:overlay;
   background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="120" height="120" filter="url(%23n)" opacity=".6"/></svg>')}
 
-/* Переходы страниц */
+/* переходы */
 .page-enter{opacity:0}
 .page-enter.page-enter-done{animation:pageFade .45s ease forwards}
 .page-leave{animation:pageFadeOut .2s ease forwards}
 @keyframes pageFade{to{opacity:1}} @keyframes pageFadeOut{to{opacity:0}}
 
-/* Header + стеклянный логотип */
+/* HEADER по референсу: слева FS, справа горизонтальные ссылки */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.6);backdrop-filter:blur(6px);
-  border-bottom:1px solid rgba(31,42,68,.6);display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+  border-bottom:1px solid rgba(31,42,68,.6);display:flex;align-items:center;gap:18px;padding:10px 20px}
 @media (prefers-color-scheme: light){ .site-header{background:rgba(255,255,255,.6);border-bottom:1px solid #e6eef7} }
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:28px;height:28px;display:grid;place-items:center;border-radius:10px}
-.glass-logo{border:1px solid rgba(255,255,255,.25);background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06));backdrop-filter:blur(10px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 8px 22px rgba(56,189,248,.15)}
-.brand-text{font-weight:700}
-.menu-btn{border:1px solid var(--border);background:transparent;color:var(--fg);padding:8px 12px;border-radius:10px;cursor:pointer}
+
+.brand.fs-mark{
+  font-weight:900; letter-spacing:.06em; font-size:20px; padding:8px 10px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.22); background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.04));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 6px 18px rgba(56,189,248,.12);
+}
+
+.top-nav{margin-left:auto; display:flex; align-items:center; gap:18px}
+.top-nav a{padding:8px 10px; border-radius:8px}
+.top-nav a:hover{background:rgba(56,189,248,.10)}
+
+/* мобильная кнопка + панель */
+.menu-btn{display:none;border:1px solid var(--border);background:transparent;color:var(--fg);padding:8px 12px;border-radius:10px}
 .menu-panel{position:fixed;top:56px;right:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:8px;display:none}
 .menu-panel.open{display:block}
 .menu-panel a{display:block;padding:8px 10px;border-radius:8px}
 .menu-panel a:hover{background:rgba(56,189,248,.1)}
 
-/* HERO: дыхание + рябь + свет + туман */
+@media (max-width:860px){
+  .top-nav{display:none}
+  .menu-btn{display:block;margin-left:auto}
+}
+
+/* HERO с рябью/светом/туманом */
 .hero{position:relative;min-height:68vh;display:grid;place-items:center;
   background-size:cover;background-position:center calc(50% + var(--hero-oy));
   animation:breathe 14s ease-in-out infinite alternate; filter:url(#ripple)}
@@ -65,7 +76,7 @@ a:hover{opacity:.92}
 .hero-fog{position:absolute;left:0;right:0;bottom:-10px;height:140px;pointer-events:none;
   background:radial-gradient(60% 80% at 50% 100%, rgba(255,255,255,.18), transparent 60%);filter:blur(14px);opacity:.5}
 
-/* Слоган и анимации */
+/* слоган */
 .hero-content{text-align:center;position:relative;z-index:1}
 .hero-title{color:#fff;font-size:clamp(40px,6.5vw,78px);font-weight:900;margin:0 0 10px;letter-spacing:-.02em;display:inline-block;white-space:nowrap;position:relative;text-shadow:0 6px 20px rgba(56,189,248,.12)}
 .hero-title::after{content:attr(data-title);position:absolute;left:0;right:0;top:100%;transform:scaleY(-1) translateY(8px);color:#d6efff;opacity:.26;filter:blur(5px);mask-image:linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,0));pointer-events:none;mix-blend-mode:screen;animation:ripple 6s ease-in-out infinite}
@@ -78,7 +89,7 @@ a:hover{opacity:.92}
 .hero-sub{color:var(--muted);max-width:760px;margin:0 auto 18px}
 .hero-actions{display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 
-/* Кнопки с ripple */
+/* кнопки */
 .btn{border:1px solid var(--border);padding:12px 18px;border-radius:12px;font-weight:600;display:inline-block;position:relative;overflow:hidden}
 .btn.primary{background:var(--accent);color:#001019;border:none;box-shadow:0 8px 22px rgba(56,189,248,.25)}
 .btn.primary:hover{transform:translateY(-1px)}
@@ -87,16 +98,16 @@ a:hover{opacity:.92}
 .ripple-btn:active::after{content:'';position:absolute;left:var(--rx,50%);top:var(--ry,50%);width:10px;height:10px;background:rgba(255,255,255,.45);border-radius:50%;transform:translate(-50%,-50%) scale(1);animation:rippleWave .6s ease-out}
 @keyframes rippleWave{to{opacity:0;transform:translate(-50%,-50%) scale(18)}}
 
-/* Секции + визуальные разделители */
+/* секции + разделители */
 .section{padding:44px 0;position:relative}
 .section + .section::before{content:'';position:absolute;left:0;right:0;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(148,163,184,.35),transparent)}
 @media (prefers-color-scheme: light){ .section + .section::before{background:linear-gradient(90deg,transparent,#d7e4f3,transparent)} }
 
-/* Scroll reveal улучшенный */
+/* reveal */
 .reveal{opacity:0;transform:translateY(18px) scale(.98);filter:blur(6px);transition:opacity .7s, transform .7s, filter .7s}
 .reveal.show{opacity:1;transform:none;filter:none}
 
-/* Карточки — стекло */
+/* карточки — стекло */
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
 .card{border:1px solid var(--border);border-radius:16px;padding:14px;will-change:transform}
 .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,.12)}
@@ -107,20 +118,20 @@ a:hover{opacity:.92}
 .drop-info{margin-top:8px;border:1px solid var(--border);background:transparent;color:var(--fg);padding:6px 10px;border-radius:999px}
 .drop-info.small{padding:2px 8px;font-size:14px}
 
-/* Галерея/картинки */
+/* галерея/картинки */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
 .g-item{border:1px solid var(--border);border-radius:12px;overflow:hidden;will-change:transform;position:relative}
 .g-img{display:block;width:100%;height:160px;object-fit:cover}
 .image-block{margin-top:12px;border:1px solid var(--border);border-radius:16px;overflow:hidden;will-change:transform;position:relative}
 .img-fluid{display:block;width:100%;height:auto}
 
-/* Skeleton shimmer */
+/* skeleton */
 .skel::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg, rgba(255,255,255,.06) 8%, rgba(255,255,255,.16) 18%, rgba(255,255,255,.06) 33%);background-size:200% 100%;animation:shimmer 1.2s linear infinite}
 .img-skel{opacity:0;transition:opacity .35s ease}
 .img-skel.loaded{opacity:1}
 @keyframes shimmer{to{background-position:-200% 0}}
 
-/* Поток (about) */
+/* поток (about) */
 .flow-wrap{position:relative;margin:20px 0 40px;border:1px solid var(--border);border-radius:16px;padding:20px;background:rgba(255,255,255,.03)}
 .flow-svg{width:100%;height:160px;display:block}
 #flowPath{animation:dash 5s linear infinite}
@@ -129,29 +140,18 @@ a:hover{opacity:.92}
 .flow-card{position:absolute;width:260px}
 .flow-card.glass{padding:12px}
 
-/* Модалка */
-.modal{position:fixed;inset:0;display:none}
-.modal.show{display:block}
-.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
-.modal-card{position:relative;max-width:520px;margin:12vh auto 0;padding:16px;border-radius:16px}
-.modal-close{position:absolute;right:10px;top:8px;border:1px solid var(--border);background:transparent;color:var(--fg);border-radius:8px;padding:2px 8px}
-
-/* Футер с отражением */
+/* футер */
 .site-footer{border-top:1px solid var(--border);padding:20px 0;background:#0a0f1f;position:relative}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
 .minor{color:#94a3b8;font-size:13px}
 .reflect::after{content: ''; position:absolute;left:0;right:0;bottom:-26px;height:26px;pointer-events:none;opacity:.12;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0))}
 
-/* Адаптив */
+/* адаптив */
 @media (max-width:1100px){ .hero-title{white-space:normal} }
 @media (max-width:960px){ .cards{grid-template-columns:repeat(2,1fr)} .flow-card{width:46vw} }
-@media (max-width:520px){
-  .cards{grid-template-columns:1fr}
-  .gallery{grid-template-columns:1fr}
-  .hero-title{font-size:34px}
-}
+@media (max-width:520px){ .cards{grid-template-columns:1fr} .gallery{grid-template-columns:1fr} .hero-title{font-size:34px} }
 
-/* Reduce motion */
+/* reduce motion */
 @media (prefers-reduced-motion:reduce){
   .hero,.hero-glints,.hero-light,.hero-title .word,.reveal,.skel::before{animation:none!important;transition:none!important;filter:none!important}
 }
