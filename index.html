@@ -1,140 +1,162 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1020">
-  <base href="/Fresh-Systems/">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Fresh Systems — Питьевая вода в вашем доме">
-  <meta property="og:description" content="Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://qqniv.github.io/Fresh-Systems/">
-  <meta property="og:image" content="https://qqniv.github.io/Fresh-Systems/images/hero-water.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <link rel="stylesheet" href="styles.css?v=23">
-  <script src="site.js?v=23" defer></script>
+  <meta name="color-scheme" content="dark light" />
+  <link rel="preload" as="image" href="images/hero-water.jpg" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="page-enter">
-  <div class="grain" aria-hidden="true"></div>
 
-  <!-- SVG-фильтр ряби -->
-  <svg class="visually-hidden">
-    <filter id="ripple">
-      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.015" numOctaves="2" seed="3" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
-
+  <!-- Шапка -->
   <header class="site-header">
-    <a href="index.html" class="brand fs-mark" aria-label="На главную">FS</a>
+    <a class="brand fs-mark" href="index.html" aria-label="На главную">FS</a>
 
-    <nav class="top-nav">
+    <nav class="top-nav" aria-label="Основное меню">
       <a href="about.html">О компании</a>
       <a href="systems.html">Фильтросистемы</a>
-      <a href="compliance.html">СанПиН</a>
+      <a href="sanpin.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
       <a href="services.html">Услуги</a>
-      <a href="contact.html">Контакты</a>
+      <a href="contacts.html">Контакты</a>
     </nav>
 
-    <!-- мобильная кнопка -->
-    <button id="menuBtn" class="menu-btn" aria-label="Меню">Меню</button>
-    <nav id="menuPanel" class="menu-panel">
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
+    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
       <a href="about.html">О компании</a>
       <a href="systems.html">Фильтросистемы</a>
-      <a href="compliance.html">СанПиН</a>
+      <a href="sanpin.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
       <a href="services.html">Услуги</a>
-      <a href="contact.html">Контакты</a>
+      <a href="contacts.html">Контакты</a>
     </nav>
   </header>
 
-  <section class="hero ripple-bg" style="background-image:url('images/hero-water.jpg?v=23');">
-    <div class="hero-blur-edges" style="background-image:url('images/hero-water.jpg?v=23');"></div>
+  <!-- HERO -->
+  <section class="hero"
+    style="background-image:url('images/hero-water.jpg')">
+    <div class="hero-blur-edges"
+      style="background-image:url('images/hero-water.jpg')"></div>
     <div class="hero-overlay"></div>
     <div class="hero-light"></div>
     <div class="hero-glints"></div>
     <div class="hero-fog"></div>
 
-    <div class="hero-content container">
-      <h1 class="hero-title">Питьевая вода в вашем доме</h1>
-      <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
+    <div class="hero-content" id="heroContent">
+      <h1 class="hero-title" id="heroTitle" data-title="Питьевая вода в вашем доме">
+        <span class="word" style="--d:0ms">Питьевая&nbsp;</span>
+        <span class="word" style="--d:140ms">вода&nbsp;</span>
+        <span class="word" style="--d:300ms">в&nbsp;</span>
+        <span class="word" style="--d:460ms">вашем&nbsp;</span>
+        <span class="word" style="--d:640ms">доме</span>
+      </h1>
+
+      <p class="hero-sub">
+        Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.
+      </p>
+
       <div class="hero-actions">
-        <a href="systems.html" class="btn primary ripple-btn">Подробнее</a>
-        <a href="contact.html" class="btn ghost ripple-btn">Оставить заявку</a>
+        <a class="btn primary ripple-btn" href="about.html" onpointerdown="setRipple(event)">Подробнее</a>
+        <a class="btn ghost ripple-btn" href="contacts.html#form" onpointerdown="setRipple(event)">Оставить заявку</a>
+      </div>
+    </div>
+
+    <!-- SVG-фильтр лёгкой ряби -->
+    <svg width="0" height="0" style="position:absolute">
+      <filter id="ripple">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" seed="2" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </svg>
+  </section>
+
+  <!-- Короткий тизер систем -->
+  <section class="section">
+    <div class="container">
+      <h2 class="reveal">Фильтросистемы</h2>
+      <p class="reveal">Тезисно о ступенях. Подробная страница — во вкладке.</p>
+
+      <div class="cards">
+        <article class="card glass reveal">
+          <div class="card-img-wrap">
+            <img class="card-img img-skel" src="images/production-2.jpg" alt="Механическая очистка" loading="lazy">
+          </div>
+          <h3>Механическая очистка</h3>
+          <p>Удаляет песок, ржавчину и взвесь. Подготавливает воду к последующим ступеням.</p>
+        </article>
+
+        <article class="card glass reveal">
+          <div class="card-img-wrap">
+            <img class="card-img img-skel" src="images/uf-module.jpg" alt="Ультрафильтрация" loading="lazy">
+          </div>
+          <h3>Ультрафильтрация</h3>
+          <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
+        </article>
+
+        <article class="card glass reveal">
+          <div class="card-img-wrap">
+            <img class="card-img img-skel" src="images/hero-water.jpg" alt="Нанофильтрация" loading="lazy">
+          </div>
+          <h3>Нанофильтрация (NF)</h3>
+          <p>Снижает жёсткость и органику, сохраняя минералы. Даёт мягкий «вкус» воды.</p>
+        </article>
+
+        <article class="card glass reveal">
+          <div class="card-img-wrap">
+            <img class="card-img img-skel" src="images/uv-tubes.jpg" alt="УФ-обеззараживание" loading="lazy">
+          </div>
+          <h3>УФ-обеззараживание</h3>
+          <p>Финальная защита без реагентов. Соответствие СанПиН по микробиологии.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="section container reveal">
-    <h2>Фильтросистемы</h2>
-    <p class="section-intro">Тезисно о ступенях. Подробная страница — во вкладке.</p>
-
-    <div class="cards">
-      <article class="card glass parallax">
-        <div class="card-img-wrap skel">
-          <img class="card-img img-skel" loading="lazy" src="images/production-2.jpg?v=23" alt="Механическая очистка" onerror="fallback(this)">
-        </div>
-        <h3>Механическая очистка</h3>
-        <p>Удаляет взвесь и ржавчину.</p>
-        <button class="drop-info" data-title="Механическая очистка" data-text="Сетки/картриджи 50–5 мкм снимают песок, ил, ржавчину. Защищает мембраны и арматуру.">💧 Подробнее</button>
-      </article>
-
-      <article class="card glass parallax">
-        <div class="card-img-wrap skel">
-          <img class="card-img img-skel" loading="lazy" src="images/uf-module.jpg?v=23" alt="Ультрафильтрация" onerror="fallback(this)">
-        </div>
-        <h3>Ультрафильтрация</h3>
-        <p>Задерживает коллоиды и бактерии.</p>
-        <button class="drop-info" data-title="Ультрафильтрация" data-text="Поры 0,01–0,1 мкм, высокая производительность, без удаления солей.">💧 Подробнее</button>
-      </article>
-
-      <article class="card glass parallax">
-        <div class="card-img-wrap skel">
-          <img class="card-img img-skel" loading="lazy" src="images/hero-water.jpg?v=23" alt="Нанофильтрация" onerror="fallback(this)">
-        </div>
-        <h3>Нанофильтрация</h3>
-        <p>Сохраняет минералы, смягчает вкус.</p>
-        <button class="drop-info" data-title="Нанофильтрация" data-text="Селективное удаление жёсткости и органики, при этом вкус остаётся «живым».">💧 Подробнее</button>
-      </article>
-
-      <article class="card glass parallax">
-        <div class="card-img-wrap skel">
-          <img class="card-img img-skel" loading="lazy" src="images/uv-tubes.jpg?v=23" alt="УФ-обеззараживание" onerror="fallback(this)">
-        </div>
-        <h3>УФ-обеззараживание</h3>
-        <p>Финальная защита без реагентов.</p>
-        <button class="drop-info" data-title="УФ-обеззараживание" data-text="Интенсивность 254 нм, инактивация бактерий/вирусов без хлора и побочных запахов.">💧 Подробнее</button>
-      </article>
-    </div>
-
-    <p><a class="btn linklike ripple-btn" href="systems.html">Читать подробно →</a></p>
-  </section>
-
-  <section class="section container cta-soft reveal">
-    <h2>Мы заботимся о вашей воде</h2>
-    <p>Наша цель — чтобы вода в вашем доме была безопасной, живой и вкусной. Мы создаём технологии, которым можно доверять.</p>
-  </section>
-
-  <footer class="site-footer reflect">
+  <footer class="site-footer">
     <div class="container footer-inner">
-      <div>© Fresh Systems, 2025</div>
-      <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
+      <div class="minor">© Fresh Systems</div>
+      <div><a class="minor" href="index.html">На главную</a></div>
     </div>
   </footer>
 
-  <!-- модалка -->
-  <div class="modal" id="infoModal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-backdrop"></div>
-    <div class="modal-card glass">
-      <button class="modal-close" aria-label="Закрыть">×</button>
-      <h3 class="modal-title">Заголовок</h3>
-      <p class="modal-text">Текст</p>
-    </div>
-  </div>
+  <!-- скрипт: моб.меню, плавное появление, ripple -->
+  <script>
+    // Mobile menu
+    const btn = document.getElementById('menuBtn');
+    const panel = document.getElementById('menuPanel');
+    if (btn && panel) {
+      btn.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    // Reveal on scroll
+    const onReveal = new IntersectionObserver((entries) => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
+    }, {threshold: 0.15});
+    document.querySelectorAll('.reveal').forEach(el => onReveal.observe(el));
+
+    // Hero ready (для последовательной анимации подписи и кнопок)
+    window.addEventListener('load', () => {
+      document.getElementById('heroContent')?.classList.add('hero-ready');
+      document.querySelectorAll('.img-skel').forEach(img=>{
+        img.addEventListener('load', ()=> img.classList.add('loaded'), {once:true});
+      });
+    });
+
+    // Ripple helper
+    function setRipple(e){
+      const t = e.currentTarget;
+      const r = t.getBoundingClientRect();
+      t.style.setProperty('--rx', (e.clientX - r.left) + 'px');
+      t.style.setProperty('--ry', (e.clientY - r.top) + 'px');
+    }
+    window.setRipple = setRipple;
+  </script>
+
+  <div class="grain" aria-hidden="true"></div>
 </body>
 </html>
