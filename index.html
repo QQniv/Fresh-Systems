@@ -4,15 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
-  <meta name="color-scheme" content="dark light" />
+  <meta name="color-scheme" content="dark" />
   <link rel="preload" as="image" href="images/hero-water.jpg" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="page-enter">
+<body>
 
   <!-- Шапка -->
   <header class="site-header">
-    <a class="brand fs-mark" href="index.html" aria-label="На главную">FS</a>
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
 
     <nav class="top-nav" aria-label="Основное меню">
       <a href="about.html">О компании</a>
@@ -35,128 +35,36 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero"
-    style="background-image:url('images/hero-water.jpg')">
-    <div class="hero-blur-edges"
-      style="background-image:url('images/hero-water.jpg')"></div>
+  <section class="hero" style="--hero-img:url('images/hero-water.jpg');">
     <div class="hero-overlay"></div>
-    <div class="hero-light"></div>
-    <div class="hero-glints"></div>
-    <div class="hero-fog"></div>
-
-    <div class="hero-content" id="heroContent">
-      <h1 class="hero-title" id="heroTitle" data-title="Питьевая вода в вашем доме">
-        <span class="word" style="--d:0ms">Питьевая&nbsp;</span>
-        <span class="word" style="--d:140ms">вода&nbsp;</span>
-        <span class="word" style="--d:300ms">в&nbsp;</span>
-        <span class="word" style="--d:460ms">вашем&nbsp;</span>
-        <span class="word" style="--d:640ms">доме</span>
-      </h1>
-
-      <p class="hero-sub">
-        Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.
-      </p>
-
+    <div class="container hero-inner">
+      <h1 class="hero-title">Питьевая вода в вашем доме</h1>
+      <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
       <div class="hero-actions">
-        <a class="btn primary ripple-btn" href="about.html" onpointerdown="setRipple(event)">Подробнее</a>
-        <a class="btn ghost ripple-btn" href="contacts.html#form" onpointerdown="setRipple(event)">Оставить заявку</a>
+        <a class="btn primary" href="about.html">Подробнее</a>
+        <a class="btn ghost" href="contacts.html#form">Оставить заявку</a>
       </div>
     </div>
-
-    <!-- SVG-фильтр лёгкой ряби -->
-    <svg width="0" height="0" style="position:absolute">
-      <filter id="ripple">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" seed="2" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-    </svg>
   </section>
 
-  <!-- Короткий тизер систем -->
+  <!-- Короткий блок -->
   <section class="section">
     <div class="container">
-      <h2 class="reveal">Фильтросистемы</h2>
-      <p class="reveal">Тезисно о ступенях. Подробная страница — во вкладке.</p>
+      <h2>Фильтросистемы</h2>
+      <p>Тезисно о ступенях. Подробная страница — во вкладке.</p>
 
       <div class="cards">
-        <article class="card glass reveal">
-          <div class="card-img-wrap">
-            <img class="card-img img-skel" src="images/production-2.jpg" alt="Механическая очистка" loading="lazy">
+        <article class="card">
+          <div class="card-img">
+            <img src="images/production-2.jpg" alt="Механическая очистка" loading="lazy">
           </div>
           <h3>Механическая очистка</h3>
-          <p>Удаляет песок, ржавчину и взвесь. Подготавливает воду к последующим ступеням.</p>
+          <p>Удаляет песок, ржавчину и взвесь. Подготавливает воду к следующим ступеням.</p>
         </article>
 
-        <article class="card glass reveal">
-          <div class="card-img-wrap">
-            <img class="card-img img-skel" src="images/uf-module.jpg" alt="Ультрафильтрация" loading="lazy">
+        <article class="card">
+          <div class="card-img">
+            <img src="images/uf-module.jpg" alt="Ультрафильтрация" loading="lazy">
           </div>
           <h3>Ультрафильтрация</h3>
-          <p>Задерживает коллоиды и бактерии, улучшая прозрачность и вкус воды.</p>
-        </article>
-
-        <article class="card glass reveal">
-          <div class="card-img-wrap">
-            <img class="card-img img-skel" src="images/hero-water.jpg" alt="Нанофильтрация" loading="lazy">
-          </div>
-          <h3>Нанофильтрация (NF)</h3>
-          <p>Снижает жёсткость и органику, сохраняя минералы. Даёт мягкий «вкус» воды.</p>
-        </article>
-
-        <article class="card glass reveal">
-          <div class="card-img-wrap">
-            <img class="card-img img-skel" src="images/uv-tubes.jpg" alt="УФ-обеззараживание" loading="lazy">
-          </div>
-          <h3>УФ-обеззараживание</h3>
-          <p>Финальная защита без реагентов. Соответствие СанПиН по микробиологии.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="minor">© Fresh Systems</div>
-      <div><a class="minor" href="index.html">На главную</a></div>
-    </div>
-  </footer>
-
-  <!-- скрипт: моб.меню, плавное появление, ripple -->
-  <script>
-    // Mobile menu
-    const btn = document.getElementById('menuBtn');
-    const panel = document.getElementById('menuPanel');
-    if (btn && panel) {
-      btn.addEventListener('click', () => {
-        const open = panel.classList.toggle('open');
-        btn.setAttribute('aria-expanded', String(open));
-      });
-    }
-
-    // Reveal on scroll
-    const onReveal = new IntersectionObserver((entries) => {
-      entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
-    }, {threshold: 0.15});
-    document.querySelectorAll('.reveal').forEach(el => onReveal.observe(el));
-
-    // Hero ready (для последовательной анимации подписи и кнопок)
-    window.addEventListener('load', () => {
-      document.getElementById('heroContent')?.classList.add('hero-ready');
-      document.querySelectorAll('.img-skel').forEach(img=>{
-        img.addEventListener('load', ()=> img.classList.add('loaded'), {once:true});
-      });
-    });
-
-    // Ripple helper
-    function setRipple(e){
-      const t = e.currentTarget;
-      const r = t.getBoundingClientRect();
-      t.style.setProperty('--rx', (e.clientX - r.left) + 'px');
-      t.style.setProperty('--ry', (e.clientY - r.top) + 'px');
-    }
-    window.setRipple = setRipple;
-  </script>
-
-  <div class="grain" aria-hidden="true"></div>
-</body>
-</html>
+          <p>Задерживает коллоиды и бактерии, улучшая прозрач
