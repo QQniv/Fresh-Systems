@@ -16,7 +16,6 @@ on:
         required: false
         default: "main"
 
-# ВАЖНО: даём Action права на запись и создание PR
 permissions:
   contents: write
   pull-requests: write
@@ -24,15 +23,19 @@ permissions:
 jobs:
   apply:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout target branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
 
+      # На всякий случай ставим Node (хотя он обычно есть)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Save payload.json
-        shell: bash
         run: |
           cat > payload.json <<'EOF'
           ${{ github.event.inputs.files_json }}
@@ -40,15 +43,15 @@ jobs:
           echo "Payload length: $(wc -c < payload.json) bytes"
 
       - name: Decode base64 files from payload.json
-        shell: node
         run: |
+          node - <<'NODE'
           const fs = require('fs');
           const path = require('path');
           const raw = fs.readFileSync('payload.json','utf8').trim();
-          if (!raw) { throw new Error('payload.json пуст'); }
+          if (!raw) { console.error('payload.json пуст'); process.exit(1); }
           let data;
           try { data = JSON.parse(raw); }
-          catch(e){ throw new Error('Неверный JSON: '+e.message); }
+          catch(e){ console.error('Неверный JSON:', e.message); process.exit(1); }
           const keys = Object.keys(data||{});
           if (!keys.length) { console.log('Нет файлов для применения'); process.exit(0); }
           for (const p of keys) {
@@ -58,10 +61,10 @@ jobs:
             fs.writeFileSync(p, Buffer.from(b64, 'base64'));
             console.log('Wrote', p);
           }
+          NODE
 
-      - name: Git commit
+      - name: Commit
         id: commit
-        shell: bash
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -77,7 +80,6 @@ jobs:
       - name: Push directly
         id: push
         if: steps.commit.outputs.changed == 'true'
-        shell: bash
         run: |
           set +e
           git push origin HEAD:${{ github.event.inputs.branch }}
