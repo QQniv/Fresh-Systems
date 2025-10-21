@@ -1,51 +1,32 @@
 :root{
   --bg:#0b1020; --fg:#fff; --muted:#cbd5e1;
   --border:#1f2a44; --accent:#38bdf8;
+  --reveal-distance:48px;         /* было 56 → плавнее */
+  --reveal-duration:1000ms;       /* было 800ms → плавнее */
   color-scheme:dark;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
-  color:var(--fg);
-  font-family:-apple-system,Inter,Roboto,Segoe UI,Arial;
-  overflow-x:hidden;
-}
+body{color:var(--fg);font-family:-apple-system,Inter,Roboto,Segoe UI,Arial;overflow-x:hidden}
 
 /* ссылки без подчёркиваний */
-a{color:var(--fg); text-decoration:none}
+a{color:var(--fg);text-decoration:none}
 a:hover{opacity:.92}
 
 /* Фон: видео или статичный fallback */
-.bg-video{
-  position:fixed; inset:0; width:100%; height:100%;
-  object-fit:cover; z-index:-2;
+.bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
   filter:brightness(.55) contrast(1.1) saturate(1.2);
-  animation:slowmove 60s linear infinite alternate;
-}
+  animation:slowmove 60s linear infinite alternate}
 body.no-video .bg-video{display:none}
-body.no-video{
-  background-image:linear-gradient(180deg, rgba(11,16,32,.4), rgba(11,16,32,.9)), url('images/hero-water.jpg');
-  background-size:cover; background-position:center; background-attachment:fixed;
-}
-@keyframes slowmove{
-  0%{transform:scale(1) translateY(0)}
-  50%{transform:scale(1.05) translateY(-2%)}
-  100%{transform:scale(1) translateY(1%)}
-}
-.overlay{
-  position:fixed; inset:0; z-index:-1;
-  background:linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.5));
-}
+body.no-video{background-image:linear-gradient(180deg,rgba(11,16,32,.4),rgba(11,16,32,.9)),url('images/hero-water.jpg');
+  background-size:cover;background-position:center;background-attachment:fixed}
+@keyframes slowmove{0%{transform:scale(1)}50%{transform:scale(1.05) translateY(-2%)}100%{transform:scale(1) translateY(1%)}}
+.overlay{position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.36),rgba(0,0,0,.5))}
 
 /* Шапка */
-.site-header{
-  position:sticky; top:0; z-index:10;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 28px;
-  background:rgba(11,16,32,.5); backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(56,189,248,.15);
-}
+.site-header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;background:rgba(11,16,32,.5);backdrop-filter:blur(10px);border-bottom:1px solid rgba(56,189,248,.15)}
 .brand{font-weight:900;font-size:22px;letter-spacing:.06em;color:#fff}
 .top-nav{display:flex;gap:22px;flex-wrap:wrap}
 .top-nav a{padding:6px 8px;border-radius:6px}
@@ -53,41 +34,24 @@ body.no-video{
 
 /* Контейнеры/секции */
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
-.section{padding:84px 0; position:relative; text-align:center; will-change:transform}
-.section.dark{background:rgba(0,0,0,.35); backdrop-filter:blur(6px)}
-.section h2{
-  font-size:clamp(28px,4vw,46px); font-weight:800; margin-bottom:12px;
-  text-shadow:0 0 10px rgba(56,189,248,.12);
-}
-.section p{color:var(--muted); font-size:18px; line-height:1.6; max-width:820px; margin:0 auto 16px}
-.section-narrow{max-width:820px; margin:0 auto}
+.section{padding:84px 0;position:relative;text-align:center;will-change:transform}
+.section.dark{background:rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+.section h2{font-size:clamp(28px,4vw,46px);font-weight:800;margin-bottom:12px;text-shadow:0 0 10px rgba(56,189,248,.12)}
+.section p{color:var(--muted);font-size:18px;line-height:1.6;max-width:820px;margin:0 auto 16px}
+.section-narrow{max-width:820px;margin:0 auto}
 .center{text-align:center}
 
 /* «Стеклянные» карточки и сетки */
 .card-section{background:rgba(0,0,0,.22)}
 .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:900px;margin:0 auto}
-.card.glass{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:18px 18px 16px;
-  text-align:left;
-  backdrop-filter:blur(8px);
-}
+.card.glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px 18px 16px;text-align:left;backdrop-filter:blur(8px)}
 .card h3{font-size:22px;margin-bottom:6px}
 .card p{margin:0;color:#dbe9f6}
 
 /* Плейсхолдер/фото новостройки */
-.about-photo-placeholder,
-.about-photo{
-  margin-top:14px; height:180px; border-radius:14px;
-  display:flex; align-items:center; justify-content:center;
-}
-.about-photo-placeholder{
-  border:1px dashed rgba(255,255,255,.2); color:#9fb7c6; font-size:14px;
-  background:rgba(255,255,255,.04);
-}
-.about-photo{object-fit:cover; width:100%}
+.about-photo-placeholder,.about-photo{margin-top:14px;height:180px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.about-photo-placeholder{border:1px dashed rgba(255,255,255,.2);color:#9fb7c6;font-size:14px;background:rgba(255,255,255,.04)}
+.about-photo{object-fit:cover;width:100%}
 
 /* Кнопки */
 .btn{padding:12px 22px;border-radius:12px;font-weight:600;border:1px solid var(--border);transition:.3s}
@@ -97,50 +61,94 @@ body.no-video{
 .btn.link{border:none;background:none;color:var(--accent);padding:0}
 .btn.link:hover{opacity:.9}
 
-/* Пилюли для «Наши системы» */
+/* Пилюли */
 .sys-buttons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px}
-.btn.pill{
-  border-radius:999px;
-  padding:10px 18px;
-  background:rgba(56,189,248,.15);
-  border:1px solid rgba(56,189,248,.25);
-}
+.btn.pill{border-radius:999px;padding:10px 18px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.25)}
 .btn.pill:hover{background:rgba(56,189,248,.25)}
 
 /* HERO */
 .hero{min-height:75vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:64px 20px;will-change:transform}
 .hero-inner{max-width:920px;margin:auto}
 .hero-title{margin-bottom:18px;will-change:transform}
-.hero-title .shine{
-  font-size:clamp(38px,6vw,84px); font-weight:900; line-height:1.12;
-  background:linear-gradient(90deg,#ffffff,#a5e9ff 40%,#ffffff 80%);
-  -webkit-background-clip:text; background-clip:text; color:transparent; position:relative;
-}
-.hero-title .shine::after{
-  content:''; position:absolute; inset:-4px -6px;
-  background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.22) 50%, transparent 60%);
-  mix-blend-mode:screen; filter:blur(6px); opacity:.7;
-  animation:gloss 6.5s ease-in-out infinite; pointer-events:none;
-}
-@keyframes gloss{ 0%{transform:translateX(-30%)} 50%{transform:translateX(30%)} 100%{transform:translateX(-30%)} }
+.hero-title .shine{font-size:clamp(38px,6vw,84px);font-weight:900;line-height:1.12;
+  background:linear-gradient(90deg,#fff,#a5e9ff 40%,#fff 80%);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative}
+.hero-title .shine::after{content:"";position:absolute;inset:-4px -6px;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.22) 50%,transparent 60%);
+  mix-blend-mode:screen;filter:blur(6px);opacity:.7;animation:gloss 6.5s ease-in-out infinite;pointer-events:none}
+@keyframes gloss{0%{transform:translateX(-30%)}50%{transform:translateX(30%)}100%{transform:translateX(-30%)}}
 .hero-sub{font-size:20px;color:var(--muted);margin:0 auto 28px;line-height:1.5;max-width:820px;will-change:transform}
 .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;will-change:transform}
 
-/* Reveal-анимация (повторяется) */
-.fadein{opacity:0; transform:translateY(56px); transition:opacity 800ms ease, transform 800ms ease}
-.fadein.show{opacity:1; transform:none}
+/* Reveal-анимация — плавнее и повторяемая */
+.fadein{opacity:0;transform:translateY(var(--reveal-distance));transition:opacity var(--reveal-duration) ease-out,transform var(--reveal-duration) ease-out}
+.fadein.show{opacity:1;transform:none}
 
-/* Адаптив */
+/* ТЕХНОЛОГИИ — блок-схема */
+.tech-hero{min-height:46vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
+.flow{max-width:1100px;margin:0 auto;padding:0 24px}
+.flow-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.flow-item{
+  position:relative;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:12px 12px 10px;
+  text-align:left;
+  backdrop-filter:blur(8px);
+}
+.flow-item .tag{display:inline-block;font-weight:800;background:rgba(56,189,248,.18);border:1px solid rgba(56,189,248,.35);
+  padding:4px 8px;border-radius:999px;font-size:12px;margin-bottom:6px}
+.flow-item h4{font-size:16px;margin-bottom:4px}
+.flow-item p{font-size:14px;color:#dbe9f6;margin:0}
+.flow-arrow{
+  position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;border-right:2px solid #7dd3fc;border-top:2px solid #7dd3fc;rotate:45deg;opacity:.8
+}
+.flow-colspan-2{grid-column:span 2}
+.flow-note{font-size:12px;color:#a9c6d7;margin-top:4px}
+.flow-drain{border-style:dashed}
+
+/* Аккордеон «Подробности» */
+.details{max-width:900px;margin:28px auto 0;padding:0 24px}
+details{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:12px 16px;
+  margin:10px 0;
+  backdrop-filter:blur(8px);
+}
+summary{cursor:pointer;font-weight:700;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{margin-top:8px;color:#dbe9f6}
+details[open]{animation:reveal var(--reveal-duration) ease-out}
+
+/* Футер */
+.site-footer{padding:26px 0;border-top:1px solid rgba(255,255,255,.1);text-align:center;background:rgba(0,0,0,.28);backdrop-filter:blur(6px)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:auto;padding:0 24px}
+.minor{color:#94a3b8;font-size:14px}
+
+/* Адаптив + мягче на телефоне */
+@media (max-width:1024px){
+  .flow-grid{grid-template-columns:repeat(3,1fr)}
+}
 @media (max-width:860px){
   .top-nav{display:none}
   .hero-sub{font-size:18px}
   .grid-2{grid-template-columns:1fr}
   .card.glass{text-align:center}
+  .flow-grid{grid-template-columns:1fr;gap:12px}
+  .flow-item{padding:14px}
+  .flow-arrow{display:none}
+  :root{ --reveal-distance:36px; --reveal-duration:1100ms; } /* ещё мягче */
 }
-
-/* Reduce Motion — отключаем движения */
+/* Reduce Motion — отключаем движения/анимации */
 @media (prefers-reduced-motion:reduce){
   .bg-video{animation:none}
   .hero-title .shine::after{animation:none}
   .fadein{transition:none}
 }
+@keyframes reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
