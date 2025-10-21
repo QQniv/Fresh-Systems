@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="color-scheme" content="dark" />
-  <!-- Шрифты (можно оставить как есть) -->
+
+  <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap&subset=cyrillic" rel="stylesheet">
-  <!-- Прелоады -->
+
+  <!-- Preload фоновых ассетов -->
   <link rel="preload" as="image" href="images/hero-water.jpg" />
-  <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
+  <link rel="preload" as="video"  href="images/water-bg.mp4" type="video/mp4" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="no-video">
 
-  <!-- Фон -->
+  <!-- Фон: видео + оверлей -->
   <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
   </video>
@@ -32,12 +35,12 @@
       <a href="contacts.html">Контакты</a>
     </nav>
 
-    <!-- бургер -->
+    <!-- Бургер (моб.) -->
     <button class="menu-toggle" id="menuBtn" aria-label="Меню" aria-expanded="false"><span></span></button>
   </header>
 
-  <!-- мобильный дровер -->
-  <nav class="mobile-drawer" id="drawer" aria-label="Мобильное меню">
+  <!-- Мобильное меню: скрыто по умолчанию -->
+  <nav class="mobile-drawer" id="drawer" hidden aria-label="Мобильное меню">
     <a href="technologies.html">Технологии</a>
     <a href="sanpin.html">СанПиН</a>
     <a href="taste.html">Почему вода вкусная</a>
@@ -60,7 +63,7 @@
     </div>
   </section>
 
-  <!-- Остальная главная (как в твоей текущей сборке) -->
+  <!-- КТО МЫ ТАКИЕ -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
@@ -71,7 +74,7 @@
 
       <div class="row">
         <div class="col-8 fadein">
-          <!-- добавь about-moscow.jpg в /images -->
+          <!-- положи в /images файл about-moscow.jpg -->
           <img src="images/about-moscow.jpg" alt="Современная новостройка Москвы" class="about-photo">
         </div>
         <div class="col-4 fadein">
@@ -84,7 +87,7 @@
     </div>
   </section>
 
-  <!-- примеры систем/доверие/контакты – оставляю как в предыдущей версии -->
+  <!-- НАШИ СИСТЕМЫ -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
@@ -93,13 +96,29 @@
         <p class="sub">Многоквартирные дома, частные дома и квартиры — подбираем по анализу воды.</p>
       </div>
       <div class="row">
-        <div class="col-4 fadein"><a class="glass" href="services.html#multi"><h3>Многоквартирные дома</h3><p>Центральные станции, резервуары, подача на стояки.</p></a></div>
-        <div class="col-4 fadein"><a class="glass" href="services.html#private"><h3>Частные дома</h3><p>Компактные станции с минерализацией и УФ.</p></a></div>
-        <div class="col-4 fadein"><a class="glass" href="services.html#apartment"><h3>Квартиры</h3><p>Индивидуальные решения под кухню и фонтаны.</p></a></div>
+        <div class="col-4 fadein">
+          <a class="glass" href="services.html#multi">
+            <h3>Многоквартирные дома</h3>
+            <p>Центральные станции, резервуары, подача на стояки.</p>
+          </a>
+        </div>
+        <div class="col-4 fadein">
+          <a class="glass" href="services.html#private">
+            <h3>Частные дома</h3>
+            <p>Компактные станции с минерализацией и УФ.</p>
+          </a>
+        </div>
+        <div class="col-4 fadein">
+          <a class="glass" href="services.html#apartment">
+            <h3>Квартиры</h3>
+            <p>Индивидуальные решения под кухню и фонтаны.</p>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ПОЧЕМУ НАМ ДОВЕРЯЮТ -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
@@ -108,12 +127,23 @@
         <p class="sub">Технологии проектируем сами, качество подтверждаем лабораторно — соответствует СанПиН.</p>
       </div>
       <div class="row">
-        <div class="col-6 fadein"><div class="glass"><h3>Инженерная экспертиза</h3><p>Гидравлика, санитарные разрывы, правильные дренажи — всё по правилам.</p></div></div>
-        <div class="col-6 fadein"><div class="glass"><h3>Лабораторные протоколы</h3><p>По протоколам — вода чище некоторых бутилированных брендов.</p></div></div>
+        <div class="col-6 fadein">
+          <div class="glass">
+            <h3>Инженерная экспертиза</h3>
+            <p>Гидравлика, санитарные разрывы, правильные дренажи — всё по правилам.</p>
+          </div>
+        </div>
+        <div class="col-6 fadein">
+          <div class="glass">
+            <h3>Лабораторные протоколы</h3>
+            <p>По протоколам — вода чище некоторых бутилированных брендов.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- КОНТАКТЫ/CTA -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
@@ -128,6 +158,7 @@
     </div>
   </section>
 
+  <!-- Футер -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
@@ -135,45 +166,50 @@
     </div>
   </footer>
 
-  <!-- JS: video fallback + mobile menu + reveals + parallax -->
+  <!-- JS: видео/меню/анимации/параллакс -->
   <script>
-    // 1) Видео-фон: на мобиле используем статичное изображение
+    // 1) Мобильный фон — статичная картинка (резче, без «пикселей»)
     (function(){
       const isMobile = matchMedia('(max-width: 768px)').matches;
       const v = document.getElementById('bgVideo');
       if(!v) return;
-      const ready = ()=>{ document.body.classList.remove('no-video'); v.play?.().catch(()=>{}); };
+      const ok = ()=>{ document.body.classList.remove('no-video'); v.play?.().catch(()=>{}); };
 
       if(isMobile){
-        // Статичное фото вместо видео для резкости
-        document.body.classList.add('mobile-bg');
+        document.body.classList.add('mobile-bg');  // см. CSS
         v.pause?.(); v.removeAttribute('src'); v.load();
       }else{
-        v.addEventListener('loadeddata', ready, {once:true});
-        v.addEventListener('canplay', ready, {once:true});
-        setTimeout(()=>{ if(v.readyState>=2) ready(); }, 1800);
+        v.addEventListener('loadeddata', ok, {once:true});
+        v.addEventListener('canplay', ok, {once:true});
+        setTimeout(()=>{ if(v.readyState>=2) ok(); }, 1800);
       }
     })();
 
-    // 2) Мобильное меню (бургер)
+    // 2) Бургер: click + touchstart, атрибут hidden
     (function(){
       const btn = document.getElementById('menuBtn');
       const drawer = document.getElementById('drawer');
       if(!btn || !drawer) return;
-      btn.addEventListener('click', ()=>{
-        const open = drawer.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+      const toggle = (open) => {
+        if(open === undefined) open = !drawer.classList.contains('open');
+        drawer.classList.toggle('open', open);
+        drawer.hidden = !open;                       // защита от «вылезшего текста»
+        btn.setAttribute('aria-expanded', String(open));
         document.body.classList.toggle('mobile-menu-open', open);
-      });
-      // Закрытие по клику вне
-      document.addEventListener('click', (e)=>{
+      };
+
+      const openClose = (e)=>{ e.preventDefault(); toggle(); };
+      btn.addEventListener('click',      openClose, {passive:false});
+      btn.addEventListener('touchstart', openClose, {passive:false});
+
+      // закрыть по клику/тапу вне меню
+      const outside = (e)=>{
         if(!drawer.classList.contains('open')) return;
-        if(!drawer.contains(e.target) && !btn.contains(e.target)){
-          drawer.classList.remove('open');
-          btn.setAttribute('aria-expanded','false');
-          document.body.classList.remove('mobile-menu-open');
-        }
-      });
+        if(!drawer.contains(e.target) && !btn.contains(e.target)) toggle(false);
+      };
+      document.addEventListener('click', outside);
+      document.addEventListener('touchstart', outside, {passive:true});
     })();
 
     // 3) Плавные появления
