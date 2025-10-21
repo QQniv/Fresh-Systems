@@ -4,188 +4,103 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Технологии — Fresh Systems</title>
-<meta name="color-scheme" content="dark" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap&subset=cyrillic" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
-<link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4">
-<link rel="preload" as="image" href="images/hero-water.jpg">
-
 <style>
-/* ——— ЛОКАЛЬНЫЕ АКЦЕНТЫ СТРАНИЦЫ ——— */
 :root{
-  --glass: rgba(160,230,255,.20);
-  --panel-bg: rgba(255,255,255,.055);
-  --panel-br: rgba(255,255,255,.10);
-  --cyan:#7dd3fc;
+  --panel-bg: rgba(255,255,255,.06);
+  --panel-br: rgba(255,255,255,.12);
+  --cyan: #7dd3fc;
 }
+body{overflow-x:hidden}
 
-/* фон-видео наследуется из styles.css; для мобильных — постер */
-body.no-video .bg-video{display:none}
-
-/* фиксированная труба: всегда на экране */
-.pipe-overlay{
-  position:fixed; inset:0; z-index:1; pointer-events:none;
-  /* чуть над водным видео и под контентом */
-}
+/* ===== Фиксированная труба поверх фона ===== */
+.pipe-overlay{position:fixed; inset:0; z-index:1; pointer-events:none}
 .overlay-svg{width:100%; height:100%; display:block}
 
 /* стеклянная труба */
-#olPath{
-  stroke: rgba(220,245,255,.18); stroke-width:24; fill:none;
-  stroke-linecap:round; stroke-linejoin:round;
-  filter: drop-shadow(0 0 12px rgba(125,211,252,.28));
-}
-#olCore{
-  stroke: url(#coreGrad); stroke-width:13; fill:none;
-  stroke-linecap:round; stroke-linejoin:round;
-  filter: blur(.2px) drop-shadow(0 0 10px rgba(125,211,252,.45));
-}
+#pipeOuter{stroke:rgba(210,240,255,.18); stroke-width:26; fill:none; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(125,211,252,.25))}
+#pipeCore {stroke:url(#coreGrad); stroke-width:15;  fill:none; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(125,211,252,.45))}
 
-/* капля */
-#olDrop{ filter: drop-shadow(0 0 10px rgba(116,210,255,.9)); }
-#olDrop .body{
-  fill:url(#dropGrad); stroke:#e6fbff; stroke-width:.8;
-}
+/* модули (фильтры) */
+.module rect{fill:rgba(12,18,32,.78); stroke:rgba(140,200,255,.38); stroke-width:1.2; rx:10; ry:10}
+.module line{stroke:rgba(140,200,255,.88); stroke-width:2}
 
-/* контентный слой поверх трубы */
-.pipe-page{ position:relative; z-index:2; padding-top:56px }
-.container-narrow{ max-width:1100px; margin:0 auto; padding:0 18px }
+/* капля: размер гарантированно меньше внутреннего диаметра */
+#drop{filter: drop-shadow(0 0 10px rgba(116,210,255,.85))}
+#drop .b{fill:url(#dropGrad); stroke:#e6fbff; stroke-width:.8}
 
-/* сетка: слева мини-карта, справа панельки-узлы */
-.pipe-grid{ display:grid; grid-template-columns: 250px 1fr; gap:22px }
-@media (max-width:1024px){ .pipe-grid{ grid-template-columns:1fr } }
+/* ===== Контент ===== */
+.pipe-page{position:relative; z-index:2; padding-top:64px}
+.container{max-width:1160px; margin:0 auto; padding:0 18px}
+.grid{display:grid; grid-template-columns:280px 1fr; gap:22px}
+@media (max-width:1024px){.grid{grid-template-columns:1fr}}
 
-/* мини-карта */
-.toc{
-  position:sticky; top:88px; align-self:flex-start;
-  background:var(--panel-bg); border:1px solid var(--panel-br);
-  border-radius:14px; padding:12px; backdrop-filter: blur(8px);
-}
-.toc h3{ margin:4px 0 8px; font-size:13px; color:#a9defc; letter-spacing:.08em; text-transform:uppercase }
-.toc a{ display:flex; gap:8px; align-items:center; padding:8px 10px; border-radius:10px; color:#e6f3ff; font-weight:600; text-decoration:none }
-.toc a .dot{ width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan) }
-.toc a.active{ background:rgba(56,189,248,.14) }
-.toc .hint{ margin-top:6px; color:#97a6b8; font-size:12px }
+.toc{position:sticky; top:86px; align-self:flex-start; background:var(--panel-bg); border:1px solid var(--panel-br); border-radius:14px; padding:12px; backdrop-filter: blur(8px)}
+.toc h3{margin:4px 0 8px; font-size:13px; color:#a9defc; letter-spacing:.08em; text-transform:uppercase}
+.toc a{display:flex; gap:8px; align-items:center; padding:8px 10px; border-radius:10px; color:#e6f3ff; font-weight:600; text-decoration:none}
+.toc a .dot{width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan)}
+.toc a.active{background:rgba(56,189,248,.14)}
 
-/* моб. шторка списка стадий */
-.toc-toggle{ display:none }
-@media (max-width:1024px){ .toc{display:none} .toc-toggle{display:inline-flex;margin-top:10px} }
-.toc-sheet{
-  position:fixed; left:16px; right:16px; bottom:16px; max-height:60vh; overflow:auto;
-  background:rgba(11,16,32,.96); border:1px solid var(--panel-br); border-radius:16px; padding:12px;
-  display:none; z-index:50; backdrop-filter: blur(8px);
-}
-.toc-sheet.open{ display:block }
+.node{min-height:100vh; display:flex; align-items:center}
+.node-inner{max-width:620px; background:var(--panel-bg); border:1px solid var(--panel-br); border-radius:16px; padding:14px; backdrop-filter: blur(8px); box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.tag{display:inline-flex; align-items:center; gap:8px; background:rgba(56,189,248,.14); color:#cfefff; border:1px solid rgba(56,189,248,.28); padding:4px 10px; border-radius:999px; font-weight:700; letter-spacing:.03em; margin-bottom:6px}
+.node h3{margin:4px 0 6px; font-size:20px}
+.node p{margin:0; color:#dbe9f6; font-size:15px; line-height:1.55}
+details{margin-top:8px}
+summary{cursor:pointer; list-style:none; color:#cfe9f8; font-weight:600}
+summary::marker, summary::-webkit-details-marker{display:none}
 
-/* панели-узлы */
-.node{ margin:90vh 0 } /* крупные секции: каждая «проламывается» трубой */
-.node-inner{
-  max-width:620px;
-  background:var(--panel-bg); border:1px solid var(--panel-br);
-  border-radius:16px; padding:14px; backdrop-filter: blur(8px);
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-.node .tag{
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(56,189,248,.14); color:#cfefff; border:1px solid rgba(56,189,248,.28);
-  padding:4px 10px; border-radius:999px; font-weight:700; letter-spacing:.03em; margin-bottom:6px;
-}
-.node h3{ margin:4px 0 6px; font-size:20px }
-.node p{ margin:0; color:#dbe9f6; font-size:15px; line-height:1.55 }
-.node details{ margin-top:8px }
-.node summary{ cursor:pointer; list-style:none; color:#cfe9f8; font-weight:600 }
-.node summary::marker, .node summary::-webkit-details-marker{ display:none }
-.node .tech{
-  margin-top:8px; border:1px dashed rgba(125,211,252,.35);
-  border-radius:12px; padding:10px 12px; color:#d7e7f4; font-size:14px;
-  background:rgba(125,211,252,.06);
-}
-
-/* 3D-иллюстрации (лёгкие «шаржи») */
-.illus{ height:70px; margin-bottom:8px; display:flex; align-items:center; gap:10px }
-.cyl{
-  width:68px; height:40px; border-radius:28px/16px;
-  background: linear-gradient(180deg,#dfe5ea,#a8b5c5 60%,#7f8ca0);
-  box-shadow: inset 0 2px 8px rgba(0,0,0,.25), 0 6px 14px rgba(0,0,0,.25);
-}
-.pump{
-  width:62px; height:38px; border-radius:8px;
-  background: linear-gradient(180deg,#b7c7d8,#7f8ea5);
-  box-shadow: inset 0 2px 8px rgba(0,0,0,.25), 0 6px 14px rgba(0,0,0,.25);
-  position:relative;
-}
-.pump::after{
-  content:""; position:absolute; right:-14px; top:8px; width:14px; height:20px; border-radius:6px;
-  background: linear-gradient(180deg,#e2edf6,#94a7bc);
-}
-
-/* финальный стакан — остаётся внутри последней секции */
-.glass{
-  width:56px;height:78px;border-radius:8px;margin:12px 0 0;
-  border:2px solid rgba(200,230,255,.7);
-  background:linear-gradient(180deg,rgba(160,230,255,.10),rgba(160,230,255,.16));
-  position:relative; overflow:hidden;
-}
-.fill{ position:absolute; left:0; right:0; bottom:0; height:0%;
-  background:linear-gradient(180deg,rgba(116,210,255,.5),rgba(116,210,255,.9)); transition:height .6s ease }
-.taste{
-  position:absolute; inset:-30px; border-radius:16px; pointer-events:none; opacity:0;
-  background:radial-gradient(60px 30px at 50% 60%, rgba(124,249,210,.35), rgba(117,210,255,.00) 60%),
-             radial-gradient(40px 24px at 30% 50%, rgba(181,255,122,.30), rgba(117,210,255,.00) 60%),
-             radial-gradient(40px 24px at 70% 40%, rgba(181,255,122,.20), rgba(117,210,255,.00) 60%);
-  filter: blur(10px); transition: opacity .8s ease;
-}
-
-/* плавные появления */
 .reveal{opacity:0; transform:translateY(18px); transition:.5s ease}
 .reveal.show{opacity:1; transform:none}
 
-/* линк без подчеркивания */
-a{text-decoration:none}
+/* стакан */
+.glass{width:58px; height:82px; border-radius:8px; border:2px solid rgba(200,230,255,.7); background:linear-gradient(180deg,rgba(160,230,255,.08),rgba(160,230,255,.14)); position:relative; overflow:hidden; margin-top:10px}
+.fill{position:absolute; left:0; right:0; bottom:0; height:0%; background:linear-gradient(180deg,rgba(116,210,255,.5),rgba(116,210,255,.9)); transition:height .6s ease}
+.taste{position:absolute; inset:-26px; border-radius:16px; pointer-events:none; opacity:0; background:
+  radial-gradient(60px 30px at 50% 60%, rgba(124,249,210,.35), rgba(117,210,255,0) 60%),
+  radial-gradient(40px 24px at 30% 50%, rgba(181,255,122,.30), rgba(117,210,255,0) 60%),
+  radial-gradient(40px 24px at 70% 40%, rgba(181,255,122,.20), rgba(117,210,255,0) 60%);
+  filter: blur(10px); transition: opacity .8s ease}
 </style>
 </head>
-<body class="no-video">
+<body>
 
 <!-- фон как на главной -->
-<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
+<video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
   <source src="images/water-bg.mp4" type="video/mp4" />
 </video>
 <div class="overlay"></div>
 
-<!-- фиксированная труба + капля -->
+<!-- ===== ФИКС. ТРУБА + МОДУЛИ + КАПЛЯ (с маской трубы) ===== -->
 <div class="pipe-overlay" aria-hidden="true">
-  <svg class="overlay-svg" id="ol" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <svg class="overlay-svg" id="pipeSvg" viewBox="0 0 1200 800" preserveAspectRatio="none">
     <defs>
       <linearGradient id="coreGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="rgba(220,255,255,.95)"/>
+        <stop offset="0%" stop-color="rgba(230,255,255,.95)"/>
         <stop offset="70%" stop-color="rgba(116,210,255,.65)"/>
         <stop offset="100%" stop-color="rgba(116,210,255,.40)"/>
       </linearGradient>
       <radialGradient id="dropGrad" cx="50%" cy="35%" r="70%">
         <stop offset="0%" stop-color="#ffffff"/>
-        <stop offset="60%" stop-color="#cfffff"/>
+        <stop offset="60%" stop-color="#eaffff"/>
         <stop offset="100%" stop-color="#7dd3fc"/>
       </radialGradient>
+      <!-- Маска внутреннего канала: капля НЕ выйдет за трубу -->
+      <mask id="pipeMask">
+        <rect x="0" y="0" width="1200" height="800" fill="black"/>
+        <path id="maskCore" d="" stroke="white" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </mask>
     </defs>
 
-    <!-- Зигзаг в пределах 1 экрана (труба фиксирована) -->
-    <path id="olPath" d="
-      M 120 120
-      C 420 120, 780 140, 1080 220
-      S 780 380, 420 460
-      S 120 620, 540 700
-    "/>
-    <path id="olCore" d="
-      M 120 120
-      C 420 120, 780 140, 1080 220
-      S 780 380, 420 460
-      S 120 620, 540 700
-    "/>
+    <path id="pipeOuter" d=""/>
+    <path id="pipeCore"  d=""/>
+    <g id="modules"></g>
 
-    <!-- Светящаяся капля (двигаем по пути скроллом) -->
-    <g id="olDrop" transform="translate(120,120)">
-      <ellipse class="body" cx="0" cy="0" rx="11" ry="15"/>
-      <circle cx="2" cy="-6" r="3" fill="#fff" opacity=".85"/>
+    <!-- капля под маской -->
+    <g id="drop" mask="url(#pipeMask)" transform="translate(0,0)">
+      <ellipse class="b" cx="0" cy="0" rx="10" ry="14"/>
+      <circle cx="2" cy="-5" r="3" fill="#fff" opacity=".85"/>
     </g>
   </svg>
 </div>
@@ -210,26 +125,16 @@ a{text-decoration:none}
 </nav>
 
 <section class="pipe-page">
-  <div class="container-narrow">
+  <div class="container">
     <h1 class="h1">Путь воды: от ХВС до стакана</h1>
-    <p class="sub">Капля двигается по «стеклянной трубе» синхронно со скроллом. Узлы — справа, с кратким описанием и «Подробнее».</p>
-    <button class="btn ghost toc-toggle" id="tocBtn">Список стадий</button>
+    <p class="sub">Труба изгибается на 90° у краёв экрана. Капля движется строго внутри трубы и проходит каждый узел.</p>
   </div>
 
-  <div class="container-narrow pipe-grid">
-    <!-- мини-карта -->
-    <aside class="toc" id="tocDesk">
+  <div class="container grid">
+    <aside class="toc" id="toc">
       <h3>Стадии</h3>
       <nav id="tocNav"></nav>
-      <div class="hint">Подсветка следует за каплей</div>
     </aside>
-
-    <!-- шторка для мобилы -->
-    <div class="toc-sheet" id="tocSheet">
-      <div class="toc" style="position:static"><h3>Стадии</h3><nav id="tocNavMobile"></nav></div>
-    </div>
-
-    <!-- узлы (контент) -->
     <div id="nodes"></div>
   </div>
 </section>
@@ -242,141 +147,200 @@ a{text-decoration:none}
 </footer>
 
 <script>
-/* — фон-видео бережно для мобилы — */
-(function(){
-  const isMobile = matchMedia('(max-width: 768px)').matches;
-  const v = document.getElementById('bgVideo');
-  if(!v) return;
-  const ok=()=>{ document.body.classList.remove('no-video'); v.play?.().catch(()=>{}); };
-  if(isMobile){
-    document.body.classList.add('mobile-bg');
-    v.pause?.(); v.removeAttribute('src'); v.load();
-  }else{
-    v.addEventListener('loadeddata', ok, {once:true});
-    v.addEventListener('canplay', ok, {once:true});
-    setTimeout(()=>{ if(v.readyState>=2) ok(); }, 1500);
-  }
-})();
-
-/* — мобильное меню (клик + тач) — */
-(function(){
-  const btn = document.getElementById('menuBtn');
-  const drawer = document.getElementById('drawer');
-  if(!btn || !drawer) return;
-  const toggle=(open)=>{
-    if(open===undefined) open=!drawer.classList.contains('open');
-    drawer.classList.toggle('open', open);
-    drawer.hidden=!open;
-    btn.setAttribute('aria-expanded', String(open));
-    document.body.classList.toggle('mobile-menu-open', open);
-  };
-  const h=(e)=>{ e.preventDefault(); toggle(); };
-  btn.addEventListener('click',h,{passive:false});
-  btn.addEventListener('touchstart',h,{passive:false});
-  const closeOutside=(e)=>{
-    if(!drawer.classList.contains('open')) return;
-    if(!drawer.contains(e.target) && !btn.contains(e.target)) toggle(false);
-  };
-  document.addEventListener('click',closeOutside);
-  document.addEventListener('touchstart',closeOutside,{passive:true});
-})();
-
-/* — конфиг стадий — */
+/* ——— Узлы ——— */
 const NODES = [
-  { id:'hvs',  tag:'ХВС',  title:'Ввод ХВС', text:'Исходная вода на входе.', tech:['Питьевые материалы труб','Байпас/отсечки'] },
-  { id:'k1',   tag:'K1',   title:'Отсечной кран', text:'Безопасное отключение узла.', tech:['Полнооткрытый проход'] },
-  { id:'ok',   tag:'OK',   title:'Обратный клапан', text:'Предотвращает обратный поток.', tech:['Подбор по расходу и ΔP'] },
-  { id:'f1',   tag:'F1',   title:'Грубая очистка 100 μm', text:'Песок, окалина, ржавчина.', tech:['Промывки по регламенту'], drain:true },
-  { id:'f2',   tag:'F2',   title:'Тонкая очистка 5 μm', text:'Базовая ступень PP melt-blown.', tech:['Замена по ΔP/сроку'] },
-  { id:'f3',   tag:'F3',   title:'Угольный фильтр', text:'Адсорбция органики, запахов.', tech:['Для загрузочного — промывки'], drain:true },
-  { id:'hd',   tag:'HD',   title:'Насос высокого давления', text:'Создаёт напор для NF.', tech:['Увязка расход/напор','Шумо/виброизоляция'], type:'pump' },
-  { id:'as',   tag:'AS',   title:'Дозирование антисиланта (опц.)', text:'Защита мембран от отложений.', tech:['Доза по анализу воды'], optional:true },
-  { id:'nf',   tag:'NF',   title:'Нанофильтрация', text:'Пермеат → далее; Концентрат → дренаж.', tech:['Контроль проводимости','Воздушный зазор на сливе'], drain:true },
-  { id:'min',  tag:'MIN',  title:'Минерализатор Ca/Mg', text:'Настройка вкуса и TDS.', tech:['Контроль загрузки; целевой TDS'] },
-  { id:'uv',   tag:'UV',   title:'УФ-обеззараживание', text:'Финишная биобезопасность.', tech:['Замена лампы; чистка кварца'] },
-  { id:'tank', tag:'БАК',  title:'Бак чистой воды', text:'Резерв и сглаживание пиков.', tech:['Объём по пикам и времени восстановления'] },
-  { id:'pump', tag:'PUMP', title:'Насос подачи', text:'Подача в питьевые стояки.', tech:['Давление/расход под сеть'] },
-  { id:'tap',  tag:'💧',   title:'Потребитель', text:'Кухни, фонтанчики — чистая вода.', tech:['См. «Почему вода вкусная»'], final:true },
+  { id:'hvs',  tag:'ХВС',  title:'Ввод ХВС', text:'Исходная вода на входе.' },
+  { id:'k1',   tag:'K1',   title:'Отсечной кран', text:'Безопасное отключение узла.' },
+  { id:'ok',   tag:'OK',   title:'Обратный клапан', text:'Предотвращает обратный поток.' },
+  { id:'f1',   tag:'F1',   title:'Грубая очистка 100 μm', text:'Песок, ржавчина, окалина.', drain:true },
+  { id:'f2',   tag:'F2',   title:'Тонкая очистка 5 μm', text:'Базовая ступень PP melt-blown.' },
+  { id:'f3',   tag:'F3',   title:'Угольный фильтр', text:'Адсорбция органики и запахов.', drain:true },
+  { id:'hd',   tag:'HD',   title:'Насос высокого давления', text:'Создаёт напор для NF.' },
+  { id:'as',   tag:'AS',   title:'Антисилант (опц.)', text:'Защита мембран от отложений.', optional:true },
+  { id:'nf',   tag:'NF',   title:'Нанофильтрация', text:'Пермеат → далее; Концентрат → дренаж.', drain:true },
+  { id:'min',  tag:'MIN',  title:'Минерализатор Ca/Mg', text:'Формирует вкус и целевой TDS.' },
+  { id:'uv',   tag:'UV',   title:'УФ-обеззараживание', text:'Финишная биобезопасность.' },
+  { id:'tank', tag:'БАК',  title:'Бак чистой воды', text:'Резерв и сглаживание пиков.' },
+  { id:'pump', tag:'PUMP', title:'Насос подачи', text:'Подача в стояки.' },
+  { id:'tap',  tag:'💧',   title:'Потребитель', text:'Кухни, фонтанчики — чистая вода.', final:true }
 ];
 
-/* — генерация узлов и мини-карты — */
-(function build(){
-  const nodesWrap = document.getElementById('nodes');
+/* ——— Меню для мобилы ——— */
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const d = document.getElementById('drawer');
+  if(!btn||!d) return;
+  const t=(o)=>{ if(o===undefined) o=!d.classList.contains('open');
+    d.classList.toggle('open',o); d.hidden=!o; btn.setAttribute('aria-expanded', String(o));
+    document.body.classList.toggle('mobile-menu-open',o); };
+  const h=e=>{e.preventDefault(); t();};
+  btn.addEventListener('click',h,{passive:false}); btn.addEventListener('touchstart',h,{passive:false});
+  document.addEventListener('click',e=>{ if(!d.classList.contains('open')) return; if(!d.contains(e.target)&&!btn.contains(e.target)) t(false);});
+})();
+
+/* ——— Контент узлов + мини-карта ——— */
+(function buildContent(){
+  const wrap = document.getElementById('nodes');
   const toc = document.getElementById('tocNav');
-  const tocM = document.getElementById('tocNavMobile');
-
-  NODES.forEach((n,idx)=>{
-    const node = document.createElement('section');
-    node.className='node reveal';
-    node.id = 'node-'+n.id;
-
-    const ill = (n.type==='pump')
-      ? '<div class="pump" aria-hidden="true"></div>'
-      : '<div class="cyl" aria-hidden="true"></div>';
-
-    node.innerHTML = `
+  NODES.forEach(n=>{
+    const s=document.createElement('section'); s.className='node reveal'; s.id='node-'+n.id;
+    s.innerHTML=`
       <div class="node-inner">
         <span class="tag">${n.tag}${n.optional?' · опционально':''}</span>
-        <div class="illus">${ill}<h3 style="margin:0 0 0 6px">${n.title}</h3></div>
+        <h3>${n.title}</h3>
         <p>${n.text}</p>
-        ${n.drain?'<p style="color:#9fdfff;margin-top:6px">Ответвление: Дренаж → воронка (возд. зазор) → канализация</p>':''}
+        ${n.drain?'<p style="color:#9fdfff;margin-top:6px">Ответвление: дренаж → воронка (возд. зазор) → канализация</p>':''}
         ${n.final?`
           <div style="display:flex;align-items:flex-end; gap:18px; margin-top:10px">
             <div style="width:70px;height:54px;border-radius:10px;background:linear-gradient(180deg,#dbe6f0,#9fb0c4);box-shadow:inset 0 2px 8px rgba(0,0,0,.25)"></div>
             <div class="glass"><div class="fill" id="fill"></div><div class="taste" id="taste"></div></div>
-          </div>
-        `:''}
+          </div>`:''}
         <details><summary>Подробнее</summary>
-          <div class="tech"><strong>Технически:</strong><ul style="margin:6px 0 0 18px">${n.tech.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+          <p style="margin-top:8px;color:#d7e7f4">Спецификации и сервис зависят от анализа воды и требуемого дебита.</p>
         </details>
       </div>`;
-    nodesWrap.appendChild(node);
-
-    const a = document.createElement('a');
-    a.href = '#node-'+n.id;
-    a.innerHTML = `<span class="dot"></span> ${n.tag} ${n.title}`;
-    toc?.appendChild(a.cloneNode(true));
-    tocM?.appendChild(a);
+    wrap.appendChild(s);
+    const a=document.createElement('a'); a.href='#node-'+n.id; a.innerHTML=`<span class="dot"></span> ${n.tag} ${n.title}`;
+    toc.appendChild(a);
   });
 })();
 
-/* — капля двигается по фиксированному пути в зависимости от прогресса прокрутки документа — */
-(function droplet(){
-  const path = document.getElementById('olPath');
-  const drop = document.getElementById('olDrop');
-  if(!path || !drop) return;
+/* ——— Геометрия трубы: 90° зигзаг + модули, адаптивно ——— */
+(function buildPipe(){
+  const svg   = document.getElementById('pipeSvg');
+  const outer = document.getElementById('pipeOuter');
+  const core  = document.getElementById('pipeCore');
+  const maskC = document.getElementById('maskCore');
+  const modsG = document.getElementById('modules');
 
-  const total = path.getTotalLength();
-  const fill = document.getElementById('fill');
+  function makePath(){
+    const w = svg.clientWidth;
+    const h = svg.clientHeight;
+
+    // Разные поля для десктопа/мобилы
+    const isMobile = matchMedia('(max-width: 768px)').matches;
+    const marginX = isMobile ? Math.max(40, w*0.05) : Math.max(80, w*0.06);
+    const startY  = 120;
+    const bottomPad = 100;
+
+    const left  = marginX;
+    const right = w - marginX;
+
+    // шаг по вертикали зависит от числа узлов и высоты вьюпорта
+    const turns = NODES.length;
+    const usableH = h - startY - bottomPad;
+    const stepY   = Math.max(80, usableH / (turns*0.9));
+
+    // строим вершины «полок»
+    const pts = [];
+    let dirRight = true;
+    let x = left, y = startY;
+    pts.push([x,y]);
+    for(let i=0;i<turns;i++){
+      x = dirRight ? right : left;   // горизонтальный ход до края (90°)
+      pts.push([x,y]);
+      y += stepY;                    // потом вниз
+      pts.push([x,y]);
+      dirRight = !dirRight;
+    }
+
+    const r = 14; // небольшое скругление угла
+    let d = `M ${pts[0][0]} ${pts[0][1]}`;
+    for(let i=1;i<pts.length;i++){
+      const [px,py]=pts[i-1], [cx,cy]=pts[i];
+      if(py===cy){ // горизонталь
+        const sign = cx>px ? 1 : -1;
+        d += ` L ${cx - sign*r} ${cy}`;
+        if(i+1<pts.length) d += ` Q ${cx} ${cy} ${cx} ${cy + r}`; else d += ` L ${cx} ${cy}`;
+      }else{       // вертикаль
+        const sign = cy>py ? 1 : -1;
+        d += ` L ${cx} ${cy - sign*r}`;
+        if(i+1<pts.length){
+          const [nx]=pts[i+1];
+          d += ` Q ${cx} ${cy} ${cx + (nx>cx ? r : -r)} ${cy}`;
+        }else d += ` L ${cx} ${cy}`;
+      }
+    }
+
+    outer.setAttribute('d', d);
+    core.setAttribute('d',  d);
+    maskC.setAttribute('d', d); // маска = внутренний путь
+
+    // ===== модули поверх трубы, поперёк направления =====
+    modsG.innerHTML='';
+    const len = outer.getTotalLength();
+    const modW = 56, modH = 30; // базовые размеры «коробки»
+    NODES.forEach((n,i)=>{
+      const t = (i+0.5)/(NODES.length+0.5);
+      const L = t*len;
+      const pt = outer.getPointAtLength(L);
+      const prev = outer.getPointAtLength(Math.max(0, L-1));
+      const horiz = Math.abs(pt.y - prev.y) < Math.abs(pt.x - prev.x);
+
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('class','module');
+
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+
+      if(horiz){
+        rect.setAttribute('x', pt.x - modW/2);
+        rect.setAttribute('y', pt.y - modH/2);
+        rect.setAttribute('width', modW);
+        rect.setAttribute('height', modH);
+        line.setAttribute('x1', pt.x - modW/2 + 8);
+        line.setAttribute('x2', pt.x + modW/2 - 8);
+        line.setAttribute('y1', pt.y);
+        line.setAttribute('y2', pt.y);
+      }else{
+        rect.setAttribute('x', pt.x - modH/2);
+        rect.setAttribute('y', pt.y - modW/2);
+        rect.setAttribute('width', modH);
+        rect.setAttribute('height', modW);
+        line.setAttribute('x1', pt.x);
+        line.setAttribute('x2', pt.x);
+        line.setAttribute('y1', pt.y - modW/2 + 8);
+        line.setAttribute('y2', pt.y + modW/2 - 8);
+      }
+      g.appendChild(rect); g.appendChild(line);
+      modsG.appendChild(g);
+    });
+
+    return { path: outer, length: len };
+  }
+
+  let geom = makePath();
+  window.addEventListener('resize', ()=>{ geom = makePath(); update(); }, {passive:true});
+
+  /* — капля по скроллу — */
+  const drop  = document.getElementById('drop');
+  const fill  = document.getElementById('fill');
   const taste = document.getElementById('taste');
-
-  const tocLinks = Array.from(document.querySelectorAll('#tocNav a, #tocNavMobile a'));
   const sections = Array.from(document.querySelectorAll('.node'));
+  const tocLinks = Array.from(document.querySelectorAll('#tocNav a'));
 
-  let ticking=false;
-  const getScrollProgress=()=>{
+  function progress(){
     const doc = document.documentElement;
-    const scrollTop = doc.scrollTop || document.body.scrollTop;
-    const docH = doc.scrollHeight - window.innerHeight;
-    return docH>0 ? Math.min(1, Math.max(0, scrollTop / docH)) : 0;
-  };
+    const st  = doc.scrollTop || document.body.scrollTop;
+    const dh  = doc.scrollHeight - innerHeight;
+    return dh>0 ? Math.min(1, Math.max(0, st/dh)) : 0;
+  }
 
-  const update=()=>{
-    const p = getScrollProgress();
-    const len = p*(total-6);
-    const pt = path.getPointAtLength(len);
+  function update(){
+    const p = progress();
+    const L = p*(geom.length-2);
+    const pt= geom.path.getPointAtLength(L);
     drop.setAttribute('transform',`translate(${pt.x},${pt.y})`);
 
-    // актив в мини-карте
-    let active = 0;
-    for(let i=0;i<sections.length;i++){
-      const r = sections[i].getBoundingClientRect();
-      if(r.top < innerHeight*0.45) active = i;
-    }
-    const id = '#'+sections[active].id;
+    // активная секция
+    let idx=0; for(let i=0;i<sections.length;i++){ const r=sections[i].getBoundingClientRect(); if(r.top<innerHeight*0.45) idx=i; }
+    const id = '#'+sections[idx].id;
     tocLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
 
-    // финальный вкус
+    // появление карточек
+    sections.forEach(s=>{ if(s.classList.contains('show')) return; const r=s.getBoundingClientRect(); if(r.top<innerHeight*0.8) s.classList.add('show'); });
+
+    // вкус
     if(fill && taste){
       const last = sections[sections.length-1].getBoundingClientRect();
       const vh = innerHeight;
@@ -384,34 +348,26 @@ const NODES = [
       fill.style.height = (f*100)+'%';
       taste.style.opacity = f>0.95 ? 1 : 0;
     }
+  }
 
-    // появления
-    sections.forEach(s=>{
-      if(s.classList.contains('show')) return;
-      const r = s.getBoundingClientRect();
-      if(r.top < innerHeight*0.8) s.classList.add('show');
-    });
-
-    ticking=false;
-  };
-
-  const onScroll=()=>{ if(!ticking){ ticking=true; requestAnimationFrame(update); } };
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll, {passive:true});
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
   update();
 })();
 
 /* — клики по мини-карте — */
-document.getElementById('tocDesk')?.addEventListener('click', (e)=>{
-  const a = e.target.closest('a'); if(!a) return;
-  e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth', block:'center'});
-});
-document.getElementById('tocSheet')?.addEventListener('click', (e)=>{
-  const a = e.target.closest('a'); if(!a) return;
-  e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth', block:'center'});
-  document.getElementById('tocSheet').classList.remove('open');
-});
-document.getElementById('tocBtn')?.addEventListener('click', ()=> document.getElementById('tocSheet').classList.toggle('open'));
+(function(){
+  const toc = document.getElementById('toc');
+  const nav = document.getElementById('tocNav');
+  NODES.forEach(n=>{
+    const a=document.createElement('a'); a.href='#node-'+n.id; a.innerHTML=`<span class="dot"></span> ${n.tag} ${n.title}`;
+    nav.appendChild(a);
+  });
+  toc?.addEventListener('click',e=>{
+    const a=e.target.closest('a'); if(!a) return;
+    e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+})();
 </script>
 </body>
 </html>
