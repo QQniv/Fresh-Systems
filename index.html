@@ -5,128 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="color-scheme" content="dark" />
-
-  <!-- Preload постера и видео (ускоряет появление) -->
+  <!-- ускоряем первый кадр -->
   <link rel="preload" as="image" href="images/hero-water.jpg" />
   <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
-
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body class="no-video"><!-- класс снимется, когда видео подтвердит готовность -->
-
-  <!-- Видео-фон (остается на заднем плане на всех секциях) -->
-  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
-    <source src="images/water-bg.mp4" type="video/mp4" />
-    <!-- можно добавить второй источник, если захочешь:
-    <source src="images/water-bg.webm" type="video/webm" />
-    -->
-  </video>
-  <div class="overlay"></div>
-
-  <!-- Шапка -->
-  <header class="site-header">
-    <a class="brand" href="index.html" aria-label="На главную">FS</a>
-    <nav class="top-nav" aria-label="Основное меню">
-      <a href="technologies.html">Технологии</a>
-      <a href="sanpin.html">СанПиН</a>
-      <a href="taste.html">Почему вода вкусная</a>
-      <a href="services.html">Услуги</a>
-      <a href="contacts.html">Контакты</a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <h1 class="hero-title">
-        <span class="shine">Питьевая вода в вашем доме</span>
-      </h1>
-      <p class="hero-sub">
-        Уникальные фильтросистемы под ваш дом — исследуем воду, проектируем систему и создаём чистую,
-        безопасную и вкусную воду каждый день.
-      </p>
-      <div class="hero-actions">
-        <a href="technologies.html" class="btn primary">Подробнее</a>
-        <a href="contacts.html" class="btn ghost">Оставить заявку</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Индивидуальные системы -->
-  <section class="section fadein">
-    <div class="container section-narrow">
-      <h2>Индивидуальные системы фильтрации</h2>
-      <p>
-        Мы подстраиваем решения под анализ воды и специфику объекта. От проектирования до пуско-наладки — полный цикл.
-      </p>
-      <a href="technologies.html" class="btn link">Подробнее о технологиях →</a>
-    </div>
-  </section>
-
-  <!-- Почему выбирают нас -->
-  <section class="section dark fadein">
-    <div class="container section-narrow">
-      <h2>Почему выбирают нас</h2>
-      <ul class="benefits">
-        <li>Разработка системы под конкретный состав воды</li>
-        <li>Соответствие требованиям СанПиН</li>
-        <li>Полный монтаж и сервис</li>
-        <li>Гарантированное качество питьевой воды</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Контакты -->
-  <section class="section fadein">
-    <div class="container section-narrow">
-      <h2>Свяжитесь с нами</h2>
-      <p>Мы рассчитаем подходящее решение и подскажем, как оптимизировать затраты для вашего дома.</p>
-      <div class="hero-actions">
-        <a href="contacts.html" class="btn primary">Оставить заявку</a>
-        <a href="services.html" class="btn ghost">Наши услуги</a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="minor">© 2025 Fresh Systems</div>
-      <a href="index.html" class="minor">Главная</a>
-    </div>
-  </footer>
-
-  <script>
-    // 1) Снимаем подчеркивание у ссылок уже в CSS, но на всякий случай:
-    // document.querySelectorAll('a').forEach(a => a.style.textDecoration = 'none');
-
-    // 2) Видео-фон: надёжная инициализация + fallback на постер/картинку
-    (function(){
-      const v = document.getElementById('bgVideo');
-      if(!v) return;
-
-      const markReady = () => {
-        document.body.classList.remove('no-video');
-        // попытка стартовать (на iOS автоплей возможен только muted + playsinline)
-        const p = v.play();
-        if (p && typeof p.catch === 'function') {
-          p.catch(() => {
-            // если браузер запретил автоплей — останемся на постере, ничего не ломаем
-          });
-        }
-      };
-
-      // События, говорящие, что можно показывать видео:
-      v.addEventListener('loadeddata', markReady, { once: true });<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fresh Systems — Питьевая вода в вашем доме</title>
-  <meta name="color-scheme" content="dark" />
-
-  <link rel="preload" as="image" href="images/hero-water.jpg" />
-  <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
-
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="no-video">
@@ -137,7 +18,7 @@
   </video>
   <div class="overlay"></div>
 
-  <!-- Шапка -->
+  <!-- Хедер -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
     <nav class="top-nav" aria-label="Основное меню">
@@ -149,7 +30,7 @@
     </nav>
   </header>
 
-  <!-- HERO (параллакс у заголовка/подзаголовка) -->
+  <!-- HERO -->
   <section class="hero">
     <div class="container hero-inner">
       <h1 class="hero-title" data-parallax data-speed="0.25">
@@ -166,35 +47,54 @@
     </div>
   </section>
 
-  <!-- Индивидуальные системы -->
-  <section class="section fadein parallaxy" data-speed="-0.08">
+  <!-- КТО МЫ ТАКИЕ -->
+  <section class="section fadein parallaxy card-section" data-speed="-0.06" id="about-brief">
     <div class="container section-narrow">
-      <h2>Индивидуальные системы фильтрации</h2>
+      <h2>Кто мы такие?</h2>
       <p>
-        Мы подстраиваем решения под анализ воды и специфику объекта. От проектирования до пуско-наладки — полный цикл.
+        <strong>FS engineering</strong> — компания по созданию централизованных систем фильтрации в жилых домах.
+        Проектируем под анализ воды, монтируем, вводим в эксплуатацию и ведём сервис.
       </p>
-      <a href="technologies.html" class="btn link">Подробнее о технологиях →</a>
+      <!-- заменишь на <img src="images/about-moscow.jpg" alt="Новая московская застройка" class="about-photo"> -->
+      <div class="about-photo-placeholder">Здесь будет фото новостройки (добавим позже)</div>
     </div>
   </section>
 
-  <!-- Почему выбирают нас -->
-  <section class="section dark fadein parallaxy" data-speed="0.08">
+  <!-- НАШИ СИСТЕМЫ -->
+  <section class="section fadein parallaxy card-section dark" data-speed="0.08" id="systems-types">
     <div class="container section-narrow">
-      <h2>Почему выбирают нас</h2>
-      <ul class="benefits">
-        <li>Разработка системы под конкретный состав воды</li>
-        <li>Соответствие требованиям СанПиН</li>
-        <li>Полный монтаж и сервис</li>
-        <li>Гарантированное качество питьевой воды</li>
-      </ul>
+      <h2>Наши системы</h2>
+      <p>Разрабатываем и создаём решения под разные задачи и объекты.</p>
+      <div class="sys-buttons">
+        <a href="services.html#multi" class="btn pill">Многоквартирные дома</a>
+        <a href="services.html#private" class="btn pill">Частные дома</a>
+        <a href="services.html#apartment" class="btn pill">Квартиры</a>
+      </div>
     </div>
   </section>
 
-  <!-- Контакты -->
-  <section class="section fadein parallaxy" data-speed="-0.06">
-    <div class="container section-narrow">
-      <h2>Свяжитесь с нами</h2>
-      <p>Мы рассчитаем подходящее решение и подскажем, как оптимизировать затраты для вашего дома.</p>
+  <!-- ПОЧЕМУ ДОВЕРЯТЬ -->
+  <section class="section fadein parallaxy card-section" data-speed="-0.05" id="trust">
+    <div class="container grid-2">
+      <div class="card glass">
+        <h3>Инженерная экспертиза</h3>
+        <p>Технологии разрабатываются командой инженеров с учётом гидравлики, ресурсных расчётов и санитарных норм.</p>
+      </div>
+      <div class="card glass">
+        <h3>Качество воды</h3>
+        <p>По результатам независимых лабораторий — вода чище, чем у части бутилированных брендов.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- СВЯЗАТЬСЯ С НАМИ -->
+  <section class="section fadein parallaxy card-section dark" data-speed="0.06" id="contact-brief">
+    <div class="container section-narrow center">
+      <h2>Связаться с нами</h2>
+      <p>
+        Офис: г.&nbsp;Москва, ул.&nbsp;Красота. Рабочие часы: 00:00–00:00.
+        <br>Нажмите «Оставить заявку», чтобы заполнить форму и отправить нам письмо.
+      </p>
       <div class="hero-actions">
         <a href="contacts.html" class="btn primary">Оставить заявку</a>
         <a href="services.html" class="btn ghost">Наши услуги</a>
@@ -209,88 +109,60 @@
     </div>
   </footer>
 
+  <!-- ==== JS: видео-фон, reveal, параллакс ==== -->
   <script>
-    // Видео: включаем фон, если готово; иначе остаёмся на статичном постере
+    // 1) ВИДЕО-ФОН — надёжная инициализация с fallback
     (function(){
       const v = document.getElementById('bgVideo');
       if(!v) return;
-      const ready = () => {
+      const markReady = () => {
         document.body.classList.remove('no-video');
-        const p = v.play?.();
-        if (p?.catch) p.catch(()=>{ /* fallback остаётся */ });
+        const p = v.play?.(); if (p?.catch) p.catch(()=>{});
       };
-      v.addEventListener('loadeddata', ready, { once:true });
-      v.addEventListener('canplay', ready, { once:true });
-      setTimeout(()=>{ if (v.readyState >= 2) ready(); }, 2500);
+      v.addEventListener('loadeddata', markReady, { once:true });
+      v.addEventListener('canplay',     markReady, { once:true });
+      // Подстраховка по таймеру (если события не пришли)
+      setTimeout(()=>{ if (v.readyState >= 2) markReady(); }, 2500);
     })();
 
-    // Reveal-анимация при каждом входе в зону видимости
-    const revealEls = document.querySelectorAll('.fadein');
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.classList.add('show');
-        } else {
-          // снимаем show, чтобы анимация повторялась при повторном появлении
-          e.target.classList.remove('show');
-        }
-      });
-    },{ threshold: 0.2 });
-    revealEls.forEach(el=>io.observe(el));
-
-    // Лёгкий параллакс: элементы с [data-parallax] и секции .parallaxy
+    // 2) REVEAL — повторяемая анимация появления секций
     (function(){
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) return;
+      const reveals = document.querySelectorAll('.fadein');
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if (e.isIntersecting) e.target.classList.add('show');
+          else e.target.classList.remove('show');
+        });
+      },{ threshold:.2 });
+      reveals.forEach(r=>obs.observe(r));
+    })();
 
-      const pxEls = [
+    // 3) ЛЁГКИЙ ПАРАЛЛАКС (герой и секции «дышат» при скролле)
+    (function(){
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const els = [
         ...document.querySelectorAll('[data-parallax]'),
         ...document.querySelectorAll('.parallaxy')
       ];
-      const state = { y: window.scrollY, ticking:false, wh: window.innerHeight };
+      if (!els.length) return;
 
-      function onScroll(){
-        state.y = window.scrollY || window.pageYOffset;
-        if (!state.ticking){
-          state.ticking = true;
-          requestAnimationFrame(applyParallax);
-        }
-      }
-      function applyParallax(){
-        const y = state.y;
-        pxEls.forEach(el=>{
-          const speed = parseFloat(el.dataset.speed || '0.1');
-          // смещение относительно центра вьюпорта — даёт «плавающий» эффект вверх/вниз
-          const rect = el.getBoundingClientRect();
-          const center = rect.top + rect.height/2 - state.wh/2;
-          const move = Math.max(-40, Math.min(40, center * speed)); // ограничим до ±40px
+      const clamp = (v,min,max)=>Math.min(max,Math.max(min,v));
+      let H = innerHeight, ticking = false;
+
+      const apply = () => {
+        els.forEach(el=>{
+          const sp = parseFloat(el.dataset.speed || '0.1');
+          const r  = el.getBoundingClientRect();
+          const c  = r.top + r.height/2 - H/2;
+          const move = clamp(c*sp, -42, 42);
           el.style.transform = `translate3d(0, ${move}px, 0)`;
         });
-        state.ticking = false;
-      }
-      // подстроим на ресайз
-      window.addEventListener('resize', ()=>{ state.wh = window.innerHeight; applyParallax(); }, { passive:true });
-      window.addEventListener('scroll', onScroll, { passive:true });
-      // первый проход
-      applyParallax();
+        ticking = false;
+      };
+      addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply);} }, { passive:true });
+      addEventListener('resize', ()=>{ H = innerHeight; apply(); }, { passive:true });
+      apply();
     })();
-  </script>
-</body>
-</html>
-      v.addEventListener('canplay', markReady, { once: true });
-
-      // Подстраховка по таймеру (если события не пришли)
-      setTimeout(() => {
-        if (v.readyState >= 2) markReady();
-      }, 2500);
-    })();
-
-    // 3) Плавное появление секций при скролле
-    const reveals = document.querySelectorAll('.fadein');
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
-    },{threshold:.2});
-    reveals.forEach(r=>obs.observe(r));
   </script>
 </body>
 </html>
