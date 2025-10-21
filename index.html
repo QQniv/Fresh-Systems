@@ -5,21 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="color-scheme" content="dark" />
+  <!-- Шрифты (можно оставить как есть) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap&subset=cyrillic" rel="stylesheet">
+  <!-- Прелоады -->
   <link rel="preload" as="image" href="images/hero-water.jpg" />
   <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="no-video">
 
-  <!-- фон -->
+  <!-- Фон -->
   <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
   </video>
   <div class="overlay"></div>
 
-  <!-- шапка -->
+  <!-- Шапка -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
+
     <nav class="top-nav" aria-label="Основное меню">
       <a href="technologies.html">Технологии</a>
       <a href="sanpin.html">СанПиН</a>
@@ -27,7 +31,19 @@
       <a href="services.html">Услуги</a>
       <a href="contacts.html">Контакты</a>
     </nav>
+
+    <!-- бургер -->
+    <button class="menu-toggle" id="menuBtn" aria-label="Меню" aria-expanded="false"><span></span></button>
   </header>
+
+  <!-- мобильный дровер -->
+  <nav class="mobile-drawer" id="drawer" aria-label="Мобильное меню">
+    <a href="technologies.html">Технологии</a>
+    <a href="sanpin.html">СанПиН</a>
+    <a href="taste.html">Почему вода вкусная</a>
+    <a href="services.html">Услуги</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
 
   <!-- HERO -->
   <section class="section hero">
@@ -44,7 +60,7 @@
     </div>
   </section>
 
-  <!-- КТО МЫ -->
+  <!-- Остальная главная (как в твоей текущей сборке) -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
@@ -55,56 +71,55 @@
 
       <div class="row">
         <div class="col-8 fadein">
+          <!-- добавь about-moscow.jpg в /images -->
           <img src="images/about-moscow.jpg" alt="Современная новостройка Москвы" class="about-photo">
         </div>
         <div class="col-4 fadein">
           <div class="glass">
             <h3>Почему это важно</h3>
-            <p>Централизованная система позволяет обеспечить одинаковое качество воды во всём доме и контролировать его по регламенту.</p>
+            <p>Централизованная система обеспечивает одинаковое качество воды во всём доме и регламентируемый контроль.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- НАШИ СИСТЕМЫ -->
+  <!-- примеры систем/доверие/контакты – оставляю как в предыдущей версии -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
         <div class="kicker">НАШИ СИСТЕМЫ</div>
         <h2 class="h2">Решения под разные задачи</h2>
-        <p class="sub">Мы работаем с многоквартирными домами, частными домами и квартирами — технологические цепочки подбираем по вашему анализу воды.</p>
+        <p class="sub">Многоквартирные дома, частные дома и квартиры — подбираем по анализу воды.</p>
       </div>
       <div class="row">
-        <div class="col-4 fadein"><a class="glass" href="services.html#multi"><h3>Многоквартирные дома</h3><p>Центральные станции подготовки, резервуары, подача на стояки.</p></a></div>
+        <div class="col-4 fadein"><a class="glass" href="services.html#multi"><h3>Многоквартирные дома</h3><p>Центральные станции, резервуары, подача на стояки.</p></a></div>
         <div class="col-4 fadein"><a class="glass" href="services.html#private"><h3>Частные дома</h3><p>Компактные станции с минерализацией и УФ.</p></a></div>
         <div class="col-4 fadein"><a class="glass" href="services.html#apartment"><h3>Квартиры</h3><p>Индивидуальные решения под кухню и фонтаны.</p></a></div>
       </div>
     </div>
   </section>
 
-  <!-- ПОЧЕМУ ДОВЕРЯЮТ -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
         <div class="kicker">ПОЧЕМУ НАМ ДОВЕРЯЮТ</div>
         <h2 class="h2">Инженерия и подтверждённое качество</h2>
-        <p class="sub">Технологии мы проектируем сами, а качество воды подтверждаем лабораторно — показатели стабильны и соответствуют СанПиН.</p>
+        <p class="sub">Технологии проектируем сами, качество подтверждаем лабораторно — соответствует СанПиН.</p>
       </div>
       <div class="row">
-        <div class="col-6 fadein"><div class="glass"><h3>Инженерная экспертиза</h3><p>Гидравлика, ресурсные расчёты, санитарные разрывы, правильные дренажи — всё по правилам.</p></div></div>
-        <div class="col-6 fadein"><div class="glass"><h3>Лабораторные протоколы</h3><p>По протоколам — вода чище некоторых бутилированных брендов, при этом «живая» за счёт минерализации.</p></div></div>
+        <div class="col-6 fadein"><div class="glass"><h3>Инженерная экспертиза</h3><p>Гидравлика, санитарные разрывы, правильные дренажи — всё по правилам.</p></div></div>
+        <div class="col-6 fadein"><div class="glass"><h3>Лабораторные протоколы</h3><p>По протоколам — вода чище некоторых бутилированных брендов.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- КОНТАКТЫ КРАТКО -->
   <section class="section">
     <div class="container">
       <div class="hgroup fadein">
         <div class="kicker">СВЯЗАТЬСЯ С НАМИ</div>
         <h2 class="h2">Москва, ул.&nbsp;Красота — рабочие часы 00:00–00:00</h2>
-        <p class="sub">Нажмите «Оставить заявку», чтобы заполнить форму — мы свяжемся с вами и подскажем оптимальный состав системы.</p>
+        <p class="sub">Нажмите «Оставить заявку», чтобы заполнить форму — мы свяжемся и подскажем оптимальный состав системы.</p>
         <div class="actions">
           <a href="contacts.html" class="btn primary">Оставить заявку</a>
           <a href="services.html" class="btn ghost">Наши услуги</a>
@@ -120,28 +135,76 @@
     </div>
   </footer>
 
-  <!-- JS: видео/появления/параллакс -->
+  <!-- JS: video fallback + mobile menu + reveals + parallax -->
   <script>
-    (function(){const v=document.getElementById('bgVideo');if(!v)return;
-      const ok=()=>{document.body.classList.remove('no-video');v.play?.().catch(()=>{});};
-      v.addEventListener('loadeddata',ok,{once:true});v.addEventListener('canplay',ok,{once:true});
-      setTimeout(()=>{if(v.readyState>=2) ok();},2200);
+    // 1) Видео-фон: на мобиле используем статичное изображение
+    (function(){
+      const isMobile = matchMedia('(max-width: 768px)').matches;
+      const v = document.getElementById('bgVideo');
+      if(!v) return;
+      const ready = ()=>{ document.body.classList.remove('no-video'); v.play?.().catch(()=>{}); };
+
+      if(isMobile){
+        // Статичное фото вместо видео для резкости
+        document.body.classList.add('mobile-bg');
+        v.pause?.(); v.removeAttribute('src'); v.load();
+      }else{
+        v.addEventListener('loadeddata', ready, {once:true});
+        v.addEventListener('canplay', ready, {once:true});
+        setTimeout(()=>{ if(v.readyState>=2) ready(); }, 1800);
+      }
     })();
 
-    (function(){const els=document.querySelectorAll('.fadein');
-      const io=new IntersectionObserver(es=>{
-        es.forEach(e=>{e.isIntersecting?e.target.classList.add('show'):e.target.classList.remove('show');});
+    // 2) Мобильное меню (бургер)
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const drawer = document.getElementById('drawer');
+      if(!btn || !drawer) return;
+      btn.addEventListener('click', ()=>{
+        const open = drawer.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.classList.toggle('mobile-menu-open', open);
+      });
+      // Закрытие по клику вне
+      document.addEventListener('click', (e)=>{
+        if(!drawer.classList.contains('open')) return;
+        if(!drawer.contains(e.target) && !btn.contains(e.target)){
+          drawer.classList.remove('open');
+          btn.setAttribute('aria-expanded','false');
+          document.body.classList.remove('mobile-menu-open');
+        }
+      });
+    })();
+
+    // 3) Плавные появления
+    (function(){
+      const els = document.querySelectorAll('.fadein');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ e.target.classList.add('show'); }
+          else{ e.target.classList.remove('show'); }
+        });
       },{threshold:.18});
       els.forEach(el=>io.observe(el));
     })();
 
-    (function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    // 4) Лёгкий параллакс заголовка
+    (function(){
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const els=[...document.querySelectorAll('[data-parallax]')];
-      if(!els.length)return;let H=innerHeight,ticking=false;
+      if(!els.length) return; let H=innerHeight, ticking=false;
       const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
-      const apply=()=>{els.forEach(el=>{const s=parseFloat(el.dataset.speed||'0.15');const r=el.getBoundingClientRect();const c=r.top+r.height/2-H/2;el.style.transform=`translate3d(0, ${clamp(c*s,-36,36)}px, 0)`;});ticking=false;};
-      addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(apply);}}, {passive:true});
-      addEventListener('resize',()=>{H=innerHeight;apply();}, {passive:true});apply();
+      const apply=()=>{
+        els.forEach(el=>{
+          const s=parseFloat(el.dataset.speed||'0.15');
+          const r=el.getBoundingClientRect();
+          const c=r.top+r.height/2-H/2;
+          el.style.transform=`translate3d(0, ${clamp(c*s,-36,36)}px, 0)`;
+        }); ticking=false;
+      };
+      addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply);} }, {passive:true});
+      addEventListener('resize', ()=>{H=innerHeight; apply();}, {passive:true});
+      apply();
     })();
   </script>
 </body>
