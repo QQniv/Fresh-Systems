@@ -5,28 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="color-scheme" content="dark" />
-  <link rel="preload" as="image" href="images/hero-water.jpg" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-
-  <!-- Шапка -->
+  <!-- ШАПКА -->
   <header class="site-header">
-    <a class="brand" href="index.html" aria-label="На главную">FS</a>
-
-    <nav class="top-nav" aria-label="Основное меню">
-      <a href="about.html">О компании</a>
-      <a href="systems.html">Фильтросистемы</a>
-      <a href="sanpin.html">СанПиН</a>
-      <a href="taste.html">Почему вода вкусная</a>
-      <a href="services.html">Услуги</a>
-      <a href="contacts.html">Контакты</a>
-    </nav>
-
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
-    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
-      <a href="about.html">О компании</a>
-      <a href="systems.html">Фильтросистемы</a>
+    <a class="brand" href="index.html">FS</a>
+    <nav class="top-nav">
+      <a href="technologies.html">Технологии</a>
       <a href="sanpin.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
       <a href="services.html">Услуги</a>
@@ -35,36 +22,75 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero" style="--hero-img:url('images/hero-water.jpg');">
+  <section class="hero" style="background-image:url('images/hero-water.jpg')">
     <div class="hero-overlay"></div>
-    <div class="container hero-inner">
+    <div class="container hero-content">
       <h1 class="hero-title">Питьевая вода в вашем доме</h1>
-      <p class="hero-sub">Системы тонкой подготовки воды для жилых комплексов: безопасно, стабильно, вкусно.</p>
+      <p class="hero-sub">
+        Мы разрабатываем системы тонкой фильтрации для жилых комплексов,
+        создавая индивидуальные решения под анализ воды и требования застройщика.
+      </p>
       <div class="hero-actions">
-        <a class="btn primary" href="about.html">Подробнее</a>
-        <a class="btn ghost" href="contacts.html#form">Оставить заявку</a>
+        <a href="technologies.html" class="btn primary">Технологии</a>
+        <a href="contacts.html" class="btn ghost">Оставить заявку</a>
       </div>
     </div>
   </section>
 
-  <!-- Короткий блок -->
+  <!-- БЛОК ФИЛЬТРОСИСТЕМЫ -->
   <section class="section">
     <div class="container">
-      <h2>Фильтросистемы</h2>
-      <p>Тезисно о ступенях. Подробная страница — во вкладке.</p>
+      <h2>Фильтросистемы Fresh Systems</h2>
+      <p>
+        Мы подбираем оборудование под результаты анализа воды. Проводим исследование,
+        рассчитываем оптимальные параметры, монтируем систему и настраиваем её под ваш объект.
+      </p>
+      <a href="technologies.html" class="btn link">Читать подробнее →</a>
+    </div>
+  </section>
 
-      <div class="cards">
-        <article class="card">
-          <div class="card-img">
-            <img src="images/production-2.jpg" alt="Механическая очистка" loading="lazy">
-          </div>
-          <h3>Механическая очистка</h3>
-          <p>Удаляет песок, ржавчину и взвесь. Подготавливает воду к следующим ступеням.</p>
-        </article>
+  <!-- СООТВЕТСТВИЕ САНПИН -->
+  <section class="section dark">
+    <div class="container">
+      <h2>Соответствие СанПиН</h2>
+      <p>
+        Все наши фильтры, материалы и трубы соответствуют нормам СанПиН
+        и стандартам питьевой воды в жилых домах.
+      </p>
+      <a href="sanpin.html" class="btn link">Читать подробнее →</a>
+    </div>
+  </section>
 
-        <article class="card">
-          <div class="card-img">
-            <img src="images/uf-module.jpg" alt="Ультрафильтрация" loading="lazy">
-          </div>
-          <h3>Ультрафильтрация</h3>
-          <p>Задерживает коллоиды и бактерии, улучшая прозрач
+  <!-- ПОЧЕМУ ВОДА ВКУСНАЯ -->
+  <section class="section">
+    <div class="container">
+      <h2>Почему вода вкусная</h2>
+      <p>
+        После фильтрации мы используем минерализацию Ca/Mg, которая
+        делает воду мягкой, сбалансированной и приятной на вкус.
+      </p>
+      <a href="taste.html" class="btn link">Раскрыть тему вкуса →</a>
+    </div>
+  </section>
+
+  <!-- СВЯЗАТЬСЯ -->
+  <section class="section dark">
+    <div class="container">
+      <h2>Свяжитесь с нами</h2>
+      <p>Оставьте заявку, и мы подберём решение под ваш объект.</p>
+      <div class="hero-actions">
+        <a href="contacts.html" class="btn primary">Оставить заявку</a>
+        <a href="services.html" class="btn ghost">Наши услуги</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="minor">© 2025 Fresh Systems</div>
+      <a href="index.html" class="minor">Главная</a>
+    </div>
+  </footer>
+</body>
+</html>
