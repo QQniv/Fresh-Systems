@@ -5,20 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="color-scheme" content="dark" />
+
+  <!-- Preload постера и видео (ускоряет появление) -->
+  <link rel="preload" as="image" href="images/hero-water.jpg" />
+  <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="no-video"><!-- класс снимется, когда видео подтвердит готовность -->
 
-  <!-- Видео фон -->
-  <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
+  <!-- Видео-фон (остается на заднем плане на всех секциях) -->
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
+    <!-- можно добавить второй источник, если захочешь:
+    <source src="images/water-bg.webm" type="video/webm" />
+    -->
   </video>
   <div class="overlay"></div>
 
   <!-- Шапка -->
   <header class="site-header">
-    <a class="brand" href="index.html">FS</a>
-    <nav class="top-nav">
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
+    <nav class="top-nav" aria-label="Основное меню">
       <a href="technologies.html">Технологии</a>
       <a href="sanpin.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
@@ -27,12 +35,15 @@
     </nav>
   </header>
 
-  <!-- Главный блок -->
+  <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
-      <h1 class="hero-title">Питьевая вода в вашем доме</h1>
+      <h1 class="hero-title">
+        <span class="shine">Питьевая вода в вашем доме</span>
+      </h1>
       <p class="hero-sub">
-        Уникальные фильтросистемы под ваш дом — исследуем воду, проектируем систему, создаём чистую и вкусную воду, как из источника.
+        Уникальные фильтросистемы под ваш дом — исследуем воду, проектируем систему и создаём чистую,
+        безопасную и вкусную воду каждый день.
       </p>
       <div class="hero-actions">
         <a href="technologies.html" class="btn primary">Подробнее</a>
@@ -41,31 +52,35 @@
     </div>
   </section>
 
-  <!-- Краткий контент -->
+  <!-- Индивидуальные системы -->
   <section class="section fadein">
-    <div class="container">
+    <div class="container section-narrow">
       <h2>Индивидуальные системы фильтрации</h2>
-      <p>Подстраиваем решения под анализ воды и специфику объекта. От проектирования до пуско-наладки — полный цикл.</p>
+      <p>
+        Мы подстраиваем решения под анализ воды и специфику объекта. От проектирования до пуско-наладки — полный цикл.
+      </p>
       <a href="technologies.html" class="btn link">Подробнее о технологиях →</a>
     </div>
   </section>
 
-  <section class="section fadein dark">
-    <div class="container">
+  <!-- Почему выбирают нас -->
+  <section class="section dark fadein">
+    <div class="container section-narrow">
       <h2>Почему выбирают нас</h2>
       <ul class="benefits">
-        <li>✔ Разработка системы под конкретный состав воды</li>
-        <li>✔ Соответствие требованиям СанПиН</li>
-        <li>✔ Полный монтаж и сервис</li>
-        <li>✔ Гарантированное качество питьевой воды</li>
+        <li>Разработка системы под конкретный состав воды</li>
+        <li>Соответствие требованиям СанПиН</li>
+        <li>Полный монтаж и сервис</li>
+        <li>Гарантированное качество питьевой воды</li>
       </ul>
     </div>
   </section>
 
+  <!-- Контакты -->
   <section class="section fadein">
-    <div class="container">
+    <div class="container section-narrow">
       <h2>Свяжитесь с нами</h2>
-      <p>Мы рассчитаем подходящее решение и подскажем, как оптимизировать затраты.</p>
+      <p>Мы рассчитаем подходящее решение и подскажем, как оптимизировать затраты для вашего дома.</p>
       <div class="hero-actions">
         <a href="contacts.html" class="btn primary">Оставить заявку</a>
         <a href="services.html" class="btn ghost">Наши услуги</a>
@@ -81,9 +96,39 @@
   </footer>
 
   <script>
-    const reveals=document.querySelectorAll('.fadein');
-    const obs=new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');});
+    // 1) Снимаем подчеркивание у ссылок уже в CSS, но на всякий случай:
+    // document.querySelectorAll('a').forEach(a => a.style.textDecoration = 'none');
+
+    // 2) Видео-фон: надёжная инициализация + fallback на постер/картинку
+    (function(){
+      const v = document.getElementById('bgVideo');
+      if(!v) return;
+
+      const markReady = () => {
+        document.body.classList.remove('no-video');
+        // попытка стартовать (на iOS автоплей возможен только muted + playsinline)
+        const p = v.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(() => {
+            // если браузер запретил автоплей — останемся на постере, ничего не ломаем
+          });
+        }
+      };
+
+      // События, говорящие, что можно показывать видео:
+      v.addEventListener('loadeddata', markReady, { once: true });
+      v.addEventListener('canplay', markReady, { once: true });
+
+      // Подстраховка по таймеру (если события не пришли)
+      setTimeout(() => {
+        if (v.readyState >= 2) markReady();
+      }, 2500);
+    })();
+
+    // 3) Плавное появление секций при скролле
+    const reveals = document.querySelectorAll('.fadein');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
     },{threshold:.2});
     reveals.forEach(r=>obs.observe(r));
   </script>
