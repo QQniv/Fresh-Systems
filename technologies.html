@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="styles.css" />
 
 <style>
-/* ==== ЛОКАЛЬНЫЙ СТИЛЬ ТОЛЬКО ДЛЯ ЭТОЙ СТРАНИЦЫ ==== */
 :root{
   --ink:#eaf6ff; --muted:#bcd2e7; --cyan:#7dd3fc;
   --panel:rgba(255,255,255,.06); --panel-br:rgba(255,255,255,.12);
@@ -16,16 +15,13 @@
 .page-tech{position:relative; z-index:1; padding-top:84px}
 .container{max-width:1200px; margin:0 auto; padding:0 20px}
 
-/* Заголовок */
 .h1{font-weight:900; font-size:clamp(32px,6vw,60px); line-height:1.05; letter-spacing:.2px; color:var(--ink); margin:0 0 8px}
 .lead{color:var(--muted); font-size:clamp(14px,2.4vw,18px); margin:0 0 24px}
 
-/* Секция с трубой — одна высокая «сцена» */
-.pipe-scene{position:relative; min-height:1800px}
-@media (max-width:900px){ .pipe-scene{min-height:2200px} }
-@media (max-width:560px){ .pipe-scene{min-height:2400px} }
+.pipe-scene{position:relative; min-height:2600px}
+@media (max-width:900px){ .pipe-scene{min-height:3000px} }
+@media (max-width:560px){ .pipe-scene{min-height:3300px} }
 
-/* SVG на всю сцену */
 #pipeSVG{position:absolute; inset:0; width:100%; height:100%; display:block}
 .pipe-outer{stroke:rgba(210,240,255,.18); stroke-width:34; fill:none; stroke-linejoin:round; stroke-linecap:round;
   filter:drop-shadow(0 0 8px rgba(125,211,252,.35))}
@@ -35,16 +31,13 @@
   animation:flow 2.8s linear infinite; opacity:.9; filter:drop-shadow(0 0 6px rgba(116,210,255,.9))}
 @keyframes flow{to{stroke-dashoffset:-180}}
 
-/* Капля */
 .drop{filter:drop-shadow(0 0 12px rgba(116,210,255,.9))}
 .drop .b{fill:url(#dropGrad); stroke:#e6fbff; stroke-width:.9}
 .drop-glint{fill:#fff; opacity:.9}
 
-/* Модуль-фильтр на горизонтальном участке */
-.module rect{fill:rgba(8,14,24,.86); stroke:rgba(140,200,255,.5); stroke-width:1.6; rx:12; ry:12}
-.module .icon{stroke:rgba(214,238,255,.95); stroke-width:2.2; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.module rect{fill:rgba(8,14,24,.86); stroke:rgba(140,200,255,.55); stroke-width:1.8; rx:12; ry:12}
+.module .icon{stroke:rgba(214,238,255,.95); stroke-width:2.3; fill:none; stroke-linecap:round; stroke-linejoin:round}
 
-/* Подписи-карточки справа/слева */
 .note{position:absolute; width:min(440px,42vw); background:var(--panel); border:1px solid var(--panel-br);
   border-radius:16px; padding:14px 16px; backdrop-filter:blur(8px); box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .note .tag{display:inline-flex; gap:8px; align-items:center; padding:4px 10px; border-radius:999px;
@@ -52,18 +45,15 @@
 .note h3{margin:6px 0 8px; font-size:18px; color:var(--ink)}
 .note p{margin:0; color:#d7e7f4; line-height:1.55; font-size:15px}
 
-/* Плавные появления */
 .reveal{opacity:0; transform:translateY(18px); transition:.55s ease}
 .reveal.show{opacity:1; transform:none}
 
-/* На мобильном подписи шире и ниже трубы */
 @media (max-width:820px){
-  .note{width:calc(100% - 40px)}
+  .note{width:calc(100% - 40px); left:20px !important}
 }
 </style>
 </head>
 <body>
-<!-- общий видео-фон и оверлей такие же, как на главной -->
 <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
   <source src="images/water-bg.mp4" type="video/mp4" />
 </video>
@@ -90,11 +80,10 @@
 
 <main class="page-tech container">
   <h1 class="h1">Технологии</h1>
-  <p class="lead">Ниже — наглядный пример схемы фильтрации. Скролль — и капля пройдёт все этапы пути.</p>
+  <p class="lead">Вот пример схемы фильтрации. Скролль — и светящаяся капля пройдёт весь путь внутри трубы.</p>
 
-  <!-- сцена с одной непрерывной трубой и поворотами 90° -->
   <section class="pipe-scene">
-    <svg id="pipeSVG" viewBox="0 0 1200 2000" preserveAspectRatio="none">
+    <svg id="pipeSVG" viewBox="0 0 1200 2600" preserveAspectRatio="none">
       <defs>
         <linearGradient id="coreGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="rgba(230,255,255,.95)"/>
@@ -106,28 +95,25 @@
           <stop offset="60%" stop-color="#eaffff"/>
           <stop offset="100%" stop-color="#7dd3fc"/>
         </radialGradient>
-        <!-- маска, чтобы капля гарантированно не «вылезала» за трубу -->
-        <mask id="tubeMask"><rect x="0" y="0" width="1200" height="2000" fill="black"/>
+
+        <mask id="tubeMask">
+          <rect x="0" y="0" width="1200" height="2600" fill="black"/>
           <path id="tubeCoreMask" d="" stroke="white" stroke-width="22" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </mask>
       </defs>
 
-      <!-- реальная труба (внешний + внутренний слои) -->
       <path id="tubeOuter" class="pipe-outer" d=""/>
       <path id="tubeCore"  class="pipe-core"  d=""/>
       <path id="tubeFlow"  class="flow"      d="" mask="url(#tubeMask)"/>
 
-      <!-- модульные блоки (узлы) -->
       <g id="modules"></g>
 
-      <!-- капля -->
       <g id="drop" class="drop" transform="translate(0,0)" mask="url(#tubeMask)">
         <ellipse class="b" cx="0" cy="0" rx="11" ry="15"/>
         <circle class="drop-glint" cx="2" cy="-6" r="3"/>
       </g>
     </svg>
 
-    <!-- подписи к этапам (абсолютные карточки) -->
     <div id="notes"></div>
   </section>
 </main>
@@ -140,7 +126,7 @@
 </footer>
 
 <script>
-/* ===== мобильное меню как на главной ===== */
+/* ===== мобильное меню ===== */
 (function(){
   const btn=document.getElementById('menuBtn'), d=document.getElementById('drawer');
   if(!btn||!d) return;
@@ -153,13 +139,13 @@
     if(!d.contains(e.target)&&!btn.contains(e.target)) t(false);});
 })();
 
-/* ===== данные этапов (между изгибами всегда один фильтр) ===== */
+/* ===== узлы ===== */
 const STAGES = [
   {id:'hvs', tag:'ХВС',  title:'Ввод ХВС', text:'Исходная вода на входе.'},
-  {id:'f1',  tag:'F1',   title:'Грубая очистка 100 μm', text:'Песок, ржавчина, окалина. Промывной блок.', icon:'grid'},
+  {id:'f1',  tag:'F1',   title:'Грубая очистка 100 μm', text:'Песок, ржавчина, окалина. Промывной.', icon:'grid'},
   {id:'f2',  tag:'F2',   title:'Тонкая очистка 5 μm', text:'Картридж PP melt-blown.', icon:'cartridge'},
   {id:'f3',  tag:'F3',   title:'Угольный фильтр', text:'Адсорбция органики и запахов.', icon:'carbon'},
-  {id:'hd',  tag:'HD',   title:'Насос высокого давления', text:'Даёт напор на узел NF.', icon:'pump'},
+  {id:'hd',  tag:'HD',   title:'Насос высокого давления', text:'Даёт напор узлу NF.', icon:'pump'},
   {id:'as',  tag:'AS',   title:'Антисилант (опц.)', text:'Защита мембран от отложений.', icon:'dose'},
   {id:'nf',  tag:'NF',   title:'Нанофильтрация', text:'Пермеат → далее; Концентрат → дренаж.', icon:'membrane'},
   {id:'min', tag:'MIN',  title:'Минерализатор Ca/Mg', text:'Формирует вкус, целевой TDS.', icon:'min'},
@@ -167,7 +153,6 @@ const STAGES = [
   {id:'tap', tag:'💧',   title:'Потребитель', text:'Кран → стакан с чистой водой.', icon:'tap', final:true}
 ];
 
-/* ===== Геометрия: построение зигзага 90° с учётом ширины/высоты ===== */
 const svg = document.getElementById('pipeSVG');
 const outer = document.getElementById('tubeOuter');
 const core  = document.getElementById('tubeCore');
@@ -177,89 +162,75 @@ const mods  = document.getElementById('modules');
 const notes = document.getElementById('notes');
 const drop  = document.getElementById('drop');
 
-let pathLen = 0, corePath;
+let coreLen = 0;
 
-function draw(){
-  // размер реального SVG
-  const r = svg.getBoundingClientRect();
-  const W = 1200;                // viewBox width
-  const H = Math.max(1800, r.height/r.width*1200); // нормализованная высота
-  svg.setAttribute('viewBox', `0 0 1200 ${H}`);
-  // поля и шаги
-  const padX = 100, padY = 140, segH = (H - padY*2) / (STAGES.length);
-  const leftX = padX, rightX = W - padX;
+/* строим одну длинную «змейку» с поворотами 90° */
+function buildPath(){
+  const VBW=1200, VBH=2600;
+  const padX = 120, padY = 140;
+  const leftX  = padX;
+  const rightX = VBW - padX;
+  const midX   = VBW/2;
 
-  // строим путь: вертикально вниз к первому горизонту, далее «змейкой» 90°
-  let d = `M ${W/2} ${padY}`;            // старт посередине сверху
-  d += ` V ${padY + segH*0.5}`;          // к первому горизонтальному участку
+  const rows = STAGES.length;                     // горизонтальных «полок»
+  const stepY = (VBH - padY*2) / (rows+0.3);      // немного запас снизу
+  let d = `M ${midX} ${padY} V ${padY + stepY*0.4}`; // старт вниз к первой полке
 
-  // массив точек середины каждого горизонтального сегмента (для фильтров)
-  const midPts = [];
-
-  for(let i=0;i<STAGES.length;i++){
-    const y = padY + segH*(i+0.5);
-    const dirRight = i%2===0;            // чётные вправо, нечётные влево
-    const x1 = dirRight ? (W/2) : (W/2);
-    const x2 = dirRight ? rightX : leftX;
-    const xFrom = i===0 ? W/2 : (dirRight ? leftX : rightX); // откуда приходит
-    // горизонталь
-    d += ` H ${x2}`;
-    midPts.push({x:(xFrom+x2)/2, y, dirRight});
-    // вертикальный поворот, кроме последнего
-    if(i<STAGES.length-1){
-      const yNext = padY + segH*(i+1.0);
-      d += ` V ${yNext}`;
-      d += ` H ${dirRight ? leftX : rightX}`;
+  for(let i=0;i<rows;i++){
+    const y = padY + stepY*(i+0.4);
+    const toRight = i%2===0;
+    const xTarget = toRight ? rightX : leftX;
+    d += ` H ${xTarget}`;
+    if(i<rows-1){
+      const yNext = padY + stepY*(i+1.4);
+      d += ` V ${yNext} H ${toRight ? leftX : rightX}`;
     }
   }
-
-  // финал: ещё немного вниз к «крану/стакану»
-  d += ` V ${H - padY}`;
+  d += ` V ${VBH - padY}`;
 
   outer.setAttribute('d', d);
   core.setAttribute('d', d);
   flow.setAttribute('d', d);
   maskCore.setAttribute('d', d);
-  corePath = core;                // для точного позиционирования капли
-  pathLen = corePath.getTotalLength();
 
-  // очищаем и добавляем модули/подписи
+  coreLen = core.getTotalLength();
+
+  /* позиции модулей берём по длине пути: делим путь на равные сегменты
+     и ставим модуль в середину каждого сегмента — так они ВСЕГДА на трубе */
   mods.innerHTML=''; notes.innerHTML='';
-  const gap = 160; // отступ карточек от края трубы
+  for(let i=0;i<STAGES.length;i++){
+    const segStart = coreLen * (i / STAGES.length);
+    const segEnd   = coreLen * ((i+1) / STAGES.length);
+    const mid      = (segStart + segEnd) / 2;
+    const pt       = core.getPointAtLength(mid);
 
-  STAGES.forEach((s,i)=>{
-    // модуль (иконка) на середине сегмента
-    const m = midPts[i];
+    // модуль в SVG
     const g = document.createElementNS('http://www.w3.org/2000/svg','g');
     g.setAttribute('class','module');
-    g.setAttribute('transform', `translate(${m.x},${m.y})`);
-    g.innerHTML = moduleIcon(s.icon);
+    g.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+    g.innerHTML = moduleIcon(STAGES[i].icon);
     mods.appendChild(g);
 
-    // подпись — справа или слева (чередуем)
-    const div = document.createElement('div');
-    div.className = 'note reveal';
-    div.innerHTML = `
-      <div class="tag">${s.tag}${s.id==='as'?' · опционально':''}</div>
-      <h3>${s.title}</h3>
-      <p>${s.text}</p>
-    `;
-    notes.appendChild(div);
+    // карточка снаружи (справа/слева от текущего края)
+    const toRight = (i%2===0);
+    const card = document.createElement('div');
+    card.className = 'note reveal';
+    card.innerHTML = `
+      <div class="tag">${STAGES[i].tag}${STAGES[i].id==='as'?' · опционально':''}</div>
+      <h3>${STAGES[i].title}</h3>
+      <p>${STAGES[i].text}</p>`;
+    notes.appendChild(card);
 
-    // позиционирование карточки
-    const toRight = m.dirRight; // если труба идёт вправо — карточка справа
-    const left = toRight ? (svg.clientWidth - 20 - Math.min(440, window.innerWidth-40)) : 20;
-    div.style.left = left+'px';
-    // чуть выше средней линии, чтобы не перекрывать
     const sceneTop = svg.getBoundingClientRect().top + window.scrollY;
-    const noteY = sceneTop + (m.y - 70);
-    div.style.top = noteY+'px';
-  });
-
-  // «свечащаяся» стартовая позиция капли — в начале
-  moveDrop(0);
+    card.style.top = (sceneTop + pt.y - 70) + 'px';
+    if(window.innerWidth>820){
+      const w = Math.min(440, window.innerWidth-40);
+      card.style.left = toRight ? (window.innerWidth - w - 20) + 'px' : '20px';
+    }
+  }
 }
 
+/* простые иконки узлов */
 function moduleIcon(kind){
   const box = `<rect x="-72" y="-24" width="144" height="48"/>`;
   switch(kind){
@@ -276,32 +247,32 @@ function moduleIcon(kind){
   }
 }
 
-/* ===== движение капли по скроллу (вперёд/назад) ===== */
+/* движение капли по скроллу (вперёд/назад) */
 function moveDrop(progress){ // 0..1
-  const L = pathLen * Math.min(1, Math.max(0, progress));
-  const pt = corePath.getPointAtLength(L || 0.0001);
+  const len = Math.max(0, Math.min(1, progress)) * coreLen;
+  const pt = core.getPointAtLength(len || 0.0001);
   drop.setAttribute('transform', `translate(${pt.x},${pt.y})`);
 }
 function onScroll(){
   const scene = document.querySelector('.pipe-scene');
-  const rect = scene.getBoundingClientRect();
+  const r = scene.getBoundingClientRect();
   const vh = window.innerHeight;
-  // прогресс: доля «пролистанной» сцены в зоне видимости
-  const total = rect.height + vh;
-  const gone  = Math.min(total, Math.max(0, vh - rect.top));
-  const p = gone / total;
-  moveDrop(p);
+  const total = r.height + vh;
+  const gone  = Math.min(total, Math.max(0, vh - r.top));
+  moveDrop(gone / total);
 
-  // включаем появления карточек
   document.querySelectorAll('.note').forEach(n=>{
     const nr = n.getBoundingClientRect();
     if(nr.top < vh*0.8) n.classList.add('show');
   });
 }
-addEventListener('scroll', onScroll, {passive:true});
-addEventListener('resize', ()=>{ draw(); onScroll(); });
 
-draw(); onScroll();
+/* init */
+buildPath();
+moveDrop(0);
+onScroll();
+addEventListener('scroll', onScroll, {passive:true});
+addEventListener('resize', ()=>{ buildPath(); onScroll(); });
 </script>
 </body>
 </html>
