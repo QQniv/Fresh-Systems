@@ -7,8 +7,15 @@
   <meta name="color-scheme" content="dark" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+
+  <!-- ВИДЕО/ФОН -->
+  <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4" />
+  </video>
+
+  <div class="overlay"></div>
+
   <!-- ШАПКА -->
   <header class="site-header">
     <a class="brand" href="index.html">FS</a>
@@ -22,62 +29,72 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero" style="background-image:url('images/hero-water.jpg')">
-    <div class="hero-overlay"></div>
-    <div class="container hero-content">
+  <section class="hero">
+    <div class="container hero-inner">
       <h1 class="hero-title">Питьевая вода в вашем доме</h1>
-      <p class="hero-sub">
-        Мы разрабатываем системы тонкой фильтрации для жилых комплексов,
-        создавая индивидуальные решения под анализ воды и требования застройщика.
-      </p>
+      <p class="hero-sub">Мы создаём современные системы фильтрации, чтобы ваша вода была чистой, безопасной и вкусной — каждый день.</p>
       <div class="hero-actions">
-        <a href="technologies.html" class="btn primary">Технологии</a>
+        <a href="technologies.html" class="btn primary">Подробнее</a>
         <a href="contacts.html" class="btn ghost">Оставить заявку</a>
       </div>
     </div>
   </section>
 
-  <!-- БЛОК ФИЛЬТРОСИСТЕМЫ -->
-  <section class="section">
-    <div class="container">
-      <h2>Фильтросистемы Fresh Systems</h2>
-      <p>
-        Мы подбираем оборудование под результаты анализа воды. Проводим исследование,
-        рассчитываем оптимальные параметры, монтируем систему и настраиваем её под ваш объект.
-      </p>
-      <a href="technologies.html" class="btn link">Читать подробнее →</a>
+  <!-- БЛОК 1 -->
+  <section class="section fadein">
+    <div class="container two-column">
+      <div class="text">
+        <h2>Фильтросистемы Fresh Systems</h2>
+        <p>
+          Мы подбираем и собираем оборудование под ваш объект.
+          Анализируем состав воды, проектируем систему под реальный расход и помогаем пройти экспертизу.
+        </p>
+        <a href="technologies.html" class="btn link">Читать подробнее →</a>
+      </div>
+      <div class="image">
+        <img src="images/production-2.jpg" alt="Фильтросистема" />
+      </div>
     </div>
   </section>
 
-  <!-- СООТВЕТСТВИЕ САНПИН -->
-  <section class="section dark">
-    <div class="container">
-      <h2>Соответствие СанПиН</h2>
-      <p>
-        Все наши фильтры, материалы и трубы соответствуют нормам СанПиН
-        и стандартам питьевой воды в жилых домах.
-      </p>
-      <a href="sanpin.html" class="btn link">Читать подробнее →</a>
+  <!-- БЛОК 2 -->
+  <section class="section dark fadein">
+    <div class="container two-column reverse">
+      <div class="image">
+        <img src="images/fittings-2784902.jpeg" alt="СанПиН трубы" />
+      </div>
+      <div class="text">
+        <h2>Соответствие СанПиН</h2>
+        <p>
+          Все используемые материалы и фильтры сертифицированы. Мы гарантируем соответствие требованиям СанПиН по микробиологии, материалам и качеству питьевой воды.
+        </p>
+        <a href="sanpin.html" class="btn link">Читать подробнее →</a>
+      </div>
     </div>
   </section>
 
-  <!-- ПОЧЕМУ ВОДА ВКУСНАЯ -->
-  <section class="section">
-    <div class="container">
-      <h2>Почему вода вкусная</h2>
-      <p>
-        После фильтрации мы используем минерализацию Ca/Mg, которая
-        делает воду мягкой, сбалансированной и приятной на вкус.
-      </p>
-      <a href="taste.html" class="btn link">Раскрыть тему вкуса →</a>
+  <!-- БЛОК 3 -->
+  <section class="section fadein">
+    <div class="container two-column">
+      <div class="text">
+        <h2>Почему вода вкусная</h2>
+        <p>
+          Мы не просто очищаем воду — мы сохраняем её природную структуру.
+          После фильтрации вода минерализуется, приобретая мягкий и насыщенный вкус.
+        </p>
+        <a href="taste.html" class="btn link">Раскрыть тему вкуса →</a>
+      </div>
+      <div class="image">
+        <img src="images/kid-drink.jpg" alt="Вкусная вода" />
+      </div>
     </div>
   </section>
 
-  <!-- СВЯЗАТЬСЯ -->
-  <section class="section dark">
-    <div class="container">
+  <!-- КОНТАКТЫ -->
+  <section class="section dark fadein">
+    <div class="container center">
       <h2>Свяжитесь с нами</h2>
-      <p>Оставьте заявку, и мы подберём решение под ваш объект.</p>
+      <p>Мы поможем подобрать оптимальное решение под ваш объект и рассчитаем стоимость проекта.</p>
       <div class="hero-actions">
         <a href="contacts.html" class="btn primary">Оставить заявку</a>
         <a href="services.html" class="btn ghost">Наши услуги</a>
@@ -85,12 +102,22 @@
     </div>
   </section>
 
-  <!-- ФУТЕР -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
       <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
+
+  <script>
+    // эффект появления при скролле
+    const reveals = document.querySelectorAll('.fadein');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('show');
+      });
+    },{threshold:.2});
+    reveals.forEach(r=>obs.observe(r));
+  </script>
 </body>
 </html>
