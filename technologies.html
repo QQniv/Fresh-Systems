@@ -14,23 +14,40 @@
 }
 body{overflow-x:hidden}
 
-/* ===== Фиксированная труба поверх фона ===== */
+/* ====== ФИКСИРОВАННАЯ ТРУБА НАД ФОНОМ ====== */
 .pipe-overlay{position:fixed; inset:0; z-index:1; pointer-events:none}
 .overlay-svg{width:100%; height:100%; display:block}
 
-/* стеклянная труба */
-#pipeOuter{stroke:rgba(210,240,255,.18); stroke-width:26; fill:none; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(125,211,252,.25))}
-#pipeCore {stroke:url(#coreGrad); stroke-width:15;  fill:none; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(125,211,252,.45))}
+/* Стеклянная труба */
+#pipeOuter{stroke:rgba(210,240,255,.18); stroke-width:28; fill:none; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(125,211,252,.28))}
+#pipeCore {stroke:url(#coreGrad); stroke-width:16; fill:none; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(125,211,252,.55))}
 
-/* модули (фильтры) */
-.module rect{fill:rgba(12,18,32,.78); stroke:rgba(140,200,255,.38); stroke-width:1.2; rx:10; ry:10}
-.module line{stroke:rgba(140,200,255,.88); stroke-width:2}
+/* Движение жидкости: пунктир, который «течёт» по трубе */
+#flow {
+  stroke: rgba(180,240,255,.9);
+  stroke-width:6; fill:none; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray: 0 24 8 120;  /* короткая «частица» и длинный зазор */
+  animation: flowMove 2.6s linear infinite;
+  opacity:.85;
+  filter: drop-shadow(0 0 6px rgba(116,210,255,.75));
+}
+@keyframes flowMove { to { stroke-dashoffset:-180; } }
 
-/* капля: размер гарантированно меньше внутреннего диаметра */
-#drop{filter: drop-shadow(0 0 10px rgba(116,210,255,.85))}
+/* Капля всегда меньше внутреннего диаметра, плюс «шлейф» */
+#drop{filter: drop-shadow(0 0 10px rgba(116,210,255,.9))}
 #drop .b{fill:url(#dropGrad); stroke:#e6fbff; stroke-width:.8}
+#dropTrail circle{fill:#cfffff; opacity:.85; animation: trail 1.2s ease-out forwards}
+@keyframes trail{
+  0%{opacity:.7; transform:scale(1)}
+  100%{opacity:0; transform:scale(1.6)}
+}
 
-/* ===== Контент ===== */
+/* Модули-фильтры внутри трубы */
+.module rect{fill:rgba(10,16,28,.85); stroke:rgba(140,200,255,.45); stroke-width:1.4; rx:10; ry:10}
+.module line{stroke:rgba(140,200,255,.88); stroke-width:2}
+.module .icon{filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+
+/* ====== КОНТЕНТНЫЙ СЛОЙ ====== */
 .pipe-page{position:relative; z-index:2; padding-top:64px}
 .container{max-width:1160px; margin:0 auto; padding:0 18px}
 .grid{display:grid; grid-template-columns:280px 1fr; gap:22px}
@@ -54,7 +71,7 @@ summary::marker, summary::-webkit-details-marker{display:none}
 .reveal{opacity:0; transform:translateY(18px); transition:.5s ease}
 .reveal.show{opacity:1; transform:none}
 
-/* стакан */
+/* Стакан в финале */
 .glass{width:58px; height:82px; border-radius:8px; border:2px solid rgba(200,230,255,.7); background:linear-gradient(180deg,rgba(160,230,255,.08),rgba(160,230,255,.14)); position:relative; overflow:hidden; margin-top:10px}
 .fill{position:absolute; left:0; right:0; bottom:0; height:0%; background:linear-gradient(180deg,rgba(116,210,255,.5),rgba(116,210,255,.9)); transition:height .6s ease}
 .taste{position:absolute; inset:-26px; border-radius:16px; pointer-events:none; opacity:0; background:
@@ -72,7 +89,7 @@ summary::marker, summary::-webkit-details-marker{display:none}
 </video>
 <div class="overlay"></div>
 
-<!-- ===== ФИКС. ТРУБА + МОДУЛИ + КАПЛЯ (с маской трубы) ===== -->
+<!-- ===== ФИКСИРОВАННАЯ ТРУБА + МОДУЛИ + КАПЛЯ + ПОТОК ===== -->
 <div class="pipe-overlay" aria-hidden="true">
   <svg class="overlay-svg" id="pipeSvg" viewBox="0 0 1200 800" preserveAspectRatio="none">
     <defs>
@@ -86,19 +103,27 @@ summary::marker, summary::-webkit-details-marker{display:none}
         <stop offset="60%" stop-color="#eaffff"/>
         <stop offset="100%" stop-color="#7dd3fc"/>
       </radialGradient>
-      <!-- Маска внутреннего канала: капля НЕ выйдет за трубу -->
+
+      <!-- Маска внутреннего канала: капля и поток не выйдут наружу -->
       <mask id="pipeMask">
         <rect x="0" y="0" width="1200" height="800" fill="black"/>
-        <path id="maskCore" d="" stroke="white" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="maskCore" d="" stroke="white" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </mask>
     </defs>
 
+    <!-- Труба; геометрию строит JS под экран -->
     <path id="pipeOuter" d=""/>
     <path id="pipeCore"  d=""/>
+
+    <!-- Движение жидкости (внутри трубы) -->
+    <path id="flow" d="" mask="url(#pipeMask)"/>
+
+    <!-- Модули-фильтры (вставки в трубе) -->
     <g id="modules"></g>
 
-    <!-- капля под маской -->
+    <!-- Капля + шлейф -->
     <g id="drop" mask="url(#pipeMask)" transform="translate(0,0)">
+      <g id="dropTrail"></g>
       <ellipse class="b" cx="0" cy="0" rx="10" ry="14"/>
       <circle cx="2" cy="-5" r="3" fill="#fff" opacity=".85"/>
     </g>
@@ -127,7 +152,7 @@ summary::marker, summary::-webkit-details-marker{display:none}
 <section class="pipe-page">
   <div class="container">
     <h1 class="h1">Путь воды: от ХВС до стакана</h1>
-    <p class="sub">Труба изгибается на 90° у краёв экрана. Капля движется строго внутри трубы и проходит каждый узел.</p>
+    <p class="sub">Капля движется строго внутри трубы зигзагом под 90°, проходя через ВСЕ фильтры. Скролль — смотри процесс.</p>
   </div>
 
   <div class="container grid">
@@ -147,7 +172,7 @@ summary::marker, summary::-webkit-details-marker{display:none}
 </footer>
 
 <script>
-/* ——— Узлы ——— */
+/* ===== ДАННЫЕ СТАДИЙ ===== */
 const NODES = [
   { id:'hvs',  tag:'ХВС',  title:'Ввод ХВС', text:'Исходная вода на входе.' },
   { id:'k1',   tag:'K1',   title:'Отсечной кран', text:'Безопасное отключение узла.' },
@@ -155,7 +180,7 @@ const NODES = [
   { id:'f1',   tag:'F1',   title:'Грубая очистка 100 μm', text:'Песок, ржавчина, окалина.', drain:true },
   { id:'f2',   tag:'F2',   title:'Тонкая очистка 5 μm', text:'Базовая ступень PP melt-blown.' },
   { id:'f3',   tag:'F3',   title:'Угольный фильтр', text:'Адсорбция органики и запахов.', drain:true },
-  { id:'hd',   tag:'HD',   title:'Насос высокого давления', text:'Создаёт напор для NF.' },
+  { id:'hd',   tag:'HD',   title:'Насос высокого давления', text:'Даёт напор на NF.' },
   { id:'as',   tag:'AS',   title:'Антисилант (опц.)', text:'Защита мембран от отложений.', optional:true },
   { id:'nf',   tag:'NF',   title:'Нанофильтрация', text:'Пермеат → далее; Концентрат → дренаж.', drain:true },
   { id:'min',  tag:'MIN',  title:'Минерализатор Ca/Mg', text:'Формирует вкус и целевой TDS.' },
@@ -165,23 +190,19 @@ const NODES = [
   { id:'tap',  tag:'💧',   title:'Потребитель', text:'Кухни, фонтанчики — чистая вода.', final:true }
 ];
 
-/* ——— Меню для мобилы ——— */
+/* ===== Мобильное меню ===== */
 (function(){
-  const btn = document.getElementById('menuBtn');
-  const d = document.getElementById('drawer');
+  const btn=document.getElementById('menuBtn'); const d=document.getElementById('drawer');
   if(!btn||!d) return;
-  const t=(o)=>{ if(o===undefined) o=!d.classList.contains('open');
-    d.classList.toggle('open',o); d.hidden=!o; btn.setAttribute('aria-expanded', String(o));
-    document.body.classList.toggle('mobile-menu-open',o); };
+  const t=o=>{ if(o===undefined) o=!d.classList.contains('open'); d.classList.toggle('open',o); d.hidden=!o; btn.setAttribute('aria-expanded', String(o)); document.body.classList.toggle('mobile-menu-open',o); };
   const h=e=>{e.preventDefault(); t();};
   btn.addEventListener('click',h,{passive:false}); btn.addEventListener('touchstart',h,{passive:false});
   document.addEventListener('click',e=>{ if(!d.classList.contains('open')) return; if(!d.contains(e.target)&&!btn.contains(e.target)) t(false);});
 })();
 
-/* ——— Контент узлов + мини-карта ——— */
+/* ===== Контент узлов + ToC ===== */
 (function buildContent(){
-  const wrap = document.getElementById('nodes');
-  const toc = document.getElementById('tocNav');
+  const wrap=document.getElementById('nodes'); const toc=document.getElementById('tocNav');
   NODES.forEach(n=>{
     const s=document.createElement('section'); s.className='node reveal'; s.id='node-'+n.id;
     s.innerHTML=`
@@ -200,59 +221,48 @@ const NODES = [
         </details>
       </div>`;
     wrap.appendChild(s);
-    const a=document.createElement('a'); a.href='#node-'+n.id; a.innerHTML=`<span class="dot"></span> ${n.tag} ${n.title}`;
-    toc.appendChild(a);
+    const a=document.createElement('a'); a.href='#node-'+n.id; a.innerHTML=`<span class="dot"></span> ${n.tag} ${n.title}`; toc.appendChild(a);
   });
 })();
 
-/* ——— Геометрия трубы: 90° зигзаг + модули, адаптивно ——— */
+/* ===== Геометрия 90° зигзага + модули + поток + маска ===== */
 (function buildPipe(){
   const svg   = document.getElementById('pipeSvg');
   const outer = document.getElementById('pipeOuter');
   const core  = document.getElementById('pipeCore');
   const maskC = document.getElementById('maskCore');
+  const flow  = document.getElementById('flow');
   const modsG = document.getElementById('modules');
 
   function makePath(){
-    const w = svg.clientWidth;
-    const h = svg.clientHeight;
-
-    // Разные поля для десктопа/мобилы
+    const w = svg.clientWidth, h = svg.clientHeight;
     const isMobile = matchMedia('(max-width: 768px)').matches;
-    const marginX = isMobile ? Math.max(40, w*0.05) : Math.max(80, w*0.06);
-    const startY  = 120;
-    const bottomPad = 100;
+    const marginX = isMobile ? Math.max(42, w*0.05) : Math.max(90, w*0.07);
+    const startY  = 120, bottomPad = 110;
+    const left  = marginX, right = w - marginX;
 
-    const left  = marginX;
-    const right = w - marginX;
-
-    // шаг по вертикали зависит от числа узлов и высоты вьюпорта
     const turns = NODES.length;
     const usableH = h - startY - bottomPad;
-    const stepY   = Math.max(80, usableH / (turns*0.9));
+    const stepY = Math.max(80, usableH / (turns*0.98));
+    const r = 14;
 
-    // строим вершины «полок»
+    // вершины полок (90° по краям)
     const pts = [];
-    let dirRight = true;
-    let x = left, y = startY;
+    let dirRight = true; let x = left, y = startY;
     pts.push([x,y]);
     for(let i=0;i<turns;i++){
-      x = dirRight ? right : left;   // горизонтальный ход до края (90°)
-      pts.push([x,y]);
-      y += stepY;                    // потом вниз
-      pts.push([x,y]);
-      dirRight = !dirRight;
+      x = dirRight ? right : left; pts.push([x,y]); y += stepY; pts.push([x,y]); dirRight=!dirRight;
     }
 
-    const r = 14; // небольшое скругление угла
+    // путь c скруглениями углов
     let d = `M ${pts[0][0]} ${pts[0][1]}`;
     for(let i=1;i<pts.length;i++){
       const [px,py]=pts[i-1], [cx,cy]=pts[i];
-      if(py===cy){ // горизонталь
+      if(py===cy){
         const sign = cx>px ? 1 : -1;
         d += ` L ${cx - sign*r} ${cy}`;
         if(i+1<pts.length) d += ` Q ${cx} ${cy} ${cx} ${cy + r}`; else d += ` L ${cx} ${cy}`;
-      }else{       // вертикаль
+      }else{
         const sign = cy>py ? 1 : -1;
         d += ` L ${cx} ${cy - sign*r}`;
         if(i+1<pts.length){
@@ -264,12 +274,13 @@ const NODES = [
 
     outer.setAttribute('d', d);
     core.setAttribute('d',  d);
-    maskC.setAttribute('d', d); // маска = внутренний путь
+    maskC.setAttribute('d', d);
+    flow.setAttribute('d',  d);
 
-    // ===== модули поверх трубы, поперёк направления =====
+    // Модули внутри трубы (простые иконки)
     modsG.innerHTML='';
     const len = outer.getTotalLength();
-    const modW = 56, modH = 30; // базовые размеры «коробки»
+    const MW = 62, MH = 34; // базовый размер «окна» модуля
     NODES.forEach((n,i)=>{
       const t = (i+0.5)/(NODES.length+0.5);
       const L = t*len;
@@ -277,32 +288,50 @@ const NODES = [
       const prev = outer.getPointAtLength(Math.max(0, L-1));
       const horiz = Math.abs(pt.y - prev.y) < Math.abs(pt.x - prev.x);
 
-      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-      g.setAttribute('class','module');
-
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.setAttribute('class','module');
       const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
       const line = document.createElementNS('http://www.w3.org/2000/svg','line');
 
       if(horiz){
-        rect.setAttribute('x', pt.x - modW/2);
-        rect.setAttribute('y', pt.y - modH/2);
-        rect.setAttribute('width', modW);
-        rect.setAttribute('height', modH);
-        line.setAttribute('x1', pt.x - modW/2 + 8);
-        line.setAttribute('x2', pt.x + modW/2 - 8);
-        line.setAttribute('y1', pt.y);
-        line.setAttribute('y2', pt.y);
-      }else{
-        rect.setAttribute('x', pt.x - modH/2);
-        rect.setAttribute('y', pt.y - modW/2);
-        rect.setAttribute('width', modH);
-        rect.setAttribute('height', modW);
-        line.setAttribute('x1', pt.x);
-        line.setAttribute('x2', pt.x);
-        line.setAttribute('y1', pt.y - modW/2 + 8);
-        line.setAttribute('y2', pt.y + modW/2 - 8);
+        rect.setAttribute('x', pt.x - MW/2); rect.setAttribute('y', pt.y - MH/2);
+        rect.setAttribute('width', MW); rect.setAttribute('height', MH);
+        line.setAttribute('x1', pt.x - MW/2 + 9); line.setAttribute('x2', pt.x + MW/2 - 9);
+        line.setAttribute('y1', pt.y); line.setAttribute('y2', pt.y);
+      } else {
+        rect.setAttribute('x', pt.x - MH/2); rect.setAttribute('y', pt.y - MW/2);
+        rect.setAttribute('width', MH); rect.setAttribute('height', MW);
+        line.setAttribute('x1', pt.x); line.setAttribute('x2', pt.x);
+        line.setAttribute('y1', pt.y - MW/2 + 9); line.setAttribute('y2', pt.y + MW/2 - 9);
       }
       g.appendChild(rect); g.appendChild(line);
+
+      // простые 3D-иконки (шаржи), разные по типу:
+      const icon = document.createElementNS('http://www.w3.org/2000/svg','g');
+      icon.setAttribute('class','icon');
+      let iconPath='';
+      switch(n.id){
+        case 'k1': iconPath='M-12 0 h24 v6 h-24 z M0 -12 v24'; break; // кран
+        case 'ok': iconPath='M-12 -8 L12 8 M-12 8 L12 -8'; break; // клапан
+        case 'f1': iconPath='M-14 -10 h28 v20 h-28 z M-10 -10 v20 M10 -10 v20'; break; // сетка
+        case 'f2': iconPath='M-10 -14 a10 6 0 1 0 20 0 a10 6 0 1 0 -20 0'; break; // картридж
+        case 'f3': iconPath='M-12 -8 h24 v16 h-24 z M-10 -6 h20 v12 h-20 z'; break; // уголь
+        case 'hd': iconPath='M-14 -8 h18 v16 h-18 z M4 -6 h8 v12 h-8 z'; break; // насос
+        case 'as': iconPath='M-6 -12 v24 M6 -12 v24 M-10 0 h20'; break; // дозирование
+        case 'nf': iconPath='M-14 -8 h28 v16 h-28 z M-12 -6 h24 v12 h-24 z'; break; // мембрана
+        case 'min':iconPath='M-10 -10 h20 v20 h-20 z M-6 -6 h12 v12 h-12 z'; break; // минерал
+        case 'uv': iconPath='M-12 -2 h24 M-8 -8 h16 M-8 4 h16'; break; // лампа
+        case 'tank':iconPath='M-14 -12 h28 v24 h-28 z M-14 -2 h28'; break; // бак
+        case 'pump':iconPath='M-14 -8 h18 v16 h-18 z M4 -6 h8 v12 h-8 z'; break; // насос
+        case 'tap':iconPath='M-10 -2 h20 M6 -2 v12 M0 10 v-6'; break; // кран
+        default: iconPath='M-8 -8 h16 v16 h-16 z';
+      }
+      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d', iconPath); p.setAttribute('fill','none'); p.setAttribute('stroke','rgba(210,235,255,.95)'); p.setAttribute('stroke-width','2.2'); p.setAttribute('stroke-linecap','round'); p.setAttribute('stroke-linejoin','round');
+
+      // позиция иконки в модуле
+      icon.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+      icon.appendChild(p); g.appendChild(icon);
+
       modsG.appendChild(g);
     });
 
@@ -312,12 +341,13 @@ const NODES = [
   let geom = makePath();
   window.addEventListener('resize', ()=>{ geom = makePath(); update(); }, {passive:true});
 
-  /* — капля по скроллу — */
+  /* ===== КАПЛЯ ПО СКРОЛЛУ + ШЛЕЙФ + АКТИВ TOC + ФИНАЛ ===== */
   const drop  = document.getElementById('drop');
-  const fill  = document.getElementById('fill');
-  const taste = document.getElementById('taste');
+  const trail = document.getElementById('dropTrail');
   const sections = Array.from(document.querySelectorAll('.node'));
   const tocLinks = Array.from(document.querySelectorAll('#tocNav a'));
+  const fill  = document.getElementById('fill');
+  const taste = document.getElementById('taste');
 
   function progress(){
     const doc = document.documentElement;
@@ -326,21 +356,31 @@ const NODES = [
     return dh>0 ? Math.min(1, Math.max(0, st/dh)) : 0;
   }
 
+  let lastT = 0;
   function update(){
     const p = progress();
     const L = p*(geom.length-2);
     const pt= geom.path.getPointAtLength(L);
     drop.setAttribute('transform',`translate(${pt.x},${pt.y})`);
 
-    // активная секция
+    // шлейф капли
+    const now = performance.now();
+    if(now - lastT > 120){ // след каждые 120мс
+      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); c.setAttribute('r', 3);
+      trail.appendChild(c); setTimeout(()=>c.remove(), 1200);
+      lastT = now;
+    }
+
+    // актив секции
     let idx=0; for(let i=0;i<sections.length;i++){ const r=sections[i].getBoundingClientRect(); if(r.top<innerHeight*0.45) idx=i; }
     const id = '#'+sections[idx].id;
     tocLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
 
-    // появление карточек
+    // появления карточек
     sections.forEach(s=>{ if(s.classList.contains('show')) return; const r=s.getBoundingClientRect(); if(r.top<innerHeight*0.8) s.classList.add('show'); });
 
-    // вкус
+    // «вкус» в стакане
     if(fill && taste){
       const last = sections[sections.length-1].getBoundingClientRect();
       const vh = innerHeight;
@@ -355,13 +395,12 @@ const NODES = [
   update();
 })();
 
-/* — клики по мини-карте — */
+/* ===== Мини-карта: плавный переход к узлам ===== */
 (function(){
   const toc = document.getElementById('toc');
   const nav = document.getElementById('tocNav');
   NODES.forEach(n=>{
-    const a=document.createElement('a'); a.href='#node-'+n.id; a.innerHTML=`<span class="dot"></span> ${n.tag} ${n.title}`;
-    nav.appendChild(a);
+    const a=document.createElement('a'); a.href='#node-'+n.id; a.innerHTML=`<span class="dot"></span> ${n.tag} ${n.title}`; nav.appendChild(a);
   });
   toc?.addEventListener('click',e=>{
     const a=e.target.closest('a'); if(!a) return;
