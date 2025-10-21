@@ -11,11 +11,13 @@
 </head>
 <body class="no-video">
 
+  <!-- фон -->
   <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
   </video>
   <div class="overlay"></div>
 
+  <!-- шапка -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
     <nav class="top-nav" aria-label="Основное меню">
@@ -27,76 +29,92 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <div class="container hero-inner">
-      <h1 class="hero-title" data-parallax data-speed="0.25">
-        <span class="shine">Питьевая вода в вашем доме</span>
-      </h1>
-      <p class="hero-sub" data-parallax data-speed="0.18">
-        Уникальные фильтросистемы под ваш дом — исследуем воду, проектируем систему и создаём чистую,
-        безопасную и вкусную воду каждый день.
-      </p>
-      <div class="hero-actions" data-parallax data-speed="0.12">
-        <a href="technologies.html" class="btn primary">Подробнее</a>
-        <a href="contacts.html" class="btn ghost">Оставить заявку</a>
+  <!-- HERO -->
+  <section class="section hero">
+    <div class="container">
+      <div class="hgroup fadein" data-parallax data-speed="0.2">
+        <div class="kicker">Fresh Systems</div>
+        <h1 class="h1">Питьевая вода в вашем доме</h1>
+        <p class="sub">Мы исследуем воду, проектируем систему под ваш дом и обеспечиваем чистую, безопасную и вкусную воду каждый день.</p>
+        <div class="actions">
+          <a href="technologies.html" class="btn primary">Подробнее</a>
+          <a href="contacts.html" class="btn ghost">Оставить заявку</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- КТО МЫ ТАКИЕ -->
-  <section class="section fadein parallaxy card-section" data-speed="-0.06" id="about-brief">
-    <div class="container section-narrow">
-      <h2>Кто мы такие?</h2>
-      <p><strong>FS engineering</strong> — компания по созданию централизованных систем фильтрации в жилых домах.
-        Проектируем под анализ воды, монтируем, вводим в эксплуатацию и ведём сервис.</p>
+  <!-- КТО МЫ -->
+  <section class="section">
+    <div class="container">
+      <div class="hgroup fadein">
+        <div class="kicker">КТО МЫ ТАКИЕ</div>
+        <h2 class="h2">FS engineering — централизованные системы фильтрации</h2>
+        <p class="sub">Проектируем под анализ воды, подбираем оборудование, монтируем, пускаем и берём на сервис.</p>
+      </div>
 
-      <!-- заменил плейсхолдер на реальное фото -->
-      <img src="images/about-moscow.jpg" alt="Современная московская новостройка" class="about-photo">
+      <div class="row">
+        <div class="col-8 fadein">
+          <img src="images/about-moscow.jpg" alt="Современная новостройка Москвы" class="about-photo">
+        </div>
+        <div class="col-4 fadein">
+          <div class="glass">
+            <h3>Почему это важно</h3>
+            <p>Централизованная система позволяет обеспечить одинаковое качество воды во всём доме и контролировать его по регламенту.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- НАШИ СИСТЕМЫ -->
-  <section class="section fadein parallaxy card-section dark" data-speed="0.08" id="systems-types">
-    <div class="container section-narrow">
-      <h2>Наши системы</h2>
-      <p>Разрабатываем и создаём решения под разные задачи и объекты.</p>
-      <div class="sys-buttons">
-        <a href="services.html#multi" class="btn pill">Многоквартирные дома</a>
-        <a href="services.html#private" class="btn pill">Частные дома</a>
-        <a href="services.html#apartment" class="btn pill">Квартиры</a>
+  <section class="section">
+    <div class="container">
+      <div class="hgroup fadein">
+        <div class="kicker">НАШИ СИСТЕМЫ</div>
+        <h2 class="h2">Решения под разные задачи</h2>
+        <p class="sub">Мы работаем с многоквартирными домами, частными домами и квартирами — технологические цепочки подбираем по вашему анализу воды.</p>
+      </div>
+      <div class="row">
+        <div class="col-4 fadein"><a class="glass" href="services.html#multi"><h3>Многоквартирные дома</h3><p>Центральные станции подготовки, резервуары, подача на стояки.</p></a></div>
+        <div class="col-4 fadein"><a class="glass" href="services.html#private"><h3>Частные дома</h3><p>Компактные станции с минерализацией и УФ.</p></a></div>
+        <div class="col-4 fadein"><a class="glass" href="services.html#apartment"><h3>Квартиры</h3><p>Индивидуальные решения под кухню и фонтаны.</p></a></div>
       </div>
     </div>
   </section>
 
-  <!-- ПОЧЕМУ ДОВЕРЯТЬ -->
-  <section class="section fadein parallaxy card-section" data-speed="-0.05" id="trust">
-    <div class="container grid-2">
-      <div class="card glass">
-        <h3>Инженерная экспертиза</h3>
-        <p>Технологии разрабатываются командой инженеров с учётом гидравлики, ресурсных расчётов и санитарных норм.</p>
+  <!-- ПОЧЕМУ ДОВЕРЯЮТ -->
+  <section class="section">
+    <div class="container">
+      <div class="hgroup fadein">
+        <div class="kicker">ПОЧЕМУ НАМ ДОВЕРЯЮТ</div>
+        <h2 class="h2">Инженерия и подтверждённое качество</h2>
+        <p class="sub">Технологии мы проектируем сами, а качество воды подтверждаем лабораторно — показатели стабильны и соответствуют СанПиН.</p>
       </div>
-      <div class="card glass">
-        <h3>Качество воды</h3>
-        <p>По результатам независимых лабораторий — вода чище, чем у части бутилированных брендов.</p>
+      <div class="row">
+        <div class="col-6 fadein"><div class="glass"><h3>Инженерная экспертиза</h3><p>Гидравлика, ресурсные расчёты, санитарные разрывы, правильные дренажи — всё по правилам.</p></div></div>
+        <div class="col-6 fadein"><div class="glass"><h3>Лабораторные протоколы</h3><p>По протоколам — вода чище некоторых бутилированных брендов, при этом «живая» за счёт минерализации.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- СВЯЗАТЬСЯ С НАМИ -->
-  <section class="section fadein parallaxy card-section dark" data-speed="0.06" id="contact-brief">
-    <div class="container section-narrow center">
-      <h2>Связаться с нами</h2>
-      <p>Офис: г.&nbsp;Москва, ул.&nbsp;Красота. Рабочие часы: 00:00–00:00.
-        <br>Нажмите «Оставить заявку», чтобы заполнить форму и отправить нам письмо.</p>
-      <div class="hero-actions">
-        <a href="contacts.html" class="btn primary">Оставить заявку</a>
-        <a href="services.html" class="btn ghost">Наши услуги</a>
+  <!-- КОНТАКТЫ КРАТКО -->
+  <section class="section">
+    <div class="container">
+      <div class="hgroup fadein">
+        <div class="kicker">СВЯЗАТЬСЯ С НАМИ</div>
+        <h2 class="h2">Москва, ул.&nbsp;Красота — рабочие часы 00:00–00:00</h2>
+        <p class="sub">Нажмите «Оставить заявку», чтобы заполнить форму — мы свяжемся с вами и подскажем оптимальный состав системы.</p>
+        <div class="actions">
+          <a href="contacts.html" class="btn primary">Оставить заявку</a>
+          <a href="services.html" class="btn ghost">Наши услуги</a>
+        </div>
       </div>
     </div>
   </section>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
       <a href="index.html" class="minor">Главная</a>
     </div>
@@ -104,40 +122,26 @@
 
   <!-- JS: видео/появления/параллакс -->
   <script>
-    (function(){
-      const v=document.getElementById('bgVideo'); if(!v) return;
-      const ready=()=>{document.body.classList.remove('no-video');const p=v.play?.();if(p?.catch)p.catch(()=>{});};
-      v.addEventListener('loadeddata',ready,{once:true});
-      v.addEventListener('canplay',ready,{once:true});
-      setTimeout(()=>{if(v.readyState>=2) ready();},2500);
+    (function(){const v=document.getElementById('bgVideo');if(!v)return;
+      const ok=()=>{document.body.classList.remove('no-video');v.play?.().catch(()=>{});};
+      v.addEventListener('loadeddata',ok,{once:true});v.addEventListener('canplay',ok,{once:true});
+      setTimeout(()=>{if(v.readyState>=2) ok();},2200);
     })();
 
-    (function(){
-      const els=document.querySelectorAll('.fadein');
+    (function(){const els=document.querySelectorAll('.fadein');
       const io=new IntersectionObserver(es=>{
-        es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); else e.target.classList.remove('show'); });
-      },{threshold:.2});
+        es.forEach(e=>{e.isIntersecting?e.target.classList.add('show'):e.target.classList.remove('show');});
+      },{threshold:.18});
       els.forEach(el=>io.observe(el));
     })();
 
-    (function(){
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const els=[...document.querySelectorAll('[data-parallax]'), ...document.querySelectorAll('.parallaxy')];
-      if(!els.length) return;
-      let H=innerHeight, ticking=false;
+    (function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      const els=[...document.querySelectorAll('[data-parallax]')];
+      if(!els.length)return;let H=innerHeight,ticking=false;
       const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
-      const apply=()=>{
-        els.forEach(el=>{
-          const s=parseFloat(el.dataset.speed||'0.1');
-          const r=el.getBoundingClientRect();
-          const c=r.top+r.height/2-H/2;
-          el.style.transform=`translate3d(0, ${clamp(c*s,-42,42)}px, 0)`;
-        });
-        ticking=false;
-      };
-      addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply);} }, {passive:true});
-      addEventListener('resize',()=>{ H=innerHeight; apply(); }, {passive:true});
-      apply();
+      const apply=()=>{els.forEach(el=>{const s=parseFloat(el.dataset.speed||'0.15');const r=el.getBoundingClientRect();const c=r.top+r.height/2-H/2;el.style.transform=`translate3d(0, ${clamp(c*s,-36,36)}px, 0)`;});ticking=false;};
+      addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(apply);}}, {passive:true});
+      addEventListener('resize',()=>{H=innerHeight;apply();}, {passive:true});apply();
     })();
   </script>
 </body>
