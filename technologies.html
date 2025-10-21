@@ -3,13 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Технологии — Fresh Systems</title>
+  <title>Fresh Systems — Технологии</title>
   <meta name="color-scheme" content="dark" />
+  <link rel="preload" as="image" href="images/hero-water.jpg" />
+  <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="no-video">
 
-  <!-- Шапка -->
+  <!-- фон -->
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="overlay"></div>
+
+  <!-- шапка -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
     <nav class="top-nav" aria-label="Основное меню">
@@ -19,100 +27,128 @@
       <a href="services.html">Услуги</a>
       <a href="contacts.html">Контакты</a>
     </nav>
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
-    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
-      <a href="technologies.html">Технологии</a>
-      <a href="sanpin.html">СанПиН</a>
-      <a href="taste.html">Почему вода вкусная</a>
-      <a href="services.html">Услуги</a>
-      <a href="contacts.html">Контакты</a>
-    </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero" style="background-image:linear-gradient(180deg,rgba(11,16,32,.45),rgba(11,16,32,.9)),url('images/hero-water.jpg'); background-position:center 32%;">
-    <div class="container hero-content">
-      <h1 class="hero-title">Технологии</h1>
-      <p class="hero-sub">Модульная система очистки, рассчитанная по результатам анализа воды и расходам дома.</p>
-      <div class="hero-actions">
-        <a class="btn primary" href="contacts.html">Оставить заявку</a>
-        <a class="btn ghost" href="services.html">Услуги</a>
-      </div>
+  <!-- hero -->
+  <section class="tech-hero fadein show">
+    <div class="container">
+      <h1 class="hero-title"><span class="shine">Технологии</span></h1>
+      <p class="hero-sub">Ниже — наглядная схема типовой системы NF с предочисткой и доочисткой.</p>
     </div>
   </section>
 
-  <!-- Как мы подбираем систему -->
-  <section class="section">
-    <div class="container">
-      <h2>Как мы проектируем решение</h2>
-      <p>Берём исходные данные (квартиры, жителей, потребление/чел, суточные и часовые пики), результаты анализа воды и целевые показатели. Далее собираем схему из модулей и считаем гидравлику, энергопотребление и габариты помещения.</p>
-    </div>
-  </section>
+  <!-- СХЕМА -->
+  <section class="section fadein">
+    <div class="flow">
+      <div class="flow-grid">
 
-  <!-- Модули системы (кратко) -->
-  <section class="section">
-    <div class="container">
-      <h2>Основные модули</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Предфильтрация</h3>
-          <p>Сетки/картриджи 50–5 мкм. Снимают песок, ил, ржавчину. Защищают мембраны и арматуру.</p>
-        </article>
-        <article class="card">
-          <h3>Ультрафильтрация (UF)</h3>
-          <p>Поры 0,01–0,1 мкм. Задерживает коллоиды и бактерии, повышает прозрачность.</p>
-        </article>
-        <article class="card">
-          <h3>Нанофильтрация (NF)</h3>
-          <p>Селективно снижает жёсткость и органику, сохраняя полезные минералы и «живой» вкус.</p>
-        </article>
-        <article class="card">
-          <h3>УФ-обеззараживание</h3>
-          <p>254 нм, финальная инактивация бактерий/вирусов без реагентов и запахов.</p>
-        </article>
-        <article class="card">
-          <h3>Минерализация</h3>
-          <p>Точная дозировка Ca/Mg для целевого вкуса (обычно TDS 120–220 мг/л, Ca:Mg≈2:1).</p>
-        </article>
-        <article class="card">
-          <h3>Резервуар + насосы</h3>
-          <p>Гидробаки/резервуары по расчёту пиков, насосные группы с частотным управлением.</p>
-        </article>
+        <div class="flow-item"><span class="tag">[K1]</span><h4>Отсечной кран</h4><p>Забор части воды на фильтрацию.</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[ОК]</span><h4>Обратный клапан</h4><p>Предотвращает обратный поток (автоматизированный).</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[F1]</span><h4>Грубая очистка</h4><p>100 μm, промывной — снимает крупные включения.</p><i class="flow-arrow"></i>
+          <div class="flow-note">Дренажная линия → <em>воронка с воздушным зазором</em> → канализация</div>
+        </div>
+        <div class="flow-item"><span class="tag">[F2]</span><h4>Тонкая очистка</h4><p>5 μm PP melt-blown — обязательный картридж.</p><i class="flow-arrow"></i></div>
+
+        <div class="flow-item"><span class="tag">[F3]</span><h4>Угольный фильтр</h4><p>Картридж/загрузка — адсорбция запахов/МИК.</p><i class="flow-arrow"></i>
+          <div class="flow-note">Если загрузочный и Q&gt;5 м³/сут → Дренаж #2</div>
+        </div>
+        <div class="flow-item"><span class="tag">[НД]</span><h4>Насос высокого давления</h4><p>Создаёт напор для NF.</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[AS]</span><h4>Антисилант (опц.)</h4><p>Защита мембраны при жёсткости/солях.</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[NF]</span><h4>Нанофильтрация</h4><p>Основная мембранная ступень.</p>
+          <div class="flow-note">Пермеат → доочистка; Концентрат → Дренаж #3</div>
+        </div>
+
+        <div class="flow-item"><span class="tag">[MIN]</span><h4>Минерализатор</h4><p>Загрузка Ca/Mg — настраиваем вкус/TDS.</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[UV]</span><h4>УФ-обеззараживание</h4><p>Устраняет риски вторичного обсеменения.</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[Бак]</span><h4>Чистая вода</h4><p>Резервуар питьевой воды.</p><i class="flow-arrow"></i></div>
+        <div class="flow-item"><span class="tag">[Насос]</span><h4>Подача</h4><p>Циркуляция по стоякам.</p></div>
+
+        <div class="flow-item flow-colspan-2 flow-drain">
+          <span class="tag">Дренаж</span>
+          <h4>Воронка с воздушным зазором → канализация</h4>
+          <p class="flow-note">Для F1 (промыв), F3 (загрузка при промывке), концентрата NF.</p>
+        </div>
+
       </div>
     </div>
-  </section>
 
-  <!-- Пример схемы (PDF) -->
-  <section class="section dark">
-    <div class="container">
-      <h2>Пример системы</h2>
-      <p>Ниже — образец одной из схем фильтрации. Можем адаптировать под ваши условия.</p>
-
-      <!-- Как использовать: положи PDF в папку /files и назови system-example.pdf -->
-      <div style="margin:20px 0">
-        <a class="btn primary" href="files/system-example.pdf" target="_blank" rel="noopener">Открыть PDF</a>
-        <a class="btn ghost" href="files/system-example.pdf" download>Скачать PDF</a>
-      </div>
-
-      <!-- Встроенный просмотрчик (если файл переименован и загружен) -->
-      <object data="files/system-example.pdf" type="application/pdf" width="100%" height="600" style="border:1px solid var(--border);border-radius:12px">
-        <p class="minor">Не удалось отобразить PDF. <a class="btn link" href="files/system-example.pdf" target="_blank" rel="noopener">Открыть в новой вкладке →</a></p>
-      </object>
-
-      <p class="minor" style="margin-top:10px">Подсказка: переименуй твой PDF «СИСТЕМА ФИЛЬТРАЦИИ.pdf» в <code>system-example.pdf</code> и положи в папку <code>/files</code>.</p>
+    <!-- ПОДРОБНОСТИ (аккордеон) -->
+    <div class="details">
+      <details>
+        <summary>[K1] Отсечной кран</summary>
+        <p>Позволяет брать заданную долю расхода на фильтрацию. Ставится на вводе узла.</p>
+      </details>
+      <details>
+        <summary>[ОК] Обратный клапан</summary>
+        <p>Исключает обратный ток/гидроудары в линию источника. Берём клапан с малым ΔP.</p>
+      </details>
+      <details>
+        <summary>[F1] Фильтр грубой очистки 100 μm (промывной)</summary>
+        <p>Улавливает ржавчину/песок. Промывка по ΔP/таймеру. Подключение к дренажу с воздушным зазором.</p>
+      </details>
+      <details>
+        <summary>[F2] Фильтр тонкой очистки 5 μm (PP melt-blown)</summary>
+        <p>Минимальная защита насосов/мембран. Картриджи меняем по ΔP/сроку ресурса.</p>
+      </details>
+      <details>
+        <summary>[F3] Угольный фильтр (картридж/загрузка)</summary>
+        <p>Удаляет органику/запах/цветность. Загрузочный — с автоматикой промывок и отводом в дренаж.</p>
+      </details>
+      <details>
+        <summary>[НД] Насос высокого давления</summary>
+        <p>Обеспечивает рабочее давление на NF. Подбирается по Q и требуемому давлению мембран.</p>
+      </details>
+      <details>
+        <summary>[AS] Узел дозирования антисиланта (опционально)</summary>
+        <p>Снижает риск накипи на мембране при высокой жёсткости/кислотности. Контроль расходомером.</p>
+      </details>
+      <details>
+        <summary>[NF] Нанофильтрация</summary>
+        <p>Основная ступень смягчения и удаления органики при сохранении части минералов. Контроль per/conc, ΔP, CIP-промывки.</p>
+      </details>
+      <details>
+        <summary>[MIN] Минерализатор (Ca/Mg)</summary>
+        <p>Формируем нужный вкус и TDS. Возможна тонкая подстройка по вкусовым тестам.</p>
+      </details>
+      <details>
+        <summary>[UV] УФ-обеззараживание</summary>
+        <p>Финишная безопасность. Подбираем по УФ-дозе и прозрачности воды; следим за ресурсом лампы.</p>
+      </details>
+      <details>
+        <summary>[Бак чистой воды]</summary>
+        <p>Расчёт объёма — из пикового расхода/резерва. На санитарных врезках — дыхательные клапаны/датчики уровня.</p>
+      </details>
+      <details>
+        <summary>[Насос подачи питьевой воды]</summary>
+        <p>Поддерживает давление в стояках. Рекомендуем частотное управление для экономии энергии и снижения шумов.</p>
+      </details>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
-      <a class="minor" href="index.html">Главная</a>
+      <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
 
+  <!-- JS: фон/анимации/параллакс (как на главной) -->
   <script>
-    const btn=document.getElementById('menuBtn'),panel=document.getElementById('menuPanel');
-    if(btn&&panel){btn.addEventListener('click',()=>{const o=panel.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});}
+    (function(){const v=document.getElementById('bgVideo');if(!v)return;
+      const ready=()=>{document.body.classList.remove('no-video');const p=v.play?.();if(p?.catch)p.catch(()=>{});};
+      v.addEventListener('loadeddata',ready,{once:true});v.addEventListener('canplay',ready,{once:true});
+      setTimeout(()=>{if(v.readyState>=2)ready();},2500);
+    })();
+    (function(){const els=document.querySelectorAll('.fadein');const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');else e.target.classList.remove('show');});
+    },{threshold:.2});els.forEach(el=>io.observe(el));})();
+    (function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      const els=[...document.querySelectorAll('[data-parallax]'),...document.querySelectorAll('.parallaxy')];
+      if(!els.length)return;let H=innerHeight,ticking=false;const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
+      const apply=()=>{els.forEach(el=>{const s=parseFloat(el.dataset.speed||'0.08');const r=el.getBoundingClientRect();const c=r.top+r.height/2-H/2;el.style.transform=`translate3d(0, ${clamp(c*s,-36,36)}px, 0)`;});ticking=false;};
+      addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(apply);}}, {passive:true});
+      addEventListener('resize',()=>{H=innerHeight;apply();}, {passive:true});apply();
+    })();
   </script>
 </body>
 </html>
