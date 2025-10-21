@@ -12,16 +12,24 @@ body{
   overflow-x:hidden;
 }
 
-/* Видео фон */
+/* Ссылки без подчеркивания */
+a{color:var(--fg); text-decoration:none}
+a:hover{opacity:.92}
+
+/* Видео-фон на весь сайт */
 .bg-video{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  z-index:-2;
+  position:fixed; inset:0; width:100%; height:100%;
+  object-fit:cover; z-index:-2;
   filter:brightness(.55) contrast(1.1) saturate(1.2);
   animation:slowmove 60s linear infinite alternate;
 }
+/* если видео не готово/нет — показываем статичный фон */
+body.no-video .bg-video{display:none}
+body.no-video{
+  background-image:linear-gradient(180deg, rgba(11,16,32,.4), rgba(11,16,32,.9)), url('images/hero-water.jpg');
+  background-size:cover; background-attachment:fixed; background-position:center;
+}
+
 @keyframes slowmove{
   0%{transform:scale(1) translateY(0)}
   50%{transform:scale(1.05) translateY(-2%)}
@@ -29,113 +37,104 @@ body{
 }
 
 .overlay{
-  position:fixed;
-  top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,.35);
-  z-index:-1;
+  position:fixed; inset:0; z-index:-1;
+  background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.50));
 }
 
 /* Шапка */
 .site-header{
   position:sticky; top:0; z-index:10;
   display:flex; align-items:center; justify-content:space-between;
-  padding:16px 32px;
-  background:rgba(11,16,32,.5);
-  backdrop-filter:blur(12px);
+  padding:16px 28px;
+  background:rgba(11,16,32,.5); backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(56,189,248,.15);
 }
-.brand{font-weight:900;font-size:24px;color:#fff;letter-spacing:.06em}
-.top-nav{display:flex;gap:24px}
-.top-nav a{color:#fff;font-weight:500;padding:6px 8px;border-radius:6px;transition:.3s}
+.brand{font-weight:900;font-size:22px;letter-spacing:.06em;color:#fff}
+.top-nav{display:flex;gap:22px;flex-wrap:wrap}
+.top-nav a{padding:6px 8px;border-radius:6px}
 .top-nav a:hover{background:rgba(56,189,248,.12)}
+
+/* Контейнеры и секции */
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.section{padding:84px 0; position:relative; text-align:center}
+.section.dark{background:rgba(0,0,0,.35); backdrop-filter:blur(6px)}
+.section h2{
+  font-size:clamp(28px,4vw,46px); font-weight:800; margin-bottom:12px;
+  text-shadow:0 0 10px rgba(56,189,248,.12);
+}
+.section p{color:var(--muted); font-size:18px; line-height:1.6; max-width:820px; margin:0 auto 16px}
+.section-narrow{max-width:820px}
 
 /* Hero */
 .hero{
-  min-height:75vh;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:60px 20px;
+  min-height:75vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:64px 20px;
 }
-.hero-inner{max-width:880px;margin:auto}
-.hero-title{
-  font-size:clamp(38px,6vw,84px);
-  font-weight:900;
-  line-height:1.15;
-  background:linear-gradient(90deg,#fff,#6fd3ff);
-  -webkit-background-clip:text;
-  color:transparent;
-  margin-bottom:20px;
+.hero-inner{max-width:920px;margin:auto}
+.hero-title{margin-bottom:18px}
+.hero-title .shine{
+  font-size:clamp(38px,6vw,84px); font-weight:900; line-height:1.12;
+  background:linear-gradient(90deg,#ffffff,#a5e9ff 40%,#ffffff 80%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  position:relative;
 }
-.hero-sub{
-  font-size:20px;
-  color:var(--muted);
-  margin-bottom:28px;
-  line-height:1.5;
+.hero-title .shine::after{
+  /* мягкий «блик», идущий слева направо */
+  content:''; position:absolute; inset:-4px -6px;
+  background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.22) 50%, transparent 60%);
+  mix-blend-mode:screen; filter:blur(6px); opacity:.7;
+  animation:gloss 6.5s ease-in-out infinite;
+  pointer-events:none;
 }
-.hero-actions{
-  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+@keyframes gloss{
+  0%{transform:translateX(-30%)}
+  50%{transform:translateX(30%)}
+  100%{transform:translateX(-30%)}
 }
 
-/* Кнопки */
-.btn{
-  padding:12px 22px;border-radius:12px;font-weight:600;
-  border:1px solid var(--border);transition:.3s;
-}
+.hero-sub{font-size:20px;color:var(--muted);margin:0 auto 28px;line-height:1.5;max-width:820px}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* Кнопки — без подчёркивания всегда */
+.btn{padding:12px 22px;border-radius:12px;font-weight:600;border:1px solid var(--border);transition:.3s; text-decoration:none}
 .btn.primary{background:var(--accent);color:#001019;border:none}
 .btn.primary:hover{transform:translateY(-2px);background:#4cc9ff}
 .btn.ghost{background:rgba(56,189,248,.15)}
-.btn.link{border:none;background:none;color:var(--accent);font-weight:500;padding:0}
-.btn.link:hover{text-decoration:underline}
+.btn.link{border:none;background:none;color:var(--accent);padding:0}
+.btn.link:hover{opacity:.9} /* без text-decoration */
 
-/* Секции */
-.section{
-  padding:80px 0;line-height:1.6;position:relative;
-  text-align:center;
+/* Список преимуществ */
+.benefits{
+  list-style:none; margin:18px auto 0; padding:0; max-width:640px; text-align:left;
+  color:#e6f6ff; font-size:18px; line-height:1.9;
 }
-.section.dark{background:rgba(0,0,0,.35);backdrop-filter:blur(6px)}
-.section h2{
-  font-size:clamp(28px,4vw,46px);
-  font-weight:800;
-  margin-bottom:12px;
-  text-shadow:0 0 10px rgba(56,189,248,.15);
-}
-.section p{
-  color:var(--muted);
-  max-width:800px;
-  margin:0 auto 20px;
-  font-size:18px;
-}
-ul.benefits{
-  list-style:none;
-  margin:20px auto 0;
-  padding:0;
-  max-width:600px;
-  text-align:left;
-  color:#dbeafe;
-  font-size:18px;
-  line-height:1.8;
+.benefits li{padding-left:26px; position:relative; margin:4px 0}
+.benefits li::before{
+  content:'•'; position:absolute; left:6px; top:-1px; color:#7dd3fc; font-size:22px; line-height:1;
 }
 
-/* Анимация появления */
-.fadein{opacity:0;transform:translateY(60px);transition:opacity 1s ease,transform 1s ease}
-.fadein.show{opacity:1;transform:none}
+/* Reveal анимация секций */
+.fadein{opacity:0; transform:translateY(60px); transition:opacity 1s ease, transform 1s ease}
+.fadein.show{opacity:1; transform:none}
 
 /* Футер */
 .site-footer{
-  padding:28px 0;
-  border-top:1px solid rgba(255,255,255,.1);
-  text-align:center;
-  background:rgba(0,0,0,.3);
-  backdrop-filter:blur(6px);
+  padding:26px 0; border-top:1px solid rgba(255,255,255,.1);
+  text-align:center; background:rgba(0,0,0,.28); backdrop-filter:blur(6px)
 }
-.footer-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  max-width:1100px;margin:auto;padding:0 24px;
-}
-.minor{color:#94a3b8;font-size:14px}
+.footer-inner{display:flex; align-items:center; justify-content:space-between; max-width:1100px; margin:auto; padding:0 24px}
+.minor{color:#94a3b8; font-size:14px}
 
 /* Адаптив */
-@media(max-width:860px){
+@media (max-width:860px){
   .top-nav{display:none}
   .hero-sub{font-size:18px}
-  ul.benefits{text-align:center}
+  .benefits{text-align:center}
+}
+
+/* Уважение к reduce motion */
+@media (prefers-reduced-motion:reduce){
+  .bg-video{animation:none}
+  .hero-title .shine::after{animation:none}
+  .fadein{transition:none}
 }
