@@ -3,13 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>СанПиН — Fresh Systems</title>
+  <title>Fresh Systems — СанПиН</title>
   <meta name="color-scheme" content="dark" />
+  <link rel="preload" as="image" href="images/hero-water.jpg" />
+  <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="no-video">
 
-  <!-- Шапка -->
+  <!-- фон -->
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="overlay"></div>
+
+  <!-- шапка -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
     <nav class="top-nav" aria-label="Основное меню">
@@ -19,87 +27,90 @@
       <a href="services.html">Услуги</a>
       <a href="contacts.html">Контакты</a>
     </nav>
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
-    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
-      <a href="technologies.html">Технологии</a>
-      <a href="sanpin.html">СанПиН</a>
-      <a href="taste.html">Почему вода вкусная</a>
-      <a href="services.html">Услуги</a>
-      <a href="contacts.html">Контакты</a>
-    </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero" style="background-image:linear-gradient(180deg,rgba(11,16,32,.45),rgba(11,16,32,.9)),url('images/hero-water.jpg'); background-position:center 36%;">
-    <div class="container hero-content">
-      <h1 class="hero-title">Соответствие СанПиН</h1>
-      <p class="hero-sub">Материалы, оборудование и процессы соответствуют требованиям к питьевой воде.</p>
+  <!-- hero -->
+  <section class="sanpin-hero fadein show">
+    <div class="container">
+      <h1 class="hero-title"><span class="shine">Соответствие СанПиН</span></h1>
+      <p class="hero-sub">Системы Fresh Systems спроектированы так, чтобы уверенно проходить проверки и демонстрировать стабильные показатели на экспертизах.</p>
     </div>
   </section>
 
-  <!-- Материалы и трубопроводы -->
-  <section class="section">
-    <div class="container">
-      <h2>Материалы и трубопроводы</h2>
-      <p>Используем сертифицированные материалы, предназначенные для контакта с питьевой водой.</p>
-      <div class="cards">
-        <article class="card">
-          <h3>Трубы и арматура</h3>
-          <p>ПНД/PP-R/ПВХ-U по проекту. Для узлов — нержавеющая сталь AISI 304/316. Пищевые уплотнения.</p>
-        </article>
-        <article class="card">
-          <h3>Резервуары</h3>
-          <p>Пищевые, с люками и дренажом. Антикоррозионные покрытия при необходимости.</p>
-        </article>
-        <article class="card">
-          <h3>УФ-реакторы</h3>
-          <p>Камеры из нержавейки, кварцевые гильзы, лампы 254 нм с контролем дозы.</p>
-        </article>
-        <article class="card">
-          <h3>Фильтрующие модули</h3>
-          <p>Мембраны UF/NF с допусками по питьевой воде и документированными режимами очистки.</p>
-        </article>
-      </div>
+  <!-- Общее заявление -->
+  <section class="section fadein">
+    <div class="container section-narrow">
+      <h2>Надёжность и нормативы</h2>
+      <p>
+        Мы разработали модульные решения, которые соответствуют актуальным требованиям СанПиН.
+        Материалы, режимы эксплуатации и регламенты обслуживания подобраны с учётом гигиенических нормативов,
+        а качество воды подтверждается протоколами независимых лабораторий.
+      </p>
+      <img src="images/microscope.jpg" alt="Лабораторный контроль качества воды" class="s-photo" />
     </div>
   </section>
 
-  <!-- Эксплуатация и контроль -->
-  <section class="section dark">
+  <!-- Минерализация -->
+  <section class="section fadein card-section dark">
+    <div class="container section-narrow">
+      <h2>Минерализация, которая «оживляет» воду</h2>
+      <p>
+        После нанофильтрации мы настраиваем содержание кальция и магния до комфортных значений TDS — вода остаётся мягкой,
+        приятной на вкус и физиологически полноценной. Такой подход обеспечивает стабильные органолептические показатели
+        и соответствие нормативам по минерализации.
+      </p>
+    </div>
+  </section>
+
+  <!-- Техническая часть -->
+  <section class="section fadein">
     <div class="container">
-      <h2>Эксплуатация и контроль</h2>
-      <p>Проект предусматривает гидравлические скорости, санитарные режимы, точки отбора проб и доступ к сервису.</p>
-      <div class="cards">
-        <article class="card">
-          <h3>Скорости в трубах</h3>
-          <p>Подбор по диаметрам для допустимых скоростей и шума. Защита от застойных зон.</p>
-        </article>
-        <article class="card">
-          <h3>Промывки и дезинфекция</h3>
-          <p>Регламентные промывки UF/NF, периодическая дезинфекция контуров, протоколы безопасности.</p>
-        </article>
-        <article class="card">
-          <h3>Мониторинг</h3>
-          <p>Онлайн-контроль давления, расхода, мутности/цветности (по проекту), журнал событий.</p>
-        </article>
-        <article class="card">
+      <h2>Техническая часть — тоже по правилам</h2>
+      <div class="s-grid">
+        <div class="s-card">
+          <h3>Материалы и обвязка</h3>
+          <p>Контактирующие с водой элементы выполнены из сертифицированных материалов, разрешённых для питьевого водоснабжения.</p>
+        </div>
+        <div class="s-card">
+          <h3>Гидравлика и безопасность</h3>
+          <p>Во всех узлах предусматриваются обратные клапаны, воздушные зазоры и корректные схемы дренажа — без риска обратного подсоса.</p>
+        </div>
+        <div class="s-card">
+          <h3>Эксплуатационные регламенты</h3>
+          <p>Регламент промывок, сервисных замен и контроля УФ-дозы/ресурса ламп обеспечивает неизменно безопасную воду.</p>
+        </div>
+        <div class="s-card">
           <h3>Документация</h3>
-          <p>Паспорта/сертификаты на материалы и оборудование, инструкции, план санитарных мероприятий.</p>
-        </article>
+          <p>Предоставляем исполнительную документацию и методику контроля, что упрощает прохождение экспертиз.</p>
+        </div>
       </div>
-      <p style="margin-top:16px"><a class="btn primary" href="contacts.html">Запросить спецификацию под ваш дом</a></p>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
-      <a class="minor" href="index.html">Главная</a>
+      <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
 
+  <!-- JS: тот же набор, что и на главной -->
   <script>
-    const btn=document.getElementById('menuBtn'),panel=document.getElementById('menuPanel');
-    if(btn&&panel){btn.addEventListener('click',()=>{const o=panel.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});}
+    (function(){const v=document.getElementById('bgVideo');if(!v)return;
+      const ready=()=>{document.body.classList.remove('no-video');const p=v.play?.();if(p?.catch)p.catch(()=>{});};
+      v.addEventListener('loadeddata',ready,{once:true});v.addEventListener('canplay',ready,{once:true});
+      setTimeout(()=>{if(v.readyState>=2)ready();},2500);
+    })();
+    (function(){const els=document.querySelectorAll('.fadein');const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');else e.target.classList.remove('show');});
+    },{threshold:.2});els.forEach(el=>io.observe(el));})();
+    (function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      const els=[...document.querySelectorAll('[data-parallax]'),...document.querySelectorAll('.parallaxy')];
+      if(!els.length)return;let H=innerHeight,ticking=false;const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
+      const apply=()=>{els.forEach(el=>{const s=parseFloat(el.dataset.speed||'0.08');const r=el.getBoundingClientRect();const c=r.top+r.height/2-H/2;el.style.transform=`translate3d(0, ${clamp(c*s,-36,36)}px, 0)`;});ticking=false;};
+      addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(apply);}}, {passive:true});
+      addEventListener('resize',()=>{H=innerHeight;apply();}, {passive:true});apply();
+    })();
   </script>
 </body>
 </html>
