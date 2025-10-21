@@ -10,79 +10,160 @@
   <link rel="preload" as="video"  href="images/water-bg.mp4" type="video/mp4" />
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Узкоспециальные стили только этой страницы -->
+  <!-- Локальные стили «трубы» (не трогают другие страницы) -->
   <style>
-    /* Вертикальная «рельса» схемы */
-    .flow {
-      position: relative;
-      margin-top: 22px;
+    /* ===== Лэйаут страницы ===== */
+    .tech-hero{padding-top:48px;padding-bottom:4px}
+    .tech-wrap{position:relative}
+    .tech-grid{display:grid;grid-template-columns: 240px 1fr; gap:18px}
+    @media (max-width:1024px){ .tech-grid{grid-template-columns:1fr} }
+
+    /* ===== Мини-карта (чекпоинты) ===== */
+    .mini{
+      position:sticky; top:88px;
+      align-self:start;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px; padding:12px;
+      backdrop-filter:blur(8px);
     }
-    .flow::before{
-      content:"";
-      position:absolute; left:32px; top:0; bottom:0; width:2px;
-      background: linear-gradient(180deg, rgba(125,211,252,.65), rgba(56,189,248,.15));
-      box-shadow: 0 0 12px rgba(125,211,252,.6);
+    .mini h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#8fbfd6;margin-bottom:8px}
+    .mini a{
+      display:flex;align-items:center;gap:10px;
+      padding:8px 10px;border-radius:10px;
+      color:#cfe9f8;font-weight:600;
+    }
+    .mini a .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#74d2ff; box-shadow:0 0 8px #74d2ff;
+    }
+    .mini a.active{background:rgba(56,189,248,.14)}
+    .mini .hint{margin-top:6px;color:#93a4b8;font-size:12px}
+
+    /* Кнопка «Список стадий» на мобиле */
+    .mini-toggle{display:none;margin-bottom:10px}
+    @media (max-width:1024px){
+      .mini{display:none}
+      .mini-toggle{display:inline-flex;align-items:center;gap:8px}
+      .mini-sheet{
+        position:fixed;left:16px;right:16px;bottom:16px;
+        max-height:60vh;overflow:auto;
+        background:rgba(11,16,32,.96);
+        border:1px solid rgba(255,255,255,.12);
+        border-radius:16px;padding:12px;display:none;z-index:50;
+        backdrop-filter:blur(8px);
+      }
+      .mini-sheet.open{display:block}
     }
 
-    .stage{
-      position: relative;
-      display: grid;
-      grid-template-columns: 68px 1fr;
-      gap: 12px;
-      padding: 14px 14px 16px;
-      margin: 0 0 16px 0;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 16px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    /* ===== Вертикальная «стеклянная труба» ===== */
+    .pipe{
+      position:relative; margin:16px 0 0 0;
+      padding-left:86px; /* место под трубу и узлы-метки */
     }
-    .stage::before{
-      /* светящаяся точка на рельсе */
-      content:"";
-      position:absolute; left:27px; top:24px; width:12px; height:12px;
-      border-radius:50%;
-      background: radial-gradient(circle, #bff1ff 30%, #7dd3fc 60%, rgba(125,211,252,.0) 70%);
-      filter: drop-shadow(0 0 8px #7dd3fc);
+    /* Рельса */
+    .pipe::before{
+      content:""; position:absolute; left:44px; top:0; bottom:0; width:18px;
+      border-radius:10px;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(160,230,255,.35), transparent 60%) top/100% 24px no-repeat,
+        linear-gradient(180deg, rgba(160,230,255,.35), rgba(80,190,255,.22), rgba(80,190,255,.10));
+      box-shadow: inset 0 0 18px rgba(125,211,252,.45), 0 0 22px rgba(125,211,252,.25);
+      filter: saturate(1.15);
+    }
+    /* Внутренний микро-поток частиц */
+    .pipe .flowFX{
+      position:absolute; left:53px; top:0; bottom:0; width:2px; overflow:hidden; pointer-events:none;
+    }
+    .pipe .bubble{
+      position:absolute; left:0; width:2px; height:12px; opacity:.9;
+      background:linear-gradient(180deg, #cfffff, #7dd3fc 60%, transparent);
+      filter:drop-shadow(0 0 6px rgba(125,211,252,.7));
+      animation:rise linear infinite;
+    }
+    @keyframes rise{
+      from{transform:translateY(120vh)}
+      to{transform:translateY(-20vh)}
+    }
+
+    /* ===== Узлы (карточки) ===== */
+    .stage{
+      position:relative;
+      display:grid; grid-template-columns:68px 1fr; gap:12px;
+      margin:0 0 18px 0;
+      padding:14px 14px 16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      backdrop-filter:blur(8px);
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .stage::before{ /* соединительная точка на трубе */
+      content:""; position:absolute; left:36px; top:22px; width:14px; height:14px; border-radius:50%;
+      background:radial-gradient(circle, #bff1ff 30%, #7dd3fc 60%, rgba(125,211,252,.0) 70%);
+      filter:drop-shadow(0 0 8px #7dd3fc);
     }
     .tag{
-      align-self:flex-start;
-      display:grid; place-items:center;
+      align-self:flex-start; display:grid; place-items:center;
       width:56px; height:56px; border-radius:12px;
-      background: rgba(56,189,248,.16);
+      background:rgba(56,189,248,.16);
       border:1px solid rgba(56,189,248,.35);
       color:#bfefff; font-weight:800; letter-spacing:.02em;
     }
     .stage h3{margin:2px 0 6px 0; font-size:18px}
     .stage p{margin:0; color:#dbe9f6; font-size:15px; line-height:1.5}
 
-    .drain, .arrow-note{
-      margin: -4px 0 12px 0;
-      padding-left: 68px; /* выравниваем по карточкам */
-      color:#9fdfff; opacity:.85; font-size:14px;
-      display:flex; align-items:center; gap:10px;
+    /* Ответвления на дренаж */
+    .branch{
+      display:flex; align-items:center; gap:10px; color:#9fdfff; opacity:.9;
+      padding-left:86px; margin:-6px 0 12px 0;
     }
-    .drain .line, .arrow-note .line{
-      height:1px; flex:1 1 auto;
-      background: linear-gradient(90deg, transparent, #7dd3fc, transparent);
-      filter: drop-shadow(0 0 4px rgba(125,211,252,.55));
+    .branch .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#7dd3fc,transparent)}
+    .funnel{width:16px;height:16px;display:inline-block;position:relative}
+    .funnel::before{
+      content:""; position:absolute; inset:0;
+      -webkit-mask: conic-gradient(from 0deg at 50% 20%, #000 0 25%, transparent 25% 75%, #000 75% 100%);
+      mask: conic-gradient(from 0deg at 50% 20%, #000 0 25%, transparent 25% 75%, #000 75% 100%);
+      background:#9fdfff;
     }
 
-    /* Две «стеклянные» колонки внизу */
+    /* Раскрывашка подробностей */
+    details{ grid-column:1 / -1; margin-top:8px }
+    details summary{
+      cursor:pointer; list-style:none; user-select:none;
+      margin:-2px 0 2px 0; color:#cfe9f8; font-weight:600;
+      display:flex; align-items:center; gap:8px;
+    }
+    details summary::before{
+      content:"›"; display:inline-block; transform:rotate(90deg); opacity:.8;
+      transition:transform .25s ease;
+    }
+    details[open] summary::before{ transform:rotate(-90deg) }
+    .tech-box{
+      margin-top:8px; border:1px dashed rgba(125,211,252,.35);
+      border-radius:12px; padding:10px 12px; color:#d7e7f4; font-size:14px;
+      background:rgba(125,211,252,.06);
+    }
+    .tech-box h4{margin:2px 0 6px 0; font-size:14px; color:#bfe2ff}
+
+    /* Пояснения-колонки внизу */
     .tech-columns{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:26px}
     .tech-columns .glass p{margin:8px 0}
     .spec-list{margin:8px 0 0 0; padding-left:18px}
     .spec-list li{margin:2px 0}
 
-    /* Адаптив */
-    @media (max-width:1024px){
-      .tech-columns{grid-template-columns:1fr}
-    }
+    /* reveal / hover */
+    .stage.fadein{opacity:0;transform:translateY(var(--reveal-distance))}
+    .stage.fadein.show{opacity:1;transform:none}
+    .stage:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12)}
+
+    /* Мобайл: меньше анимации потока */
     @media (max-width:768px){
-      .flow::before{left:26px}
-      .stage{grid-template-columns:56px 1fr}
-      .stage::before{left:21px}
+      .pipe{padding-left:76px}
+      .pipe::before{left:40px;width:16px}
+      .pipe .flowFX{left:48px}
       .tag{width:50px;height:50px}
+      .stage{grid-template-columns:56px 1fr}
     }
   </style>
 </head>
@@ -123,174 +204,263 @@
     <div class="container">
       <div class="hgroup fadein" data-parallax data-speed="0.2">
         <div class="kicker">ТЕХНОЛОГИИ</div>
-        <h1 class="h1">Наглядная схема системы NF</h1>
-        <p class="sub">Вертикальная цепочка: предочистка → нанофильтрация → минерализация → УФ → бак и подача. Все дренажи через воронку с <em>воздушным зазором</em> — строго по СанПиН.</p>
+        <h1 class="h1">От ХВС до стакана воды — на одной вертикали</h1>
+        <p class="sub">Скролль вниз по «стеклянной трубе»: предочистка → нанофильтрация → минерализация → УФ → бак → подача потребителю. Дренажи — через воронку с воздушным зазором.</p>
+
+        <!-- Моб. кнопка мини-карты -->
+        <button class="btn ghost mini-toggle" id="miniBtn">Список стадий</button>
       </div>
     </div>
   </section>
 
-  <!-- ВЕРТИКАЛЬНАЯ СХЕМА -->
+  <!-- КОНТЕНТ: МИНИ-КАРТА + ТРУБА -->
   <section class="section">
-    <div class="container">
-      <div class="flow">
+    <div class="container tech-wrap">
+      <div class="tech-grid">
 
-        <!-- K1 -->
-        <div class="stage fadein">
-          <div class="tag">K1</div>
-          <div>
-            <h3>Отсечной кран</h3>
-            <p>Забор части воды на фильтрацию и безопасная остановка узла.</p>
-          </div>
-        </div>
+        <!-- Мини-карта (десктоп) -->
+        <aside class="mini" id="miniDesk" aria-label="Стадии">
+          <h3>Стадии</h3>
+          <nav id="toc">
+            <a href="#hvs"><span class="dot"></span> ХВС (ввод)</a>
+            <a href="#k1"><span class="dot"></span> K1 Отсечной</a>
+            <a href="#ok"><span class="dot"></span> OK Обратный клапан</a>
+            <a href="#f1"><span class="dot"></span> F1 Грубая очистка</a>
+            <a href="#f2"><span class="dot"></span> F2 Тонкая очистка</a>
+            <a href="#f3"><span class="dot"></span> F3 Угольный</a>
+            <a href="#hd"><span class="dot"></span> HD Насос ВД</a>
+            <a href="#as"><span class="dot"></span> AS Антисилант (опц.)</a>
+            <a href="#nf"><span class="dot"></span> NF Нанофильтрация</a>
+            <a href="#min"><span class="dot"></span> MIN Минерализатор</a>
+            <a href="#uv"><span class="dot"></span> UV УФ-обеззараживание</a>
+            <a href="#tank"><span class="dot"></span> БАК Чистой воды</a>
+            <a href="#pump"><span class="dot"></span> Насос подачи</a>
+            <a href="#tap"><span class="dot"></span> Потребитель</a>
+          </nav>
+          <div class="hint">Подсветка следует за прокруткой</div>
+        </aside>
 
-        <!-- OK -->
-        <div class="stage fadein">
-          <div class="tag">OK</div>
-          <div>
-            <h3>Обратный клапан</h3>
-            <p>Исключает обратный поток, защищая общедомовую магистраль. Рекомендуем автоматизированный узел.</p>
-          </div>
-        </div>
-
-        <!-- F1 -->
-        <div class="stage fadein">
-          <div class="tag">F1</div>
-          <div>
-            <h3>Фильтр грубой очистки</h3>
-            <p>100&nbsp;µm, промывной — удаляет песок/ржавчину/взвесь, продлевая ресурс последующих фильтров.</p>
-          </div>
-        </div>
-        <div class="drain"><div class="line"></div>Дренаж&nbsp;#1 → воронка (возд. зазор) → канализация<div class="line"></div></div>
-
-        <!-- F2 -->
-        <div class="stage fadein">
-          <div class="tag">F2</div>
-          <div>
-            <h3>Фильтр тонкой очистки</h3>
-            <p>5&nbsp;µm, картридж PP melt-blown — базовая ступень каждой системы.</p>
-          </div>
-        </div>
-
-        <!-- F3 -->
-        <div class="stage fadein">
-          <div class="tag">F3</div>
-          <div>
-            <h3>Угольный фильтр</h3>
-            <p>Картриджный/загрузочный: адсорбция органики, запахов, части микропримесей.</p>
-          </div>
-        </div>
-        <div class="arrow-note fadein">Если узел загрузочный и суточный объём &gt; 5&nbsp;м³ — требуются промывки с дренажом.</div>
-        <div class="drain"><div class="line"></div>Дренаж&nbsp;#2 → воронка (возд. зазор) → канализация<div class="line"></div></div>
-
-        <!-- HD -->
-        <div class="stage fadein">
-          <div class="tag">HD</div>
-          <div>
-            <h3>Насос высокого давления</h3>
-            <p>Создаёт напор для мембран NF и стабильный пермеат.</p>
+        <!-- Моб. шторка мини-карты -->
+        <div class="mini-sheet" id="miniSheet" aria-label="Стадии (моб.)">
+          <div class="mini" style="position:static">
+            <h3>Стадии</h3>
+            <nav>
+              <a href="#hvs"><span class="dot"></span> ХВС (ввод)</a>
+              <a href="#k1"><span class="dot"></span> K1 Отсечной</a>
+              <a href="#ok"><span class="dot"></span> OK Обратный клапан</a>
+              <a href="#f1"><span class="dot"></span> F1 Грубая очистка</a>
+              <a href="#f2"><span class="dot"></span> F2 Тонкая очистка</a>
+              <a href="#f3"><span class="dot"></span> F3 Угольный</a>
+              <a href="#hd"><span class="dot"></span> HD Насос ВД</a>
+              <a href="#as"><span class="dot"></span> AS Антисилант (опц.)</a>
+              <a href="#nf"><span class="dot"></span> NF Нанофильтрация</a>
+              <a href="#min"><span class="dot"></span> MIN Минерализатор</a>
+              <a href="#uv"><span class="dot"></span> UV УФ-обеззараживание</a>
+              <a href="#tank"><span class="dot"></span> БАК Чистой воды</a>
+              <a href="#pump"><span class="dot"></span> Насос подачи</a>
+              <a href="#tap"><span class="dot"></span> Потребитель</a>
+            </nav>
           </div>
         </div>
 
-        <!-- AS -->
-        <div class="stage fadein">
-          <div class="tag">AS</div>
-          <div>
-            <h3>Дозирование антисиланта <span style="opacity:.7">(опционально)</span></h3>
-            <p>Защищает мембраны при высокой жёсткости/солёности — предотвращает отложения.</p>
-          </div>
-        </div>
+        <!-- Вертикальная труба + узлы -->
+        <div class="pipe">
 
-        <!-- NF -->
-        <div class="stage fadein">
-          <div class="tag">NF</div>
-          <div>
-            <h3>Нанофильтрация</h3>
-            <p>Основная ступень мембранной очистки: Пермеат → на финиш; Концентрат → дренаж.</p>
+          <!-- эффекты «микро-потока» -->
+          <div class="flowFX" aria-hidden="true">
+            <!-- несколько «пузырьков» с разными задержками -->
+            <div class="bubble" style="animation-duration:9s; animation-delay:-1s;"></div>
+            <div class="bubble" style="animation-duration:10.5s; animation-delay:-4s;"></div>
+            <div class="bubble" style="animation-duration:8.5s; animation-delay:-2.2s;"></div>
+            <div class="bubble" style="animation-duration:11.5s; animation-delay:-6s;"></div>
+            <div class="bubble" style="animation-duration:9.8s; animation-delay:-3.4s;"></div>
           </div>
-        </div>
-        <div class="drain"><div class="line"></div>Концентрат → Дренаж&nbsp;#3<div class="line"></div></div>
 
-        <!-- MIN -->
-        <div class="stage fadein">
-          <div class="tag">MIN</div>
-          <div>
-            <h3>Минерализатор</h3>
-            <p>Настраиваем Ca/Mg под комфортный TDS — «оживляет» вкус, сохраняет минералы.</p>
-          </div>
-        </div>
+          <!-- ХВС -->
+          <article id="hvs" class="stage fadein">
+            <div class="tag">ХВС</div>
+            <div>
+              <h3>Холодное водоснабжение (ввод)</h3>
+              <p>Исходная вода на входе в узел фильтрации. Отсюда начинается подготовка.</p>
+              <details>
+                <summary>Подробнее</summary>
+                <div class="tech-box">
+                  <h4>Технически</h4>
+                  <ul>
+                    <li>Материал труб — питьевой класс (PP-R/PEX/нерж.).</li>
+                    <li>Байпас и отсечные вентили для сервиса.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </article>
 
-        <!-- UV -->
-        <div class="stage fadein">
-          <div class="tag">UV</div>
-          <div>
-            <h3>УФ-обеззараживание</h3>
-            <p>Финишная биобезопасность: инактивирует бактерии и вирусы перед подачей.</p>
-          </div>
-        </div>
+          <!-- K1 -->
+          <article id="k1" class="stage fadein">
+            <div class="tag">K1</div>
+            <div>
+              <h3>Отсечной кран</h3>
+              <p>Безопасное отключение узла и забор воды на обработку.</p>
+              <details>
+                <summary>Подробнее</summary>
+                <div class="tech-box">
+                  <h4>Технически</h4>
+                  <ul>
+                    <li>Полнооткрытый проход, маркировка направления.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </article>
 
-        <!-- БАК / НАСОС / ПОТРЕБИТЕЛИ -->
-        <div class="stage fadein">
-          <div class="tag">БАК</div>
-          <div>
-            <h3>Бак чистой воды</h3>
-            <p>Сглаживает пики, обеспечивает запас пермеата.</p>
-          </div>
-        </div>
-        <div class="stage fadein">
-          <div class="tag">PUMP</div>
-          <div>
-            <h3>Насос подачи</h3>
-            <p>Подача на питьевые стояки и точки разбора по дому.</p>
-          </div>
-        </div>
-        <div class="stage fadein">
-          <div class="tag">↘︎</div>
-          <div>
-            <h3>Потребители</h3>
-            <p>Кухни, кулинария, фонтанчики — стабильный вкус и профиль минерализации.</p>
-          </div>
-        </div>
+          <!-- OK -->
+          <article id="ok" class="stage fadein">
+            <div class="tag">OK</div>
+            <div>
+              <h3>Обратный клапан</h3>
+              <p>Исключает обратный поток в магистраль. Рекомендуется автоматизация.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Подбор по расходу и ΔP.</li></ul></div></details>
+            </div>
+          </article>
 
+          <!-- F1 -->
+          <article id="f1" class="stage fadein">
+            <div class="tag">F1</div>
+            <div>
+              <h3>Фильтр грубой очистки</h3>
+              <p>100&nbsp;µm, промывной — удаляет песок, окалину, ржавчину.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Промывки по регламенту; контроль ΔP.</li></ul></div></details>
+            </div>
+          </article>
+          <div class="branch"><span class="line"></span><span class="funnel" title="Дренаж"></span> Дренаж #1 → воронка (возд. зазор) → канализация <span class="line"></span></div>
+
+          <!-- F2 -->
+          <article id="f2" class="stage fadein">
+            <div class="tag">F2</div>
+            <div>
+              <h3>Фильтр тонкой очистки</h3>
+              <p>5&nbsp;µm, PP melt-blown — «база» любой системы.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Замена по ΔP/сроку.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- F3 -->
+          <article id="f3" class="stage fadein">
+            <div class="tag">F3</div>
+            <div>
+              <h3>Угольный фильтр</h3>
+              <p>Картриджный/загрузочный — адсорбция органики, запахов, части микропримесей.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>При загрузочном узле — регламент промывок.</li></ul></div></details>
+            </div>
+          </article>
+          <div class="branch"><span class="line"></span><span class="funnel"></span> Дренаж #2 → воронка (возд. зазор) → канализация <span class="line"></span></div>
+
+          <!-- HD -->
+          <article id="hd" class="stage fadein">
+            <div class="tag">HD</div>
+            <div>
+              <h3>Насос высокого давления</h3>
+              <p>Создаёт требуемый напор для мембран NF.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Гидравлическая увязка по расходу/напору.</li><li>Вибро/шумо-изоляция.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- AS (опционально) -->
+          <article id="as" class="stage fadein">
+            <div class="tag">AS</div>
+            <div>
+              <h3>Дозирование антисиланта <span style="opacity:.7">(опционально)</span></h3>
+              <p>Защита мембран при высокой жёсткости/солёности, предотвращает отложения.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Доза — по анализу воды и рекомендациям производителя.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- NF -->
+          <article id="nf" class="stage fadein">
+            <div class="tag">NF</div>
+            <div>
+              <h3>Нанофильтрация</h3>
+              <p>Основная мембранная ступень. Пермеат → на финиш; Концентрат → дренаж.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Контроль проводимости пермеата.</li><li>Обвязка дренажа с воздушным зазором.</li></ul></div></details>
+            </div>
+          </article>
+          <div class="branch"><span class="line"></span><span class="funnel"></span> Концентрат → Дренаж #3 <span class="line"></span></div>
+
+          <!-- MIN -->
+          <article id="min" class="stage fadein">
+            <div class="tag">MIN</div>
+            <div>
+              <h3>Минерализатор</h3>
+              <p>Настройка Ca/Mg под комфортный TDS — «оживляет» вкус.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Контроль загрузки; целевой TDS по вкусу/ нормам.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- UV -->
+          <article id="uv" class="stage fadein">
+            <div class="tag">UV</div>
+            <div>
+              <h3>УФ-обеззараживание</h3>
+              <p>Финишная биобезопасность (бактерии/вирусы) перед подачей.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Замена лампы по наработке; чистка кварцевого кожуха.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- БАК -->
+          <article id="tank" class="stage fadein">
+            <div class="tag">БАК</div>
+            <div>
+              <h3>Бак чистой воды</h3>
+              <p>Сглаживает пики, обеспечивает резерв.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Объём — по пиковому расходу и времени восстановления.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- PUMP -->
+          <article id="pump" class="stage fadein">
+            <div class="tag">PUMP</div>
+            <div>
+              <h3>Насос подачи</h3>
+              <p>Подаёт воду в питьевые стояки и точки разбора.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>Технически</h4><ul><li>Давление/расход под сеть стояков; обратные клапаны по схеме.</li></ul></div></details>
+            </div>
+          </article>
+
+          <!-- Потребитель (финал) -->
+          <article id="tap" class="stage fadein">
+            <div class="tag">💧</div>
+            <div>
+              <h3>Потребитель</h3>
+              <p>Кухни, питьевые фонтанчики — чистая и вкусная вода.</p>
+              <details><summary>Подробнее</summary><div class="tech-box"><h4>«Эффект вкуса»</h4><ul><li>Сбалансированная минерализация (Ca/Mg) и УФ-безопасность.</li><li>Подробнее см. раздел «Почему вода вкусная».</li></ul></div></details>
+            </div>
+          </article>
+
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Пояснения и нюансы -->
-  <section class="section">
-    <div class="container">
-      <div class="hgroup fadein">
-        <div class="kicker">ПОДРОБНО</div>
-        <h2 class="h2">Эксплуатация и проектные нюансы</h2>
-        <p class="sub">Соблюдаем санитарные разрывы, правильные дренажи через воронки, мониторинг давления/проводимости и удобство сервисного доступа — всё в соответствии с СанПиН.</p>
-      </div>
-
+      <!-- Пояснения -->
       <div class="tech-columns">
         <div class="glass fadein">
           <h3>Эксплуатация</h3>
           <ul class="spec-list">
             <li>Промывки F1/загрузочных узлов по регламенту; замена F2/F3 по ΔP и сроку.</li>
-            <li>Контроль давления до/после насосов, проводимости пермеата (качество NF).</li>
-            <li>Минерализатор: поддержка загрузки, контроль TDS и органолептики.</li>
-            <li>УФ-лампа: замена по наработке, чистка кварцевого кожуха.</li>
+            <li>Контроль давления до/после насосов, проводимости пермеата NF.</li>
+            <li>Минерализатор — поддержка загрузки, контроль TDS/вкуса.</li>
+            <li>УФ-лампа — замена по наработке, чистка кварцевого кожуха.</li>
           </ul>
         </div>
         <div class="glass fadein">
           <h3>Проектные нюансы</h3>
           <ul class="spec-list">
             <li>Дренажи только через воронку с воздушным зазором и сифоном.</li>
-            <li>Бак — расчёт по пиковым водоразборам и времени восстановления.</li>
-            <li>Материалы труб/фитингов — питьевые, допущенные СанПиН.</li>
-            <li>Шумогашение насосов, места для сервиса, байпас на вводе.</li>
+            <li>Бак — по пикам водоразбора и времени восстановления.</li>
+            <li>Материалы труб/фитингов — питьевые (СанПиН).</li>
+            <li>Шумо-виброизоляция насосов, доступ для сервиса, байпас на вводе.</li>
           </ul>
         </div>
       </div>
 
-      <!-- (необязательно) иллюстрация схемы из PDF: добавь файл в images/flow-diagram.png -->
-      <div class="glass fadein" style="margin-top:22px;">
-        <h3>Диаграмма цепочки</h3>
-        <p class="sub">Суммарная схема узла. Если добавишь изображение <code>images/flow-diagram.png</code>, оно появится ниже.</p>
-        <img src="images/flow-diagram.png" alt="Диаграмма системы" onerror="this.style.display='none'">
-      </div>
     </div>
   </section>
 
@@ -302,9 +472,9 @@
     </div>
   </footer>
 
-  <!-- JS: видео/меню/анимации/параллакс — как на главной -->
+  <!-- Скрипты: видео/меню/мини-карта/появления/параллакс -->
   <script>
-    // Мобильный фон — картинка вместо видео (резче)
+    // Фон на мобиле — картинка вместо видео (резче)
     (function(){
       const isMobile = matchMedia('(max-width: 768px)').matches;
       const v = document.getElementById('bgVideo');
@@ -320,7 +490,7 @@
       }
     })();
 
-    // Мобильное меню
+    // Бургер: click + touchstart, управляем hidden
     (function(){
       const btn = document.getElementById('menuBtn');
       const drawer = document.getElementById('drawer');
@@ -343,7 +513,7 @@
       document.addEventListener('touchstart',closeOutside,{passive:true});
     })();
 
-    // Плавные появления (ре-активация при повторном входе в зону)
+    // Плавные появления (ре-анимация при повторном входе в видимую зону)
     (function(){
       const els=document.querySelectorAll('.fadein');
       const io=new IntersectionObserver((entries)=>{
@@ -372,6 +542,36 @@
       addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply);} }, {passive:true});
       addEventListener('resize', ()=>{H=innerHeight; apply();}, {passive:true});
       apply();
+    })();
+
+    // Мини-карта: подсветка активного узла (desktop + mobile)
+    (function(){
+      const links = Array.from(document.querySelectorAll('#toc a'));
+      if(!links.length) return;
+      const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+      const sections = Array.from(document.querySelectorAll('.stage[id]'));
+
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const id = e.target.id;
+            links.forEach(l=>l.classList.remove('active'));
+            const a = map.get(id);
+            if(a) a.classList.add('active');
+          }
+        });
+      }, { rootMargin: "-40% 0px -50% 0px", threshold: 0.01 });
+      sections.forEach(s=>io.observe(s));
+
+      // Моб. список стадий
+      const btn = document.getElementById('miniBtn');
+      const sheet = document.getElementById('miniSheet');
+      if(btn && sheet){
+        btn.addEventListener('click', ()=> sheet.classList.toggle('open'));
+        sheet.addEventListener('click', (e)=>{
+          if(e.target.tagName === 'A'){ sheet.classList.remove('open'); }
+        });
+      }
     })();
   </script>
 </body>
