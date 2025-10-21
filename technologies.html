@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Технологии — Fresh Systems</title>
+  <meta name="color-scheme" content="dark" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
+    <nav class="top-nav" aria-label="Основное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
+      <a href="services.html">Услуги</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
+    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
+      <a href="services.html">Услуги</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" style="background-image:linear-gradient(180deg,rgba(11,16,32,.45),rgba(11,16,32,.9)),url('images/hero-water.jpg'); background-position:center 32%;">
+    <div class="container hero-content">
+      <h1 class="hero-title">Технологии</h1>
+      <p class="hero-sub">Модульная система очистки, рассчитанная по результатам анализа воды и расходам дома.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="contacts.html">Оставить заявку</a>
+        <a class="btn ghost" href="services.html">Услуги</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Как мы подбираем систему -->
+  <section class="section">
+    <div class="container">
+      <h2>Как мы проектируем решение</h2>
+      <p>Берём исходные данные (квартиры, жителей, потребление/чел, суточные и часовые пики), результаты анализа воды и целевые показатели. Далее собираем схему из модулей и считаем гидравлику, энергопотребление и габариты помещения.</p>
+    </div>
+  </section>
+
+  <!-- Модули системы (кратко) -->
+  <section class="section">
+    <div class="container">
+      <h2>Основные модули</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Предфильтрация</h3>
+          <p>Сетки/картриджи 50–5 мкм. Снимают песок, ил, ржавчину. Защищают мембраны и арматуру.</p>
+        </article>
+        <article class="card">
+          <h3>Ультрафильтрация (UF)</h3>
+          <p>Поры 0,01–0,1 мкм. Задерживает коллоиды и бактерии, повышает прозрачность.</p>
+        </article>
+        <article class="card">
+          <h3>Нанофильтрация (NF)</h3>
+          <p>Селективно снижает жёсткость и органику, сохраняя полезные минералы и «живой» вкус.</p>
+        </article>
+        <article class="card">
+          <h3>УФ-обеззараживание</h3>
+          <p>254 нм, финальная инактивация бактерий/вирусов без реагентов и запахов.</p>
+        </article>
+        <article class="card">
+          <h3>Минерализация</h3>
+          <p>Точная дозировка Ca/Mg для целевого вкуса (обычно TDS 120–220 мг/л, Ca:Mg≈2:1).</p>
+        </article>
+        <article class="card">
+          <h3>Резервуар + насосы</h3>
+          <p>Гидробаки/резервуары по расчёту пиков, насосные группы с частотным управлением.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Пример схемы (PDF) -->
+  <section class="section dark">
+    <div class="container">
+      <h2>Пример системы</h2>
+      <p>Ниже — образец одной из схем фильтрации. Можем адаптировать под ваши условия.</p>
+
+      <!-- Как использовать: положи PDF в папку /files и назови system-example.pdf -->
+      <div style="margin:20px 0">
+        <a class="btn primary" href="files/system-example.pdf" target="_blank" rel="noopener">Открыть PDF</a>
+        <a class="btn ghost" href="files/system-example.pdf" download>Скачать PDF</a>
+      </div>
+
+      <!-- Встроенный просмотрчик (если файл переименован и загружен) -->
+      <object data="files/system-example.pdf" type="application/pdf" width="100%" height="600" style="border:1px solid var(--border);border-radius:12px">
+        <p class="minor">Не удалось отобразить PDF. <a class="btn link" href="files/system-example.pdf" target="_blank" rel="noopener">Открыть в новой вкладке →</a></p>
+      </object>
+
+      <p class="minor" style="margin-top:10px">Подсказка: переименуй твой PDF «СИСТЕМА ФИЛЬТРАЦИИ.pdf» в <code>system-example.pdf</code> и положи в папку <code>/files</code>.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="minor">© 2025 Fresh Systems</div>
+      <a class="minor" href="index.html">Главная</a>
+    </div>
+  </footer>
+
+  <script>
+    const btn=document.getElementById('menuBtn'),panel=document.getElementById('menuPanel');
+    if(btn&&panel){btn.addEventListener('click',()=>{const o=panel.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});}
+  </script>
+</body>
+</html>
