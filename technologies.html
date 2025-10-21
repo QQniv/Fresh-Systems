@@ -11,16 +11,16 @@
 </head>
 <body class="no-video">
 
-  <!-- фон -->
+  <!-- Background -->
   <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
   </video>
   <div class="overlay"></div>
 
-  <!-- шапка -->
+  <!-- Header -->
   <header class="site-header">
-    <a class="brand" href="index.html" aria-label="На главную">FS</a>
-    <nav class="top-nav" aria-label="Основное меню">
+    <a class="brand" href="index.html">FS</a>
+    <nav class="top-nav">
       <a href="technologies.html">Технологии</a>
       <a href="sanpin.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
@@ -29,125 +29,160 @@
     </nav>
   </header>
 
-  <!-- hero -->
-  <section class="tech-hero fadein show">
+  <!-- Intro -->
+  <section class="section">
     <div class="container">
-      <h1 class="hero-title"><span class="shine">Технологии</span></h1>
-      <p class="hero-sub">Ниже — наглядная схема типовой системы NF с предочисткой и доочисткой.</p>
-    </div>
-  </section>
-
-  <!-- СХЕМА -->
-  <section class="section fadein">
-    <div class="flow">
-      <div class="flow-grid">
-
-        <div class="flow-item"><span class="tag">[K1]</span><h4>Отсечной кран</h4><p>Забор части воды на фильтрацию.</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[ОК]</span><h4>Обратный клапан</h4><p>Предотвращает обратный поток (автоматизированный).</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[F1]</span><h4>Грубая очистка</h4><p>100 μm, промывной — снимает крупные включения.</p><i class="flow-arrow"></i>
-          <div class="flow-note">Дренажная линия → <em>воронка с воздушным зазором</em> → канализация</div>
-        </div>
-        <div class="flow-item"><span class="tag">[F2]</span><h4>Тонкая очистка</h4><p>5 μm PP melt-blown — обязательный картридж.</p><i class="flow-arrow"></i></div>
-
-        <div class="flow-item"><span class="tag">[F3]</span><h4>Угольный фильтр</h4><p>Картридж/загрузка — адсорбция запахов/МИК.</p><i class="flow-arrow"></i>
-          <div class="flow-note">Если загрузочный и Q&gt;5 м³/сут → Дренаж #2</div>
-        </div>
-        <div class="flow-item"><span class="tag">[НД]</span><h4>Насос высокого давления</h4><p>Создаёт напор для NF.</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[AS]</span><h4>Антисилант (опц.)</h4><p>Защита мембраны при жёсткости/солях.</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[NF]</span><h4>Нанофильтрация</h4><p>Основная мембранная ступень.</p>
-          <div class="flow-note">Пермеат → доочистка; Концентрат → Дренаж #3</div>
-        </div>
-
-        <div class="flow-item"><span class="tag">[MIN]</span><h4>Минерализатор</h4><p>Загрузка Ca/Mg — настраиваем вкус/TDS.</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[UV]</span><h4>УФ-обеззараживание</h4><p>Устраняет риски вторичного обсеменения.</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[Бак]</span><h4>Чистая вода</h4><p>Резервуар питьевой воды.</p><i class="flow-arrow"></i></div>
-        <div class="flow-item"><span class="tag">[Насос]</span><h4>Подача</h4><p>Циркуляция по стоякам.</p></div>
-
-        <div class="flow-item flow-colspan-2 flow-drain">
-          <span class="tag">Дренаж</span>
-          <h4>Воронка с воздушным зазором → канализация</h4>
-          <p class="flow-note">Для F1 (промыв), F3 (загрузка при промывке), концентрата NF.</p>
-        </div>
-
+      <div class="hgroup fadein">
+        <div class="kicker">ТЕХНОЛОГИИ</div>
+        <h1 class="h1">Наглядная схема системы NF</h1>
+        <p class="sub">Типовая цепочка с предочисткой, узлом NF, минерализацией и УФ. Все дренажи — через воронку с воздушным зазором.</p>
       </div>
-    </div>
 
-    <!-- ПОДРОБНОСТИ (аккордеон) -->
-    <div class="details">
-      <details>
-        <summary>[K1] Отсечной кран</summary>
-        <p>Позволяет брать заданную долю расхода на фильтрацию. Ставится на вводе узла.</p>
-      </details>
-      <details>
-        <summary>[ОК] Обратный клапан</summary>
-        <p>Исключает обратный ток/гидроудары в линию источника. Берём клапан с малым ΔP.</p>
-      </details>
-      <details>
-        <summary>[F1] Фильтр грубой очистки 100 μm (промывной)</summary>
-        <p>Улавливает ржавчину/песок. Промывка по ΔP/таймеру. Подключение к дренажу с воздушным зазором.</p>
-      </details>
-      <details>
-        <summary>[F2] Фильтр тонкой очистки 5 μm (PP melt-blown)</summary>
-        <p>Минимальная защита насосов/мембран. Картриджи меняем по ΔP/сроку ресурса.</p>
-      </details>
-      <details>
-        <summary>[F3] Угольный фильтр (картридж/загрузка)</summary>
-        <p>Удаляет органику/запах/цветность. Загрузочный — с автоматикой промывок и отводом в дренаж.</p>
-      </details>
-      <details>
-        <summary>[НД] Насос высокого давления</summary>
-        <p>Обеспечивает рабочее давление на NF. Подбирается по Q и требуемому давлению мембран.</p>
-      </details>
-      <details>
-        <summary>[AS] Узел дозирования антисиланта (опционально)</summary>
-        <p>Снижает риск накипи на мембране при высокой жёсткости/кислотности. Контроль расходомером.</p>
-      </details>
-      <details>
-        <summary>[NF] Нанофильтрация</summary>
-        <p>Основная ступень смягчения и удаления органики при сохранении части минералов. Контроль per/conc, ΔP, CIP-промывки.</p>
-      </details>
-      <details>
-        <summary>[MIN] Минерализатор (Ca/Mg)</summary>
-        <p>Формируем нужный вкус и TDS. Возможна тонкая подстройка по вкусовым тестам.</p>
-      </details>
-      <details>
-        <summary>[UV] УФ-обеззараживание</summary>
-        <p>Финишная безопасность. Подбираем по УФ-дозе и прозрачности воды; следим за ресурсом лампы.</p>
-      </details>
-      <details>
-        <summary>[Бак чистой воды]</summary>
-        <p>Расчёт объёма — из пикового расхода/резерва. На санитарных врезках — дыхательные клапаны/датчики уровня.</p>
-      </details>
-      <details>
-        <summary>[Насос подачи питьевой воды]</summary>
-        <p>Поддерживает давление в стояках. Рекомендуем частотное управление для экономии энергии и снижения шумов.</p>
-      </details>
+      <!-- FLOW (модели) -->
+      <div class="flow fadein">
+        <div class="flow-grid">
+
+          <!-- Линия 1 -->
+          <div class="flow-item">
+            <span class="tag">[K1]</span>
+            <h4>Отсечной кран</h4>
+            <p>Забор части воды на фильтрацию.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[ОК]</span>
+            <h4>Обратный клапан</h4>
+            <p>Предотвращает обратный поток.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[F1]</span>
+            <h4>Фильтр грубой очистки</h4>
+            <p>100 μm, промывной.</p>
+            <div class="flow-note">Дренаж → воронка (возд. зазор) → канализация</div>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[F2]</span>
+            <h4>Фильтр тонкой очистки</h4>
+            <p>5 μm, PP melt-blown.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <!-- Линия 2 -->
+          <div class="flow-item">
+            <span class="tag">[F3]</span>
+            <h4>Угольный фильтр</h4>
+            <p>Картридж/загрузка; поглощает органику и запахи.</p>
+            <div class="flow-note">Если загрузочный — промывки → дренаж</div>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[НД]</span>
+            <h4>Насос высокого давления</h4>
+            <p>Создаёт напор для NF.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[AS]</span>
+            <h4>Узел дозирования антисиланта (опц.)</h4>
+            <p>Защищает мембрану при высокой жёсткости/солёности.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[NF]</span>
+            <h4>Нанофильтрация</h4>
+            <p>Основная ступень мембранной очистки.</p>
+            <div class="flow-note">Пермеат → доочистка; Концентрат → дренаж</div>
+          </div>
+
+          <!-- Линия 3 -->
+          <div class="flow-item">
+            <span class="tag">[MIN]</span>
+            <h4>Минерализатор</h4>
+            <p>Настройка Ca/Mg, комфортный TDS.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[UV]</span>
+            <h4>УФ-обеззараживание</h4>
+            <p>Финишная безопасность — бактерии/вирусы.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[Бак]</span>
+            <h4>Бак чистой воды</h4>
+            <p>Резерв, сглаживание пиков потребления.</p>
+            <i class="flow-arrow"></i>
+          </div>
+
+          <div class="flow-item">
+            <span class="tag">[Насос]</span>
+            <h4>Насос подачи</h4>
+            <p>Циркуляция по стоякам, стабильное давление.</p>
+          </div>
+
+          <!-- Доп. плашка-дренаж -->
+          <div class="flow-item flow-colspan-2 flow-drain">
+            <span class="tag">Дренаж</span>
+            <h4>Воронка с воздушным зазором → канализация</h4>
+            <p class="flow-note">Для F1 (промыв), F3 (загрузка), концентрат NF.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Пояснения -->
+      <div class="row" style="margin-top:20px">
+        <div class="col-6 fadein">
+          <div class="glass">
+            <h3>Зачем каждая ступень</h3>
+            <p>Предочистка защищает насос и мембрану; NF удаляет органику и лишнюю жёсткость, оставляя часть минералов;
+               минерализация «оживляет» вкус; УФ — гарантия микробиологической безопасности; бак и насос — стабильная подача.</p>
+          </div>
+        </div>
+        <div class="col-6 fadein">
+          <div class="glass">
+            <h3>Проект по анализу воды</h3>
+            <p>Конкретные номиналы и состав цепочки зависят от исходного анализа и целевых показателей.
+               Дренажи выполняются только через воздушный зазор; материалы — разрешённые для питьевого водоснабжения.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
       <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
 
-  <!-- JS: фон/анимации/параллакс (как на главной) -->
+  <!-- Scripts: video ready + reveals -->
   <script>
     (function(){const v=document.getElementById('bgVideo');if(!v)return;
-      const ready=()=>{document.body.classList.remove('no-video');const p=v.play?.();if(p?.catch)p.catch(()=>{});};
-      v.addEventListener('loadeddata',ready,{once:true});v.addEventListener('canplay',ready,{once:true});
-      setTimeout(()=>{if(v.readyState>=2)ready();},2500);
+      const ok=()=>{document.body.classList.remove('no-video');v.play?.().catch(()=>{});};
+      v.addEventListener('loadeddata',ok,{once:true});
+      v.addEventListener('canplay',ok,{once:true});
+      setTimeout(()=>{if(v.readyState>=2) ok();},2200);
     })();
-    (function(){const els=document.querySelectorAll('.fadein');const io=new IntersectionObserver(es=>{
-      es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');else e.target.classList.remove('show');});
-    },{threshold:.2});els.forEach(el=>io.observe(el));})();
-    (function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-      const els=[...document.querySelectorAll('[data-parallax]'),...document.querySelectorAll('.parallaxy')];
-      if(!els.length)return;let H=innerHeight,ticking=false;const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
-      const apply=()=>{els.forEach(el=>{const s=parseFloat(el.dataset.speed||'0.08');const r=el.getBoundingClientRect();const c=r.top+r.height/2-H/2;el.style.transform=`translate3d(0, ${clamp(c*s,-36,36)}px, 0)`;});ticking=false;};
-      addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(apply);}}, {passive:true});
-      addEventListener('resize',()=>{H=innerHeight;apply();}, {passive:true});apply();
+
+    (function(){
+      const els=document.querySelectorAll('.fadein');
+      const io=new IntersectionObserver(es=>{
+        es.forEach(e=>{e.isIntersecting?e.target.classList.add('show'):e.target.classList.remove('show');});
+      },{threshold:.18});
+      els.forEach(el=>io.observe(el));
     })();
   </script>
 </body>
