@@ -1,6 +1,3 @@
-/* =========================
-   Fresh Systems — Base styles (desktop+mobile fixes)
-   ========================= */
 :root{
   --bg:#0b1020; --fg:#ffffff; --muted:#cbd5e1;
   --line:#1c253a; --accent:#38bdf8; --accent-2:#7dd3fc;
@@ -21,7 +18,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ===== Global background (video + overlay) ===== */
+/* ===== Фон ===== */
 .bg-video{
   position:fixed; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:center;
@@ -37,6 +34,7 @@ body{
 .overlay{
   position:fixed; inset:0; z-index:-2;
   background:
+    /* сглаженный, без «шва» */
     linear-gradient(180deg,
       rgba(7,11,22,.72) 0%,
       rgba(7,11,22,.66) 20%,
@@ -52,7 +50,7 @@ body{
   mix-blend-mode:overlay; opacity:.12;
 }
 
-/* ===== Header ===== */
+/* ===== Шапка / меню ===== */
 .site-header{
   position:sticky; top:0; z-index:20;
   display:flex; align-items:center; justify-content:space-between;
@@ -65,7 +63,6 @@ body{
 .top-nav a{padding:6px 8px;border-radius:8px}
 .top-nav a:hover{background:rgba(56,189,248,.12)}
 
-/* Mobile menu button */
 .menu-toggle{
   display:none; width:40px;height:40px;border-radius:10px;
   border:1px solid rgba(255,255,255,.16);
@@ -77,27 +74,30 @@ body{
 }
 .menu-toggle::before{transform:translateY(-6px)}
 .menu-toggle::after{transform:translateY(6px)}
-/* Mobile drawer */
+
+/* Мобильный дровер — по умолчанию скрыт */
+.mobile-drawer[hidden]{display:none !important;}
 .mobile-drawer{
-  position:fixed; inset:60px 16px auto 16px;
-  background:rgba(11,16,32,.95); border:1px solid rgba(255,255,255,.12);
-  border-radius:14px; padding:14px; display:none; z-index:19;
+  position:fixed; left:16px; right:16px; top:64px;
+  background:rgba(11,16,32,.95);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px; padding:14px;
+  display:none; z-index:1000;
   backdrop-filter:blur(8px);
 }
+.mobile-drawer.open{display:block}
 .mobile-drawer a{display:block;padding:10px 12px;border-radius:10px}
 .mobile-drawer a:hover{background:rgba(56,189,248,.12)}
 
-/* ===== Sections / Layout / Type ===== */
+/* ===== Секции / типографика ===== */
 .container{max-width:1160px;margin:0 auto;padding:0 28px}
 .section{padding:84px 0;border-top:1px solid rgba(255,255,255,.06)}
 .section:first-of-type{border-top:none}
-
 .hgroup{max-width:980px}
 .kicker{color:#8fbfd6;text-transform:uppercase;letter-spacing:.14em;font-weight:700;margin-bottom:12px}
 
-/* DESKTOP-FIX: аккуратные размеры героя */
 .h1{
-  font-size:clamp(36px,4.6vw,64px); /* было слишком крупно — ограничили */
+  font-size:clamp(36px,4.6vw,64px);
   font-weight:900; line-height:1.08; margin-bottom:18px;
   background:linear-gradient(90deg,#fff,#a6eaff 40%,#fff 80%);
   -webkit-background-clip:text; background-clip:text; color:transparent; position:relative;
@@ -110,54 +110,33 @@ body{
 @keyframes shine{0%{transform:translateX(-30%)}50%{transform:translateX(30%)}100%{transform:translateX(-30%)}}
 
 .h2{font-size:clamp(24px,3.2vw,44px);font-weight:900;line-height:1.12;margin-bottom:12px}
-.sub{
-  color:var(--muted);
-  font-size:clamp(16px,1.7vw,22px); /* контролируем на десктопе */
-  line-height:1.55; max-width:980px;
-}
+.sub{color:var(--muted);font-size:clamp(16px,1.7vw,22px);line-height:1.55;max-width:980px}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
 .btn{padding:12px 20px;border-radius:12px;border:1px solid var(--line);font-weight:600;transition:.25s background,.25s transform,.25s opacity}
 .btn.primary{background:var(--accent);color:#001019;border:none}
 .btn.primary:hover{transform:translateY(-2px);background:#56d3ff}
 .btn.ghost{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.28)}
 
-/* Grid / Cards */
 .row{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;margin-top:26px}
 .col-6{grid-column:span 6}
 .col-8{grid-column:span 8}
 .col-4{grid-column:span 4}
+
 .glass{
   background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08);
   border-radius:var(--radius); padding:18px 18px 16px; backdrop-filter:blur(8px); box-shadow:var(--shadow)
 }
 .glass h3{font-size:22px;margin-bottom:6px}
 .glass p{color:#dbe9f6}
+
 .about-photo{width:100%;height:220px;object-fit:cover;border-radius:var(--radius);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
 
-/* Hero block spacing */
 .hero{min-height:74vh;display:flex;align-items:center}
 .hero .hgroup{max-width:1050px}
 
-/* reveal / parallax */
+/* Плавные появления / параллакс */
 .fadein{opacity:0;transform:translateY(var(--reveal-distance));transition:opacity var(--reveal-duration) cubic-bezier(.16,1,.3,1),transform var(--reveal-duration) cubic-bezier(.16,1,.3,1)}
 .fadein.show{opacity:1;transform:none}
-
-/* ===== Flow (Технологии) ===== */
-.flow{margin-top:14px}
-.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.flow-item{position:relative;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:12px 12px 10px;backdrop-filter:blur(8px);box-shadow:var(--shadow)}
-.tag{display:inline-block;font-weight:800;background:rgba(56,189,248,.18);border:1px solid rgba(56,189,248,.35);padding:4px 8px;border-radius:999px;font-size:12px;margin-bottom:6px}
-.flow-item h4{font-size:16px;margin-bottom:4px}
-.flow-item p{font-size:14px;color:#dbe9f6}
-.flow-note{font-size:12px;color:#a9c6d7;margin-top:4px}
-.flow-arrow{position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-right:2px solid var(--accent-2);border-top:2px solid var(--accent-2);rotate:45deg;opacity:.8}
-.flow-colspan-2{grid-column:span 2}
-.flow-drain{border-style:dashed}
-
-/* ===== Footer ===== */
-.site-footer{padding:26px 0;border-top:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.28);backdrop-filter:blur(6px)}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin:0 auto;padding:0 28px}
-.minor{color:#94a3b8;font-size:14px}
 
 /* ===== Responsive ===== */
 @media (max-width:1180px){
@@ -166,29 +145,31 @@ body{
 @media (max-width:1024px){
   .row{grid-template-columns:repeat(6,1fr)}
   .col-8,.col-6,.col-4{grid-column:span 6}
-  .flow-grid{grid-template-columns:repeat(2,1fr)}
 }
 
-/* MOBILE: бургер + drawer, фон — фото вместо видео (чётче) */
+/* MOBILE */
 @media (max-width:768px){
   .top-nav{display:none}
   .menu-toggle{display:flex}
-  .mobile-drawer.open{display:block}
   body.mobile-menu-open{overflow:hidden}
 
-  /* фон воды — статичное изображение для резкости */
+  /* Чёткий фон воды на телефоне — статичная картинка */
   body.mobile-bg{
-    background:url('images/hero-water-mobile.jpg') center/cover fixed no-repeat;
+    background:
+      image-set(
+        url('images/hero-water-mobile.jpg') type("image/jpeg"),
+        url('images/hero-water.jpg') type("image/jpeg")
+      )
+      center top / cover no-repeat fixed;
   }
   body.mobile-bg .bg-video{display:none}
+
   .hero{min-height:64vh}
   .about-photo{height:180px}
-  .flow-grid{grid-template-columns:1fr}
-  .flow-arrow{display:none}
   :root{--reveal-distance:34px;--reveal-duration:1100ms}
 }
 
-/* Motion accessibility */
+/* A11y: меньше движения */
 @media (prefers-reduced-motion:reduce){
   .bg-video{animation:none}
   .h1::after{animation:none}
