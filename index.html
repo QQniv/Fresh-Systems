@@ -5,20 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Systems — Питьевая вода в вашем доме</title>
   <meta name="color-scheme" content="dark" />
-  <!-- ускоряем первый кадр -->
   <link rel="preload" as="image" href="images/hero-water.jpg" />
   <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="no-video">
 
-  <!-- Видео-фон на весь сайт -->
   <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
   </video>
   <div class="overlay"></div>
 
-  <!-- Хедер -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
     <nav class="top-nav" aria-label="Основное меню">
@@ -30,7 +27,6 @@
     </nav>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="container hero-inner">
       <h1 class="hero-title" data-parallax data-speed="0.25">
@@ -51,12 +47,11 @@
   <section class="section fadein parallaxy card-section" data-speed="-0.06" id="about-brief">
     <div class="container section-narrow">
       <h2>Кто мы такие?</h2>
-      <p>
-        <strong>FS engineering</strong> — компания по созданию централизованных систем фильтрации в жилых домах.
-        Проектируем под анализ воды, монтируем, вводим в эксплуатацию и ведём сервис.
-      </p>
-      <!-- заменишь на <img src="images/about-moscow.jpg" alt="Новая московская застройка" class="about-photo"> -->
-      <div class="about-photo-placeholder">Здесь будет фото новостройки (добавим позже)</div>
+      <p><strong>FS engineering</strong> — компания по созданию централизованных систем фильтрации в жилых домах.
+        Проектируем под анализ воды, монтируем, вводим в эксплуатацию и ведём сервис.</p>
+
+      <!-- заменил плейсхолдер на реальное фото -->
+      <img src="images/about-moscow.jpg" alt="Современная московская новостройка" class="about-photo">
     </div>
   </section>
 
@@ -91,10 +86,8 @@
   <section class="section fadein parallaxy card-section dark" data-speed="0.06" id="contact-brief">
     <div class="container section-narrow center">
       <h2>Связаться с нами</h2>
-      <p>
-        Офис: г.&nbsp;Москва, ул.&nbsp;Красота. Рабочие часы: 00:00–00:00.
-        <br>Нажмите «Оставить заявку», чтобы заполнить форму и отправить нам письмо.
-      </p>
+      <p>Офис: г.&nbsp;Москва, ул.&nbsp;Красота. Рабочие часы: 00:00–00:00.
+        <br>Нажмите «Оставить заявку», чтобы заполнить форму и отправить нам письмо.</p>
       <div class="hero-actions">
         <a href="contacts.html" class="btn primary">Оставить заявку</a>
         <a href="services.html" class="btn ghost">Наши услуги</a>
@@ -109,58 +102,41 @@
     </div>
   </footer>
 
-  <!-- ==== JS: видео-фон, reveal, параллакс ==== -->
+  <!-- JS: видео/появления/параллакс -->
   <script>
-    // 1) ВИДЕО-ФОН — надёжная инициализация с fallback
     (function(){
-      const v = document.getElementById('bgVideo');
-      if(!v) return;
-      const markReady = () => {
-        document.body.classList.remove('no-video');
-        const p = v.play?.(); if (p?.catch) p.catch(()=>{});
-      };
-      v.addEventListener('loadeddata', markReady, { once:true });
-      v.addEventListener('canplay',     markReady, { once:true });
-      // Подстраховка по таймеру (если события не пришли)
-      setTimeout(()=>{ if (v.readyState >= 2) markReady(); }, 2500);
+      const v=document.getElementById('bgVideo'); if(!v) return;
+      const ready=()=>{document.body.classList.remove('no-video');const p=v.play?.();if(p?.catch)p.catch(()=>{});};
+      v.addEventListener('loadeddata',ready,{once:true});
+      v.addEventListener('canplay',ready,{once:true});
+      setTimeout(()=>{if(v.readyState>=2) ready();},2500);
     })();
 
-    // 2) REVEAL — повторяемая анимация появления секций
     (function(){
-      const reveals = document.querySelectorAll('.fadein');
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if (e.isIntersecting) e.target.classList.add('show');
-          else e.target.classList.remove('show');
-        });
-      },{ threshold:.2 });
-      reveals.forEach(r=>obs.observe(r));
+      const els=document.querySelectorAll('.fadein');
+      const io=new IntersectionObserver(es=>{
+        es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); else e.target.classList.remove('show'); });
+      },{threshold:.2});
+      els.forEach(el=>io.observe(el));
     })();
 
-    // 3) ЛЁГКИЙ ПАРАЛЛАКС (герой и секции «дышат» при скролле)
     (function(){
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const els = [
-        ...document.querySelectorAll('[data-parallax]'),
-        ...document.querySelectorAll('.parallaxy')
-      ];
-      if (!els.length) return;
-
-      const clamp = (v,min,max)=>Math.min(max,Math.max(min,v));
-      let H = innerHeight, ticking = false;
-
-      const apply = () => {
+      const els=[...document.querySelectorAll('[data-parallax]'), ...document.querySelectorAll('.parallaxy')];
+      if(!els.length) return;
+      let H=innerHeight, ticking=false;
+      const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
+      const apply=()=>{
         els.forEach(el=>{
-          const sp = parseFloat(el.dataset.speed || '0.1');
-          const r  = el.getBoundingClientRect();
-          const c  = r.top + r.height/2 - H/2;
-          const move = clamp(c*sp, -42, 42);
-          el.style.transform = `translate3d(0, ${move}px, 0)`;
+          const s=parseFloat(el.dataset.speed||'0.1');
+          const r=el.getBoundingClientRect();
+          const c=r.top+r.height/2-H/2;
+          el.style.transform=`translate3d(0, ${clamp(c*s,-42,42)}px, 0)`;
         });
-        ticking = false;
+        ticking=false;
       };
-      addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply);} }, { passive:true });
-      addEventListener('resize', ()=>{ H = innerHeight; apply(); }, { passive:true });
+      addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply);} }, {passive:true});
+      addEventListener('resize',()=>{ H=innerHeight; apply(); }, {passive:true});
       apply();
     })();
   </script>
