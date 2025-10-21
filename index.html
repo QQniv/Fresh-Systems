@@ -9,14 +9,13 @@
 </head>
 <body>
 
-  <!-- ВИДЕО/ФОН -->
+  <!-- Видео фон -->
   <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
     <source src="images/water-bg.mp4" type="video/mp4" />
   </video>
-
   <div class="overlay"></div>
 
-  <!-- ШАПКА -->
+  <!-- Шапка -->
   <header class="site-header">
     <a class="brand" href="index.html">FS</a>
     <nav class="top-nav">
@@ -28,11 +27,13 @@
     </nav>
   </header>
 
-  <!-- HERO -->
+  <!-- Главный блок -->
   <section class="hero">
     <div class="container hero-inner">
       <h1 class="hero-title">Питьевая вода в вашем доме</h1>
-      <p class="hero-sub">Мы создаём современные системы фильтрации, чтобы ваша вода была чистой, безопасной и вкусной — каждый день.</p>
+      <p class="hero-sub">
+        Уникальные фильтросистемы под ваш дом — исследуем воду, проектируем систему, создаём чистую и вкусную воду, как из источника.
+      </p>
       <div class="hero-actions">
         <a href="technologies.html" class="btn primary">Подробнее</a>
         <a href="contacts.html" class="btn ghost">Оставить заявку</a>
@@ -40,61 +41,31 @@
     </div>
   </section>
 
-  <!-- БЛОК 1 -->
+  <!-- Краткий контент -->
   <section class="section fadein">
-    <div class="container two-column">
-      <div class="text">
-        <h2>Фильтросистемы Fresh Systems</h2>
-        <p>
-          Мы подбираем и собираем оборудование под ваш объект.
-          Анализируем состав воды, проектируем систему под реальный расход и помогаем пройти экспертизу.
-        </p>
-        <a href="technologies.html" class="btn link">Читать подробнее →</a>
-      </div>
-      <div class="image">
-        <img src="images/production-2.jpg" alt="Фильтросистема" />
-      </div>
+    <div class="container">
+      <h2>Индивидуальные системы фильтрации</h2>
+      <p>Подстраиваем решения под анализ воды и специфику объекта. От проектирования до пуско-наладки — полный цикл.</p>
+      <a href="technologies.html" class="btn link">Подробнее о технологиях →</a>
     </div>
   </section>
 
-  <!-- БЛОК 2 -->
-  <section class="section dark fadein">
-    <div class="container two-column reverse">
-      <div class="image">
-        <img src="images/fittings-2784902.jpeg" alt="СанПиН трубы" />
-      </div>
-      <div class="text">
-        <h2>Соответствие СанПиН</h2>
-        <p>
-          Все используемые материалы и фильтры сертифицированы. Мы гарантируем соответствие требованиям СанПиН по микробиологии, материалам и качеству питьевой воды.
-        </p>
-        <a href="sanpin.html" class="btn link">Читать подробнее →</a>
-      </div>
+  <section class="section fadein dark">
+    <div class="container">
+      <h2>Почему выбирают нас</h2>
+      <ul class="benefits">
+        <li>✔ Разработка системы под конкретный состав воды</li>
+        <li>✔ Соответствие требованиям СанПиН</li>
+        <li>✔ Полный монтаж и сервис</li>
+        <li>✔ Гарантированное качество питьевой воды</li>
+      </ul>
     </div>
   </section>
 
-  <!-- БЛОК 3 -->
   <section class="section fadein">
-    <div class="container two-column">
-      <div class="text">
-        <h2>Почему вода вкусная</h2>
-        <p>
-          Мы не просто очищаем воду — мы сохраняем её природную структуру.
-          После фильтрации вода минерализуется, приобретая мягкий и насыщенный вкус.
-        </p>
-        <a href="taste.html" class="btn link">Раскрыть тему вкуса →</a>
-      </div>
-      <div class="image">
-        <img src="images/kid-drink.jpg" alt="Вкусная вода" />
-      </div>
-    </div>
-  </section>
-
-  <!-- КОНТАКТЫ -->
-  <section class="section dark fadein">
-    <div class="container center">
+    <div class="container">
       <h2>Свяжитесь с нами</h2>
-      <p>Мы поможем подобрать оптимальное решение под ваш объект и рассчитаем стоимость проекта.</p>
+      <p>Мы рассчитаем подходящее решение и подскажем, как оптимизировать затраты.</p>
       <div class="hero-actions">
         <a href="contacts.html" class="btn primary">Оставить заявку</a>
         <a href="services.html" class="btn ghost">Наши услуги</a>
@@ -110,12 +81,9 @@
   </footer>
 
   <script>
-    // эффект появления при скролле
-    const reveals = document.querySelectorAll('.fadein');
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting) e.target.classList.add('show');
-      });
+    const reveals=document.querySelectorAll('.fadein');
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show');});
     },{threshold:.2});
     reveals.forEach(r=>obs.observe(r));
   </script>
