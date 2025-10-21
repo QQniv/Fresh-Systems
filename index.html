@@ -116,7 +116,167 @@
       };
 
       // События, говорящие, что можно показывать видео:
-      v.addEventListener('loadeddata', markReady, { once: true });
+      v.addEventListener('loadeddata', markReady, { once: true });<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fresh Systems — Питьевая вода в вашем доме</title>
+  <meta name="color-scheme" content="dark" />
+
+  <link rel="preload" as="image" href="images/hero-water.jpg" />
+  <link rel="preload" as="video" href="images/water-bg.mp4" type="video/mp4" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="no-video">
+
+  <!-- Видео-фон на весь сайт -->
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="overlay"></div>
+
+  <!-- Шапка -->
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
+    <nav class="top-nav" aria-label="Основное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
+      <a href="services.html">Услуги</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <!-- HERO (параллакс у заголовка/подзаголовка) -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1 class="hero-title" data-parallax data-speed="0.25">
+        <span class="shine">Питьевая вода в вашем доме</span>
+      </h1>
+      <p class="hero-sub" data-parallax data-speed="0.18">
+        Уникальные фильтросистемы под ваш дом — исследуем воду, проектируем систему и создаём чистую,
+        безопасную и вкусную воду каждый день.
+      </p>
+      <div class="hero-actions" data-parallax data-speed="0.12">
+        <a href="technologies.html" class="btn primary">Подробнее</a>
+        <a href="contacts.html" class="btn ghost">Оставить заявку</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Индивидуальные системы -->
+  <section class="section fadein parallaxy" data-speed="-0.08">
+    <div class="container section-narrow">
+      <h2>Индивидуальные системы фильтрации</h2>
+      <p>
+        Мы подстраиваем решения под анализ воды и специфику объекта. От проектирования до пуско-наладки — полный цикл.
+      </p>
+      <a href="technologies.html" class="btn link">Подробнее о технологиях →</a>
+    </div>
+  </section>
+
+  <!-- Почему выбирают нас -->
+  <section class="section dark fadein parallaxy" data-speed="0.08">
+    <div class="container section-narrow">
+      <h2>Почему выбирают нас</h2>
+      <ul class="benefits">
+        <li>Разработка системы под конкретный состав воды</li>
+        <li>Соответствие требованиям СанПиН</li>
+        <li>Полный монтаж и сервис</li>
+        <li>Гарантированное качество питьевой воды</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Контакты -->
+  <section class="section fadein parallaxy" data-speed="-0.06">
+    <div class="container section-narrow">
+      <h2>Свяжитесь с нами</h2>
+      <p>Мы рассчитаем подходящее решение и подскажем, как оптимизировать затраты для вашего дома.</p>
+      <div class="hero-actions">
+        <a href="contacts.html" class="btn primary">Оставить заявку</a>
+        <a href="services.html" class="btn ghost">Наши услуги</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="minor">© 2025 Fresh Systems</div>
+      <a href="index.html" class="minor">Главная</a>
+    </div>
+  </footer>
+
+  <script>
+    // Видео: включаем фон, если готово; иначе остаёмся на статичном постере
+    (function(){
+      const v = document.getElementById('bgVideo');
+      if(!v) return;
+      const ready = () => {
+        document.body.classList.remove('no-video');
+        const p = v.play?.();
+        if (p?.catch) p.catch(()=>{ /* fallback остаётся */ });
+      };
+      v.addEventListener('loadeddata', ready, { once:true });
+      v.addEventListener('canplay', ready, { once:true });
+      setTimeout(()=>{ if (v.readyState >= 2) ready(); }, 2500);
+    })();
+
+    // Reveal-анимация при каждом входе в зону видимости
+    const revealEls = document.querySelectorAll('.fadein');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+        } else {
+          // снимаем show, чтобы анимация повторялась при повторном появлении
+          e.target.classList.remove('show');
+        }
+      });
+    },{ threshold: 0.2 });
+    revealEls.forEach(el=>io.observe(el));
+
+    // Лёгкий параллакс: элементы с [data-parallax] и секции .parallaxy
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      const pxEls = [
+        ...document.querySelectorAll('[data-parallax]'),
+        ...document.querySelectorAll('.parallaxy')
+      ];
+      const state = { y: window.scrollY, ticking:false, wh: window.innerHeight };
+
+      function onScroll(){
+        state.y = window.scrollY || window.pageYOffset;
+        if (!state.ticking){
+          state.ticking = true;
+          requestAnimationFrame(applyParallax);
+        }
+      }
+      function applyParallax(){
+        const y = state.y;
+        pxEls.forEach(el=>{
+          const speed = parseFloat(el.dataset.speed || '0.1');
+          // смещение относительно центра вьюпорта — даёт «плавающий» эффект вверх/вниз
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height/2 - state.wh/2;
+          const move = Math.max(-40, Math.min(40, center * speed)); // ограничим до ±40px
+          el.style.transform = `translate3d(0, ${move}px, 0)`;
+        });
+        state.ticking = false;
+      }
+      // подстроим на ресайз
+      window.addEventListener('resize', ()=>{ state.wh = window.innerHeight; applyParallax(); }, { passive:true });
+      window.addEventListener('scroll', onScroll, { passive:true });
+      // первый проход
+      applyParallax();
+    })();
+  </script>
+</body>
+</html>
       v.addEventListener('canplay', markReady, { once: true });
 
       // Подстраховка по таймеру (если события не пришли)
