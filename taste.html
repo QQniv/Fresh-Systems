@@ -1,50 +1,86 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Почему вода вкусная — Fresh Systems</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="/Fresh-Systems/">
-  <link rel="stylesheet" href="styles.css?v=11">
-  <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const btn=document.getElementById('menuBtn');const panel=document.getElementById('menuPanel');
-      btn.addEventListener('click',()=>panel.classList.toggle('open'));
-      panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('open')));
-    });
-    function fallback(img){img.onerror=null;img.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="system-ui" font-size="28">Фото будет добавлено</text></svg>');}
-  </script>
+  <meta name="color-scheme" content="dark" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <!-- Шапка -->
   <header class="site-header">
-    <a href="index.html" class="brand" aria-label="На главную"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></a>
-    <button id="menuBtn" class="menu-btn">Меню</button>
-    <nav id="menuPanel" class="menu-panel">
-      <a href="about.html" target="_blank" rel="noopener">О компании</a>
-      <a href="systems.html">Фильтросистемы</a>
-      <a href="compliance.html">СанПиН</a>
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
+    <nav class="top-nav" aria-label="Основное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
       <a href="taste.html">Почему вода вкусная</a>
       <a href="services.html">Услуги</a>
-      <a href="contact.html">Контакты</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
+    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
+      <a href="services.html">Услуги</a>
+      <a href="contacts.html">Контакты</a>
     </nav>
   </header>
 
-  <section class="section container">
-    <h1>Почему вода вкусная</h1>
-    <p class="section-intro">Раскроем тему: минерализация, pH, редокс-потенциал, органолептика и роль NF.</p>
+  <!-- Hero -->
+  <section class="hero" style="background-image:linear-gradient(180deg,rgba(11,16,32,.45),rgba(11,16,32,.9)),url('images/hero-water.jpg'); background-position:center 34%;">
+    <div class="container hero-content">
+      <h1 class="hero-title">Почему вода вкусная</h1>
+      <p class="hero-sub">Мы управляем минерализацией и балансом чтобы сохранить «живой» вкус воды.</p>
+    </div>
+  </section>
 
-    <div class="gallery">
-      <div class="g-item"><img class="g-img" src="images/tap-splash.jpg?v=11" alt="Вода из крана" onerror="fallback(this)"></div>
-      <div class="g-item"><img class="g-img" src="images/kid-drink.jpg?v=11" alt="Питьевая вода" onerror="fallback(this)"></div>
-      <div class="g-item"><img class="g-img" src="images/production-2.jpg?v=11" alt="Производство" onerror="fallback(this)"></div>
+  <!-- Основы вкуса -->
+  <section class="section">
+    <div class="container">
+      <h2>Что влияет на вкус</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Минерализация (TDS)</h3>
+          <p>Комфортный диапазон обычно 120–220 мг/л. Слишком мало — «плоская», слишком много — «тяжёлая».</p>
+        </article>
+        <article class="card">
+          <h3>Кальций и магний</h3>
+          <p>Целевой баланс Ca:Mg ≈ 2:1. Даёт «мягкость» и приятное послевкусие.</p>
+        </article>
+        <article class="card">
+          <h3>Щёлочность и pH</h3>
+          <p>Буферная ёмкость и pH 7–8 помогают стабилизировать вкус и «сладость» воды.</p>
+        </article>
+        <article class="card">
+          <h3>Органика и запахи</h3>
+          <p>Удаляем органику/запахи на ранних стадиях — чтобы вкус не маскировался посторонними нотами.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Как мы этого добиваемся -->
+  <section class="section dark">
+    <div class="container">
+      <h2>Как мы формируем профиль</h2>
+      <p>NF-селективность снижает жёсткость, но оставляет базовые минералы. Далее — аккуратная дозировка Ca/Mg под целевой профиль вкуса. По итогам пуско-наладки фиксируем режимы и точки контроля.</p>
+      <p style="margin-top:16px"><a class="btn primary" href="contacts.html">Настроить вкус под ваш дом</a></p>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>© Fresh Systems, 2025</div>
-      <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
+      <div class="minor">© 2025 Fresh Systems</div>
+      <a class="minor" href="index.html">Главная</a>
     </div>
   </footer>
+
+  <script>
+    const btn=document.getElementById('menuBtn'),panel=document.getElementById('menuPanel');
+    if(btn&&panel){btn.addEventListener('click',()=>{const o=panel.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});}
+  </script>
 </body>
 </html>
