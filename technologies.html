@@ -9,28 +9,42 @@
 
 <style>
 :root{
-  --ink:#eaf6ff; --muted:#bcd2e7;
-  --panel:rgba(255,255,255,.08); --panel-br:rgba(255,255,255,.16);
-  --cyan:#7dd3fc; --good:#97f6d4;
-  --pipeEdge: rgba(230,247,255, .85);
-  --pipeBody: rgba(130,190,230, .28);
-  --pipeCore: rgba(120,215,255, .85);
-  --pipeGlow: rgba(120,215,255, .95);
+  --ink:#eaf6ff;
+  --muted:#bcd2e7;
+  --panel:rgba(255,255,255,.08);
+  --panel-br:rgba(255,255,255,.16);
+  --cyan:#7dd3fc;
+  --good:#97f6d4;
+  --pipeEdge: rgba(235,250,255, .95);
+  --pipeBody: rgba(130,190,230, .30);
+  --pipeCore: rgba(120,215,255, .92);
+  --pipeGlow: rgba(120,215,255, 1);
 }
+/* базовая сетка */
 *{box-sizing:border-box}
 body{overflow-x:hidden}
 
-/* верх */
-.page-tech{position:relative; z-index:1; padding-top:88px}
+/* сильнее затемняем фон конкретно на этой странице */
+.bg-video{filter:brightness(.5) saturate(.9) contrast(.95)}
+.overlay{background:linear-gradient(to bottom, rgba(4,9,14,.58), rgba(4,9,14,.62))}
+
+/* дополнительная виньетка для фокуса на трубе */
+.vignette{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,.0), rgba(0,0,0,.28) 55%, rgba(0,0,0,.45) 100%);
+}
+
+/* верхняя часть */
+.page-tech{position:relative; z-index:2; padding-top:88px}
 .container{max-width:1100px; margin:0 auto; padding:0 20px}
 .h1{font:900 clamp(28px,6vw,56px)/1.04 Inter,system-ui; color:var(--ink); margin:0 0 6px}
 .lead{color:var(--muted); font-size:clamp(14px,2.2vw,18px); margin:0 0 14px}
 
-/* миникарта */
+/* миникарта — спокойная */
 .mini{
-  position:fixed; left:16px; top:100px; width:220px; z-index:5;
+  position:fixed; left:16px; top:100px; width:220px; z-index:3;
   background:var(--panel); border:1px solid var(--panel-br); border-radius:14px;
-  padding:10px; backdrop-filter:blur(8px)
+  padding:10px; backdrop-filter:blur(8px); opacity:.78; transition:opacity .25s ease;
 }
 .mini h4{margin:4px 8px 8px; font:700 12px/1 Inter; color:#a9defc; letter-spacing:.1em; text-transform:uppercase}
 .mini a{display:flex; gap:8px; align-items:center; padding:8px 10px; border-radius:10px; color:#e6f3ff; font-weight:600; text-decoration:none}
@@ -39,7 +53,7 @@ body{overflow-x:hidden}
 @media (max-width:1000px){ .mini{display:none} }
 
 /* сцена-слайды */
-.flow{position:relative; scroll-snap-type:y mandatory}
+.flow{position:relative; z-index:2; scroll-snap-type:y mandatory}
 .stage{
   position:relative; height:100vh; min-height:640px; scroll-snap-align:start;
   display:grid; grid-template-columns: 1fr min(640px,64vw) 1fr; align-items:center;
@@ -48,49 +62,51 @@ body{overflow-x:hidden}
 @media (max-width:860px){ .stage{grid-template-columns: 1fr min(560px,74vw) 1fr} }
 @media (max-width:760px){ .stage{grid-template-columns: 1fr; padding:10px 14px} }
 
-/* фиксированная труба */
-.pipe-layer{position:fixed; inset:0; z-index:0; pointer-events:none}
-.pipe-wrap{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  transition: transform .8s cubic-bezier(.22,.61,.36,1); will-change:transform}
-#pipeSVG{width:min(640px,64vw); height:88vh; filter:drop-shadow(0 24px 48px rgba(0,0,0,.42))}
-@media (max-width:760px){ #pipeSVG{width:min(560px,82vw); height:78vh} }
+/* труба — над всем, вместе с карточкой, чтобы она была центром внимания */
+.pipe-layer{position:fixed; inset:0; z-index:4; pointer-events:none}
+.pipe-wrap{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; will-change:transform}
+#pipeSVG{width:min(640px,64vw); height:88vh; filter:drop-shadow(0 30px 64px rgba(0,0,0,.55))}
+@media (max-width:760px){ #pipeSVG{width:min(560px,82vw); height:80vh} }
 
-/* стеклянная труба — массивнее, главнее */
-.pipe-edge{stroke:var(--pipeEdge); stroke-width:44; fill:none; stroke-linecap:round; opacity:.8}
-.pipe-body{stroke:var(--pipeBody); stroke-width:40; fill:none; stroke-linecap:round; filter:url(#softBlur)}
-.pipe-core{stroke:var(--pipeCore); stroke-width:22; fill:none; stroke-linecap:round; filter:drop-shadow(0 0 22px rgba(116,210,255,.55))}
-.pipe-flow{stroke:var(--pipeGlow); stroke-width:8; fill:none; stroke-linecap:round; stroke-dasharray:0 26 10 120; animation:flow 3s linear infinite}
+/* стеклянная труба */
+.pipe-edge{stroke:var(--pipeEdge); stroke-width:48; fill:none; stroke-linecap:round; opacity:.95}
+.pipe-body{stroke:var(--pipeBody); stroke-width:44; fill:none; stroke-linecap:round; filter:url(#softBlur)}
+.pipe-core{stroke:var(--pipeCore); stroke-width:26; fill:none; stroke-linecap:round; filter:drop-shadow(0 0 26px rgba(116,210,255,.75))}
+.pipe-flow{stroke:var(--pipeGlow); stroke-width:9; fill:none; stroke-linecap:round; stroke-dasharray:0 26 10 120; animation:flow 3s linear infinite; opacity:.85}
 @keyframes flow{to{stroke-dashoffset:-180}}
 
-/* «проток» между фильтрами на активном экране */
-.progress{stroke:var(--pipeGlow); stroke-width:18; fill:none; stroke-linecap:round; filter:drop-shadow(0 0 24px rgba(116,210,255,1)); opacity:.85}
+/* подсвеченный «проток» между узлами */
+.progress{stroke:var(--pipeGlow); stroke-width:20; fill:none; stroke-linecap:round; filter:drop-shadow(0 0 30px rgba(116,210,255,1)); opacity:0}
 
 /* маска для капли */
-.mask-stroke{stroke:#fff; stroke-width:28; fill:none; stroke-linecap:round}
+.mask-stroke{stroke:#fff; stroke-width:32; fill:none; stroke-linecap:round}
 
 /* капля одна */
-.drop{filter:drop-shadow(0 0 18px rgba(116,210,255,1))}
-.drop .a{fill:rgba(115,220,255,.40); transform-origin:center; animation:pulse 1.9s ease-in-out infinite}
+.drop{filter:drop-shadow(0 0 20px rgba(116,210,255,1))}
+.drop .a{fill:rgba(115,220,255,.40); transform-origin:center}
 .drop .b{fill:url(#dropGrad); stroke:#e6fbff; stroke-width:1.25}
 .drop .g{fill:#fff; opacity:.95}
-@keyframes pulse{0%,100%{transform:scale(.9); opacity:.65} 50%{transform:scale(1.06); opacity:1}}
 
 /* узлы в трубе */
-.module .plate{fill:rgba(8,12,18,.9); stroke:rgba(170,215,255,.7); stroke-width:2; rx:10}
-.module .icon{stroke:#e6f5ff; stroke-width:2.6; fill:none; stroke-linecap:round; stroke-linejoin:round}
-.module.active .plate{stroke:var(--good);}
+.module{opacity:.22; transition:opacity .25s ease, transform .25s ease}
+.module .plate{fill:rgba(8,12,18,.92); stroke:rgba(170,215,255,.7); stroke-width:2; rx:12}
+.module .icon{stroke:#e6f5ff; stroke-width:2.8; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.module.active{opacity:1}
+.module.active .plate{stroke:var(--good)}
+.module.active{filter:drop-shadow(0 0 28px rgba(120,215,255,.45))}
 
-/* карточки справа/слева от трубы */
+/* карточки у фильтров */
 .card{
-  background:var(--panel); border:1px solid var(--panel-br); border-radius:16px;
+  position:relative; z-index:5; background:var(--panel); border:1px solid var(--panel-br); border-radius:16px;
   padding:14px 16px; color:#e9f6ff; backdrop-filter:blur(10px);
-  box-shadow:0 22px 46px rgba(0,0,0,.35); max-width:480px; opacity:0; transform:translateY(14px); transition:.55s ease
+  box-shadow:0 24px 52px rgba(0,0,0,.45); max-width:520px; opacity:0; transform:translateY(14px); transition:.45s ease;
 }
 .card.show{opacity:1; transform:none}
 .card .tag{display:inline-flex; gap:8px; align-items:center; padding:4px 10px; border-radius:999px;
   border:1px solid rgba(125,211,252,.35); background:rgba(125,211,252,.14); color:#dff6ff; font-weight:700; margin-bottom:8px}
 .card h3{margin:4px 0 8px; font:800 20px/1.28 Inter; color:#eef9ff}
 .card p{margin:0; color:#cfe3f5; font-size:15.5px; line-height:1.6}
+.card strong{color:#fff}
 
 .stage-left{grid-column:1; justify-self:end; margin-right:min(3vw,24px)}
 .stage-right{grid-column:3; justify-self:start; margin-left:min(3vw,24px)}
@@ -101,11 +117,8 @@ body{overflow-x:hidden}
 /* уважение к reduced motion */
 @media (prefers-reduced-motion: reduce){
   .pipe-flow{animation:none}
-  .drop .a{animation:none}
   .card{transition:none}
 }
-
-/* фон вода — из вашего styles.css (bg-video + .overlay) */
 </style>
 </head>
 <body>
@@ -114,6 +127,7 @@ body{overflow-x:hidden}
   <source src="images/water-bg.mp4" type="video/mp4"/>
 </video>
 <div class="overlay"></div>
+<div class="vignette" aria-hidden="true"></div>
 
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="На главную">FS</a>
@@ -134,7 +148,6 @@ body{overflow-x:hidden}
   <a href="contacts.html">Контакты</a>
 </nav>
 
-<!-- миникарта -->
 <aside class="mini" aria-label="Навигация по этапам">
   <h4>Стадии</h4>
   <nav id="miniNav"></nav>
@@ -142,18 +155,18 @@ body{overflow-x:hidden}
 
 <main class="page-tech container">
   <h1 class="h1">Технологии</h1>
-  <p class="lead">Пример цепочки: каждый экран — отдельный фильтр. Труба — главный элемент, капля движется по ней от узла к узлу.</p>
+  <p class="lead">Ниже — путь воды по вертикальной трубе. Фокус — на трубе и активном фильтре; остальное приглушено.</p>
 </main>
 
-<!-- фиксированный слой трубы -->
+<!-- фиксированная труба (впереди всего интерфейса) -->
 <div class="pipe-layer" aria-hidden="true">
   <div class="pipe-wrap" id="pipeWrap">
     <svg id="pipeSVG" viewBox="0 0 640 1600" preserveAspectRatio="none" role="img" aria-label="Труба">
       <defs>
-        <filter id="softBlur"><feGaussianBlur stdDeviation="1.8"/></filter>
+        <filter id="softBlur"><feGaussianBlur stdDeviation="2"/></filter>
         <linearGradient id="coreGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#eaffff"/>
-          <stop offset="60%" stop-color="#9fe6ff"/>
+          <stop offset="60%" stop-color="#a7ecff"/>
           <stop offset="100%" stop-color="#64d1ff"/>
         </linearGradient>
         <radialGradient id="dropGrad" cx="50%" cy="35%" r="70%">
@@ -167,19 +180,17 @@ body{overflow-x:hidden}
         </mask>
       </defs>
 
-      <!-- Контур трубы -->
+      <!-- контур трубы -->
       <path id="pEdge"  class="pipe-edge" d=""/>
       <path id="pBody"  class="pipe-body" d=""/>
       <path id="pCore"  class="pipe-core" d=""/>
       <path id="pFlow"  class="pipe-flow" d="" mask="url(#tubeMask)"/>
-
-      <!-- Проток между узлами (меняется для активного экрана) -->
       <path id="pProgress" class="progress" d="" opacity="0"/>
 
-      <!-- Узлы -->
+      <!-- узлы -->
       <g id="mods"></g>
 
-      <!-- Капля -->
+      <!-- капля -->
       <g id="drop" class="drop" transform="translate(320,120)" mask="url(#tubeMask)">
         <ellipse class="a" cx="0" cy="0" rx="22" ry="28"/>
         <ellipse class="b" cx="0" cy="0" rx="14" ry="20"/>
@@ -189,7 +200,7 @@ body{overflow-x:hidden}
   </div>
 </div>
 
-<!-- сцена-слайды -->
+<!-- слайды -->
 <section class="flow" id="flow"></section>
 
 <footer class="site-footer">
@@ -206,17 +217,17 @@ const t=o=>{if(o===undefined)o=!d.classList.contains('open');d.classList.toggle(
 const h=e=>{e.preventDefault();t()};b.addEventListener('click',h,{passive:false});b.addEventListener('touchstart',h,{passive:false});
 document.addEventListener('click',e=>{if(!d.classList.contains('open'))return;if(!d.contains(e.target)&&!b.contains(e.target))t(false);});})();
 
-/* ДАННЫЕ: порядок фильтров */
+/* порядок фильтров */
 const STAGES = [
   {id:'hvs', tag:'ХВС', title:'Ввод холодной воды', text:'Исходная вода на входе в систему.'},
   {id:'f1',  tag:'F1',  title:'Грубая очистка 100 μm', text:'Удаляет песок и ржавчину. Промывной фильтр.', icon:'grid'},
   {id:'f2',  tag:'F2',  title:'Тонкая очистка 5 μm',  text:'Картридж PP: мелкие взвеси.', icon:'cartridge'},
-  {id:'f3',  tag:'F3',  title:'Угольный фильтр',      text:'Адсорбция органики, запахов, хлорпроизводных.', icon:'carbon'},
-  {id:'hd',  tag:'HD',  title:'Насос высокого давления', text:'Создаёт давление для нанофильтра.', icon:'pump'},
+  {id:'f3',  tag:'F3',  title:'Угольный фильтр',      text:'Адсорбция органики и запахов.', icon:'carbon'},
+  {id:'hd',  tag:'HD',  title:'Насос высокого давления', text:'Создаёт давление для NF.', icon:'pump'},
   {id:'as',  tag:'AS',  title:'Антисилант (опц.)',    text:'Защищает мембрану от отложений.', icon:'dose'},
-  {id:'nf',  tag:'NF',  title:'Нанофильтрация',       text:'Мембрана: пермеат — в питьевую зону, концентрат — в дренаж.', icon:'membrane'},
+  {id:'nf',  tag:'NF',  title:'Нанофильтрация',       text:'Пермеат — в питьевую зону, концентрат — в дренаж.', icon:'membrane'},
   {id:'min', tag:'MIN', title:'Минерализатор Ca/Mg',  text:'Возвращает вкус до целевого TDS.', icon:'min'},
-  {id:'uv',  tag:'UV',  title:'УФ-обеззараживание',   text:'Финишная биобезопасность (СанПиН).', icon:'uv'},
+  {id:'uv',  tag:'UV',  title:'УФ-обеззараживание',   text:'Финишная биобезопасность.', icon:'uv'},
   {id:'tap', tag:'💧',  title:'Потребитель',          text:'Кран → стакан с чистой водой.', icon:'tap', final:true}
 ];
 
@@ -237,29 +248,29 @@ const miniNav  = document.getElementById('miniNav');
 
 let coreLen=0, points=[], sections=[], ioCards;
 
-/* ИКОНКИ узлов в трубе */
+/* ИКОНКИ */
 function icon(kind){
   switch(kind){
-    case 'grid':      return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><path class="icon" d="M-36 -10 h72 v20 h-72 z M-18 -10 v20 M18 -10 v20 M-36 0 h72"/>`;
-    case 'cartridge': return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><ellipse class="icon" cx="0" cy="0" rx="30" ry="12"/>`;
-    case 'carbon':    return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><rect class="icon" x="-30" y="-10" width="60" height="20" rx="7"/>`;
-    case 'pump':      return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><rect class="icon" x="-20" y="-8" width="24" height="16" rx="3"/><rect class="icon" x="10" y="-6" width="16" height="12" rx="3"/>`;
-    case 'dose':      return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><path class="icon" d="M-8 -12 v24 M8 -12 v24 M-20 0 h40"/>`;
-    case 'membrane':  return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><path class="icon" d="M-30 -8 h60 M-30 -2 h60 M-30 4 h60"/>`;
-    case 'min':       return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><rect class="icon" x="-13" y="-8" width="26" height="16" rx="3"/>`;
-    case 'uv':        return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><path class="icon" d="M-28 0 h56 M-16 -8 h32 M-16 8 h32"/>`;
-    case 'tap':       return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/><path class="icon" d="M-18 0 h36 M14 0 v12 M0 14 v-8"/>`;
-    default:          return `<rect class="plate" x="-48" y="-20" width="96" height="40" rx="11"/>`;
+    case 'grid':      return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><path class="icon" d="M-40 -10 h80 v20 h-80 z M-20 -10 v20 M20 -10 v20 M-40 0 h80"/>`;
+    case 'cartridge': return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><ellipse class="icon" cx="0" cy="0" rx="34" ry="13"/>`;
+    case 'carbon':    return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><rect class="icon" x="-34" y="-10" width="68" height="20" rx="8"/>`;
+    case 'pump':      return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><rect class="icon" x="-24" y="-8" width="28" height="16" rx="3"/><rect class="icon" x="8" y="-6" width="18" height="12" rx="3"/>`;
+    case 'dose':      return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><path class="icon" d="M-10 -12 v24 M10 -12 v24 M-24 0 h48"/>`;
+    case 'membrane':  return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><path class="icon" d="M-36 -8 h72 M-36 -2 h72 M-36 4 h72"/>`;
+    case 'min':       return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><rect class="icon" x="-14" y="-8" width="28" height="16" rx="3"/>`;
+    case 'uv':        return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><path class="icon" d="M-34 0 h68 M-20 -8 h40 M-20 8 h40"/>`;
+    case 'tap':       return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/><path class="icon" d="M-20 0 h40 M16 0 v12 M0 14 v-8"/>`;
+    default:          return `<rect class="plate" x="-56" y="-22" width="112" height="44" rx="12"/>`;
   }
 }
 
-/* Строим трубу (вертикальная с S-динамикой), точки узлов */
+/* строим трубу (вертикальный путь с лёгкой S-динамикой) */
 function buildPipe(){
   const VBW=640, VBH=1600;
   const cx=VBW/2, top=120, bottom=VBH-120;
 
   const y=STAGES.map((_,i)=> top + (i/(STAGES.length-1))*(bottom-top) );
-  const offset = i => (i%2? 26 : -26);
+  const offset = i => (i%2? 30 : -30);
   let d=`M ${cx} ${y[0]}`;
   for(let i=1;i<y.length;i++){
     const x1=cx+offset(i-1), x2=cx+offset(i);
@@ -269,7 +280,7 @@ function buildPipe(){
   [pEdge,pBody,pCore,pFlow,maskPath].forEach(p=>p.setAttribute('d', d));
   coreLen = pCore.getTotalLength();
 
-  // координаты точек на пути
+  // координаты узлов на оси пути
   points = y.map(yy=>{
     let best=0, bestDy=1e9;
     for(let L=0; L<=coreLen; L+=8){
@@ -291,8 +302,9 @@ function buildPipe(){
   });
 }
 
-/* Слайды и миникарта */
+/* слайды и миникарта */
 function buildSlides(){
+  const flow = document.getElementById('flow');
   flow.innerHTML=''; miniNav.innerHTML='';
   sections = STAGES.map((s,i)=>{
     const sec=document.createElement('section');
@@ -328,7 +340,7 @@ function buildSlides(){
   sections.forEach(s=>ioCards.observe(s));
 }
 
-/* Перелёты: капля, подсветка узла, «проток» между узлами, лёгкий поворот трубы */
+/* скролл: капля, подсветка узла, сегмент протока, лёгкий наклон */
 function onScroll(){
   const vh=innerHeight||800;
   let idx=0, local=0;
@@ -339,13 +351,11 @@ function onScroll(){
   }
   local=Math.max(0,Math.min(1,local));
 
-  // позиция капли между idx и idx+1
   const a=points[idx], b=points[Math.min(points.length-1, idx+1)];
   const lerp=(u,v,t)=>u+(v-u)*t;
   const x=lerp(a.x,b.x,local), y=lerp(a.y,b.y,local);
   drop.setAttribute('transform',`translate(${x},${y})`);
 
-  // прогресс-сегмент от предыдущего узла к текущему — делаем явным движение от фильтра к фильтру
   const lenPrev = lengthAtPoint(a), lenNext = lengthAtPoint(b);
   const segStart = Math.min(lenPrev, lenNext);
   const segEnd   = lerp(lenPrev, lenNext, local);
@@ -357,18 +367,15 @@ function onScroll(){
     pProgress.setAttribute('opacity','0');
   }
 
-  // динамический лёгкий наклон трубы
-  const tilt = ((idx%2? -1:1)*2.2) + (local-0.5)*1.6;
+  const tilt = ((idx%2? -1:1)*1.8) + (local-0.5)*1.2;
   pipeWrap.style.transform = `rotate(${tilt}deg)`;
 
-  // активный модуль и миникарта
   document.querySelectorAll('.module').forEach((m,i)=>m.classList.toggle('active', i===idx));
   const links = miniNav.querySelectorAll('a'); links.forEach(a=>a.classList.remove('active')); if(links[idx]) links[idx].classList.add('active');
 }
 
-/* вспомогательные: длина вдоль пути у ближайшей точки; выделение подпути */
+/* утилиты для подпути */
 function lengthAtPoint(pt){
-  // грубо ищем L, где точка пути ближе всего к pt
   let bestL=0, best=1e9;
   for(let L=0; L<=coreLen; L+=6){
     const p = pCore.getPointAtLength(L);
@@ -389,10 +396,8 @@ function subPath(pathEl, from, to){
   let d=`M ${pts[0][0]} ${pts[0][1]}`; for(let i=1;i<pts.length;i++){ d+=` L ${pts[i][0]} ${pts[i][1]}` } return d;
 }
 
-/* инициализация */
-function init(){
-  buildPipe(); buildSlides(); requestAnimationFrame(onScroll);
-}
+/* init */
+function init(){ buildPipe(); buildSlides(); requestAnimationFrame(onScroll); }
 init();
 addEventListener('scroll', onScroll, {passive:true});
 addEventListener('resize', ()=>{ init(); }, {passive:true});
