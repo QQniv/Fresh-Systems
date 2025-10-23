@@ -1,86 +1,250 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Почему вода вкусная — Fresh Systems</title>
-  <meta name="color-scheme" content="dark" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap&subset=cyrillic" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    :root {
+      --ink:#eaf6ff;
+      --muted:#bcd2e7;
+      --panel:rgba(255,255,255,.08);
+      --panel-br:rgba(255,255,255,.16);
+      --accent:#7dd3fc;
+      --ok:#96f2d7;
+    }
+
+    .bg-video { filter:brightness(.55) saturate(.95) contrast(.95); }
+    .overlay { background:linear-gradient(to bottom, rgba(4,9,14,.6), rgba(4,9,14,.7)); }
+    .vignette {
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      background:radial-gradient(60% 60% at 50% 35%, rgba(0,0,0,0), rgba(0,0,0,.3) 55%, rgba(0,0,0,.45) 100%);
+    }
+
+    .page { position:relative; z-index:2; }
+    .container { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+    /* HERO */
+    .hero { padding-top:88px; padding-bottom:48px; text-align:left; }
+    .hero h1 {
+      font:900 clamp(28px,6vw,56px)/1.05 Inter, system-ui;
+      color:var(--ink); margin-bottom:12px;
+    }
+    .hero p {
+      color:var(--muted);
+      font-size:clamp(15px,2.2vw,18px);
+      line-height:1.6;
+      margin:0;
+      max-width:800px;
+    }
+
+    /* секции */
+    .section {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+      padding:60px 0;
+    }
+    .section h2 {
+      font:900 clamp(22px,4.5vw,40px)/1.1 Inter;
+      color:var(--ink);
+      margin:0 0 10px;
+    }
+    .kicker {
+      color:#a9defc;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font:700 12px/1 Inter;
+      margin-bottom:8px;
+    }
+    .text {
+      color:#d8e9fb;
+      font-size:16.5px;
+      line-height:1.75;
+    }
+    .panel {
+      background:var(--panel);
+      border:1px solid var(--panel-br);
+      border-radius:16px;
+      padding:20px;
+      backdrop-filter:blur(10px);
+    }
+    .media {
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      align-items:center;
+    }
+    .media img {
+      width:100%;
+      height:auto;
+      border-radius:14px;
+      border:1px solid var(--panel-br);
+      box-shadow:0 22px 50px rgba(0,0,0,.45);
+    }
+    @media(max-width:900px){ .media{ grid-template-columns:1fr; } }
+
+    /* CTA */
+    .cta {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:20px 0 60px;
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 18px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:800;
+    }
+    .btn-primary {
+      background:rgba(125,211,252,.18);
+      border:1px solid rgba(125,211,252,.4);
+      color:#e9f8ff;
+    }
+    .btn-primary:hover { background:rgba(125,211,252,.28); }
+    .btn-ghost {
+      background:transparent;
+      border:1px solid var(--panel-br);
+      color:#e9f6ff;
+    }
+    .btn-ghost:hover { background:rgba(255,255,255,.06); }
+
+    /* анимация появления */
+    .fade { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+    .fade.show { opacity:1; transform:none; }
+
+    .site-header { z-index:3; }
+  </style>
 </head>
 <body>
+  <!-- фон воды -->
+  <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4"/>
+  </video>
+  <div class="overlay"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
-  <!-- Шапка -->
+  <!-- шапка -->
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="На главную">FS</a>
     <nav class="top-nav" aria-label="Основное меню">
       <a href="technologies.html">Технологии</a>
       <a href="sanpin.html">СанПиН</a>
-      <a href="taste.html">Почему вода вкусная</a>
+      <a href="taste.html" class="active">Почему вода вкусная</a>
       <a href="services.html">Услуги</a>
       <a href="contacts.html">Контакты</a>
     </nav>
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">Меню</button>
-    <nav id="menuPanel" class="menu-panel" aria-label="Мобильное меню">
-      <a href="technologies.html">Технологии</a>
-      <a href="sanpin.html">СанПиН</a>
-      <a href="taste.html">Почему вода вкусная</a>
-      <a href="services.html">Услуги</a>
-      <a href="contacts.html">Контакты</a>
-    </nav>
+    <button class="menu-toggle" id="menuBtn" aria-label="Меню" aria-expanded="false"><span></span></button>
   </header>
+  <nav class="mobile-drawer" id="drawer" hidden aria-label="Мобильное меню">
+    <a href="technologies.html">Технологии</a>
+    <a href="sanpin.html">СанПиН</a>
+    <a href="taste.html" class="active">Почему вода вкусная</a>
+    <a href="services.html">Услуги</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
 
-  <!-- Hero -->
-  <section class="hero" style="background-image:linear-gradient(180deg,rgba(11,16,32,.45),rgba(11,16,32,.9)),url('images/hero-water.jpg'); background-position:center 34%;">
-    <div class="container hero-content">
-      <h1 class="hero-title">Почему вода вкусная</h1>
-      <p class="hero-sub">Мы управляем минерализацией и балансом чтобы сохранить «живой» вкус воды.</p>
-    </div>
-  </section>
+  <main class="page">
+    <section class="hero container fade">
+      <h1>Почему вода вкусная</h1>
+      <p>Чистая вода должна быть не просто безопасной — она должна радовать вкусом, оставляя ощущение свежести. Мы добиваемся этого сочетанием инженерии, физики и баланса минералов.</p>
+    </section>
 
-  <!-- Основы вкуса -->
-  <section class="section">
-    <div class="container">
-      <h2>Что влияет на вкус</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Минерализация (TDS)</h3>
-          <p>Комфортный диапазон обычно 120–220 мг/л. Слишком мало — «плоская», слишком много — «тяжёлая».</p>
-        </article>
-        <article class="card">
-          <h3>Кальций и магний</h3>
-          <p>Целевой баланс Ca:Mg ≈ 2:1. Даёт «мягкость» и приятное послевкусие.</p>
-        </article>
-        <article class="card">
-          <h3>Щёлочность и pH</h3>
-          <p>Буферная ёмкость и pH 7–8 помогают стабилизировать вкус и «сладость» воды.</p>
-        </article>
-        <article class="card">
-          <h3>Органика и запахи</h3>
-          <p>Удаляем органику/запахи на ранних стадиях — чтобы вкус не маскировался посторонними нотами.</p>
-        </article>
+    <section class="section container fade">
+      <div>
+        <div class="kicker">Естественный баланс</div>
+        <h2>Минералы и структура воды</h2>
       </div>
-    </div>
-  </section>
+      <div class="media">
+        <div class="panel text">
+          <p>После многоступенчатой фильтрации мы возвращаем воде природные элементы — кальций, магний, калий. Благодаря этому вкус становится мягким, сбалансированным, без «плоского» послевкусия.</p>
+          <p>Минерализатор подбирается индивидуально под состав исходной воды. Это позволяет сохранить естественный баланс, характерный для родниковой воды, соответствуя СанПиН и мировым стандартам.</p>
+        </div>
+        <img src="images/microscope.jpg" alt="Минералы и структура воды под микроскопом"/>
+      </div>
+    </section>
 
-  <!-- Как мы этого добиваемся -->
-  <section class="section dark">
-    <div class="container">
-      <h2>Как мы формируем профиль</h2>
-      <p>NF-селективность снижает жёсткость, но оставляет базовые минералы. Далее — аккуратная дозировка Ca/Mg под целевой профиль вкуса. По итогам пуско-наладки фиксируем режимы и точки контроля.</p>
-      <p style="margin-top:16px"><a class="btn primary" href="contacts.html">Настроить вкус под ваш дом</a></p>
-    </div>
-  </section>
+    <section class="section container fade">
+      <div>
+        <div class="kicker">Физика вкуса</div>
+        <h2>Как работает вкус чистоты</h2>
+      </div>
+      <div class="panel text">
+        <p>Вода, прошедшая нанофильтрацию, освобождается от тяжёлых ионов, органических соединений и запахов. Снижается поверхностное натяжение — и на языке она ощущается «лёгкой» и мягкой.</p>
+        <p>Мы используем оптимальный диапазон минерализации — 150–250 мг/л. Это делает вкус насыщенным, но не солоноватым, а ощущение после глотка — чистым и освежающим.</p>
+      </div>
+    </section>
+
+    <section class="section container fade">
+      <div>
+        <div class="kicker">Безупречная чистота</div>
+        <h2>Финальная фильтрация и УФ-обработка</h2>
+      </div>
+      <div class="panel text">
+        <p>Перед подачей к потребителю вода проходит ультрафиолетовую дезинфекцию. Излучение уничтожает микробактерии, не изменяя вкус и не добавляя химии.</p>
+        <p>Благодаря циркуляционным насосам и продуманной гидравлике система сохраняет вкус свежести даже при длительном хранении в резервуаре.</p>
+      </div>
+    </section>
+
+    <section class="section container fade">
+      <div>
+        <div class="kicker">Результат</div>
+        <h2>Вода, к которой хочется возвращаться</h2>
+      </div>
+      <div class="panel text">
+        <p>Наши фильтросистемы создают воду, близкую к природной родниковой по составу, но при этом полностью контролируемую по качеству. Вы чувствуете вкус живой воды каждый день — дома, без пластика и доставки.</p>
+      </div>
+
+      <div class="cta">
+        <a class="btn btn-primary" href="technologies.html">Смотреть фильтры</a>
+        <a class="btn btn-ghost" href="contacts.html">Оставить заявку</a>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="footer-inner">
       <div class="minor">© 2025 Fresh Systems</div>
-      <a class="minor" href="index.html">Главная</a>
+      <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
 
   <script>
-    const btn=document.getElementById('menuBtn'),panel=document.getElementById('menuPanel');
-    if(btn&&panel){btn.addEventListener('click',()=>{const o=panel.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});}
+    /* мобильное меню */
+    (() => {
+      const btn = document.getElementById('menuBtn');
+      const drawer = document.getElementById('drawer');
+      if (!btn || !drawer) return;
+      const toggle = (open) => {
+        const o = open ?? !drawer.classList.contains('open');
+        drawer.classList.toggle('open', o);
+        drawer.hidden = !o;
+        btn.setAttribute('aria-expanded', String(o));
+        document.body.classList.toggle('mobile-menu-open', o);
+      };
+      const handle = (e) => { e.preventDefault(); toggle(); };
+      btn.addEventListener('click', handle, { passive: false });
+      btn.addEventListener('touchstart', handle, { passive: false });
+      document.addEventListener('click', (e) => {
+        if (!drawer.classList.contains('open')) return;
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) toggle(false);
+      });
+    })();
+
+    /* анимации появления */
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); }
+      });
+    },{threshold:.25});
+    document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
   </script>
 </body>
 </html>
