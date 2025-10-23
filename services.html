@@ -1,50 +1,268 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Услуги — Fresh Systems</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="/Fresh-Systems/">
-  <link rel="stylesheet" href="styles.css?v=10">
-  <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const btn=document.getElementById('menuBtn');const panel=document.getElementById('menuPanel');
-      btn.addEventListener('click',()=>panel.classList.toggle('open'));
-      panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>panel.classList.remove('open')));
-    });
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap&subset=cyrillic" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    :root {
+      --ink:#eaf6ff;
+      --muted:#bcd2e7;
+      --panel:rgba(255,255,255,.08);
+      --panel-br:rgba(255,255,255,.16);
+      --accent:#7dd3fc;
+      --ok:#96f2d7;
+    }
+
+    .bg-video { filter:brightness(.55) saturate(.95) contrast(.95); }
+    .overlay { background:linear-gradient(to bottom, rgba(4,9,14,.6), rgba(4,9,14,.7)); }
+    .vignette {
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      background:radial-gradient(60% 60% at 50% 35%, rgba(0,0,0,0), rgba(0,0,0,.3) 55%, rgba(0,0,0,.45) 100%);
+    }
+
+    .page { position:relative; z-index:2; }
+    .container { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+    /* HERO */
+    .hero { padding-top:88px; padding-bottom:48px; }
+    .hero h1 {
+      font:900 clamp(28px,6vw,56px)/1.05 Inter, system-ui;
+      color:var(--ink); margin-bottom:12px;
+    }
+    .hero p {
+      color:var(--muted);
+      font-size:clamp(15px,2.2vw,18px);
+      line-height:1.6;
+      margin:0;
+      max-width:800px;
+    }
+
+    /* секции */
+    .section {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+      padding:60px 0;
+    }
+    .section h2 {
+      font:900 clamp(22px,4.5vw,40px)/1.1 Inter;
+      color:var(--ink);
+      margin:0 0 10px;
+    }
+    .kicker {
+      color:#a9defc;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font:700 12px/1 Inter;
+      margin-bottom:8px;
+    }
+    .text {
+      color:#d8e9fb;
+      font-size:16.5px;
+      line-height:1.75;
+    }
+    .panel {
+      background:var(--panel);
+      border:1px solid var(--panel-br);
+      border-radius:16px;
+      padding:24px;
+      backdrop-filter:blur(10px);
+      transition:transform .4s ease, background .3s ease;
+    }
+    .panel:hover { transform:translateY(-6px); background:rgba(255,255,255,.1); }
+
+    .media {
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      align-items:center;
+    }
+    .media img {
+      width:100%;
+      height:auto;
+      border-radius:14px;
+      border:1px solid var(--panel-br);
+      box-shadow:0 22px 50px rgba(0,0,0,.45);
+    }
+    @media(max-width:900px){ .media{ grid-template-columns:1fr; } }
+
+    /* CTA */
+    .cta {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:20px 0 60px;
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 18px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:800;
+    }
+    .btn-primary {
+      background:rgba(125,211,252,.18);
+      border:1px solid rgba(125,211,252,.4);
+      color:#e9f8ff;
+    }
+    .btn-primary:hover { background:rgba(125,211,252,.28); }
+    .btn-ghost {
+      background:transparent;
+      border:1px solid var(--panel-br);
+      color:#e9f6ff;
+    }
+    .btn-ghost:hover { background:rgba(255,255,255,.06); }
+
+    /* анимация появления */
+    .fade { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+    .fade.show { opacity:1; transform:none; }
+
+    .site-header { z-index:3; }
+  </style>
 </head>
 <body>
+  <!-- фон воды -->
+  <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4"/>
+  </video>
+  <div class="overlay"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- шапка -->
   <header class="site-header">
-    <div class="brand"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></div>
-    <button id="menuBtn" class="menu-btn">Меню</button>
-    <nav id="menuPanel" class="menu-panel">
-      <a href="index.html">Главная</a>
-      <a href="about.html">О компании</a>
-      <a href="services.html">Услуги</a>
-      <a href="contact.html">Контакты</a>
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
+    <nav class="top-nav" aria-label="Основное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
+      <a href="services.html" class="active">Услуги</a>
+      <a href="contacts.html">Контакты</a>
     </nav>
+    <button class="menu-toggle" id="menuBtn" aria-label="Меню" aria-expanded="false"><span></span></button>
   </header>
+  <nav class="mobile-drawer" id="drawer" hidden aria-label="Мобильное меню">
+    <a href="technologies.html">Технологии</a>
+    <a href="sanpin.html">СанПиН</a>
+    <a href="taste.html">Почему вода вкусная</a>
+    <a href="services.html" class="active">Услуги</a>
+    <a href="contacts.html">Контакты</a>
+  </nav>
 
-  <section class="section container">
-    <h1>Услуги</h1>
-    <p class="section-intro">Под ключ: от анализа воды и проектирования — до поставки, монтажа и сервиса.</p>
+  <main class="page">
+    <section class="hero container fade">
+      <h1>Наши услуги</h1>
+      <p>Мы проектируем, устанавливаем и обслуживаем современные системы фильтрации воды для любого формата жилья — от элитных жилых комплексов до частных домов и индивидуальных квартир.</p>
+    </section>
 
-    <div class="cards services">
-      <article class="card"><h3>Аудит и анализ воды</h3><p>Отбор проб, лаборатория, интерпретация.</p></article>
-      <article class="card"><h3>Проектирование</h3><p>BIM, гидравлика, размещение оборудования.</p></article>
-      <article class="card"><h3>Поставка и монтаж</h3><p>UF/NF, УФ-реакторы, насосы, дозирование.</p></article>
-      <article class="card"><h3>ПНР и обучение</h3><p>Пуск системы, обучение персонала.</p></article>
-      <article class="card"><h3>Сервис и реагенты</h3><p>Регламент, мембраны, расходники, выезд.</p></article>
-      <article class="card"><h3>Мониторинг</h3><p>Онлайн-контроль параметров и SLA.</p></article>
-    </div>
-  </section>
+    <!-- Блок 1: Многоквартирные дома -->
+    <section class="section container fade">
+      <div class="kicker">Решения для застройщиков</div>
+      <h2>Фильтрационные системы для многоквартирных домов</h2>
+      <div class="media">
+        <div class="panel text">
+          <p><strong>Fresh Systems Engineering</strong> обеспечивает централизованную очистку воды на уровне всего жилого комплекса. Мы разрабатываем, устанавливаем и обслуживаем станции, снабжающие весь дом чистой питьевой водой прямо из крана.</p>
+          <p>Такая система увеличивает привлекательность объекта для покупателей, снижает нагрузку на жильцов и полностью соответствует требованиям <strong>СанПиН</strong>.</p>
+          <ul>
+            <li>— Проектирование под анализ конкретной воды и гидравлику дома</li>
+            <li>— Автоматизация, мониторинг давления и ресурс фильтров</li>
+            <li>— Гарантийное и постгарантийное обслуживание</li>
+          </ul>
+        </div>
+        <img src="images/about-moscow.jpg" alt="Фильтрация для многоквартирных домов"/>
+      </div>
+    </section>
+
+    <!-- Блок 2: Частные дома -->
+    <section class="section container fade">
+      <div class="kicker">Для владельцев коттеджей</div>
+      <h2>Системы фильтрации для частных домов</h2>
+      <div class="media">
+        <img src="images/about-structure.jpg" alt="Фильтросистема в частном доме"/>
+        <div class="panel text">
+          <p>Мы создаём <strong>индивидуальные решения</strong> для коттеджей и загородных домов. Система подбирается с учётом состава воды, источника (скважина, колодец, центральный водопровод) и особенностей вашего объекта.</p>
+          <p>Установка выполняется под ключ: от анализа воды до финального запуска и настройки. В результате — чистая, безопасная и вкусная вода во всех точках дома: кухня, ванная, бассейн, баня.</p>
+          <ul>
+            <li>— Компактное оборудование и скрытый монтаж</li>
+            <li>— Подбор под любые расходные режимы</li>
+            <li>— Дистанционный контроль состояния фильтров</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Блок 3: Индивидуальные фильтры для квартир -->
+    <section class="section container fade">
+      <div class="kicker">Для горожан</div>
+      <h2>Индивидуальные фильтры для квартир</h2>
+      <div class="media">
+        <div class="panel text">
+          <p>Для тех, кто хочет получить <strong>воду премиального качества</strong> в своей квартире, мы устанавливаем компактные модули с тонкой настройкой состава воды. По запросу — можно добавить систему <strong>минерализации</strong> и <strong>обогащения кислородом</strong>.</p>
+          <p>Каждая установка разрабатывается по вашим предпочтениям: вкус, минерализация, давление, производительность. Мы берём на себя установку, настройку и последующее обслуживание.</p>
+          <ul>
+            <li>— Мини-системы с обратным осмосом и постфильтрацией</li>
+            <li>— Персонализированные параметры воды</li>
+            <li>— Поддержка 24/7 и замена фильтров без хлопот</li>
+          </ul>
+        </div>
+        <img src="images/kid-drink.jpg" alt="Фильтр для квартиры"/>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section container fade">
+      <div class="panel text" style="text-align:center;">
+        <h2>Комплексное обслуживание и гарантия</h2>
+        <p>Все системы Fresh Systems проходят обязательное тестирование и сопровождаются полным пакетом документов. Мы остаёмся с вами на всём пути эксплуатации — от первого запуска до модернизации.</p>
+        <div class="cta" style="justify-content:center;">
+          <a class="btn btn-primary" href="contacts.html">Оставить заявку</a>
+          <a class="btn btn-ghost" href="technologies.html">Подробнее о технологиях</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© Fresh Systems, 2025</div>
-      <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
+    <div class="footer-inner">
+      <div class="minor">© 2025 Fresh Systems</div>
+      <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
+
+  <script>
+    /* мобильное меню */
+    (() => {
+      const btn = document.getElementById('menuBtn');
+      const drawer = document.getElementById('drawer');
+      if (!btn || !drawer) return;
+      const toggle = (open) => {
+        const o = open ?? !drawer.classList.contains('open');
+        drawer.classList.toggle('open', o);
+        drawer.hidden = !o;
+        btn.setAttribute('aria-expanded', String(o));
+        document.body.classList.toggle('mobile-menu-open', o);
+      };
+      const handle = (e) => { e.preventDefault(); toggle(); };
+      btn.addEventListener('click', handle, { passive: false });
+      btn.addEventListener('touchstart', handle, { passive: false });
+      document.addEventListener('click', (e) => {
+        if (!drawer.classList.contains('open')) return;
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) toggle(false);
+      });
+    })();
+
+    /* анимации появления */
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); }
+      });
+    },{threshold:.25});
+    document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
+  </script>
 </body>
 </html>
