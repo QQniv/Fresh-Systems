@@ -1,44 +1,213 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Контакты — Fresh Systems</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="/Fresh-Systems/">
-  <link rel="stylesheet" href="styles.css?v=10">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap&subset=cyrillic" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <style>
+    :root{
+      --ink:#eaf6ff;
+      --muted:#bcd2e7;
+      --panel:rgba(255,255,255,.08);
+      --panel-br:rgba(255,255,255,.16);
+      --accent:#7dd3fc;
+    }
+
+    .bg-video{ filter:brightness(.55) saturate(.95) contrast(.95); }
+    .overlay{ background:linear-gradient(to bottom, rgba(4,9,14,.6), rgba(4,9,14,.72)); }
+    .vignette{
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      background:radial-gradient(60% 60% at 50% 35%, rgba(0,0,0,0), rgba(0,0,0,.30) 55%, rgba(0,0,0,.45) 100%);
+    }
+
+    .page{ position:relative; z-index:2; }
+    .container{ max-width:1100px; margin:0 auto; padding:0 20px; }
+
+    .hero{ padding-top:88px; padding-bottom:40px; }
+    .hero h1{
+      font:900 clamp(28px,6vw,56px)/1.05 Inter, system-ui;
+      color:var(--ink); margin:0 0 12px;
+    }
+    .hero p{
+      color:var(--muted);
+      font-size:clamp(15px,2.2vw,18px);
+      line-height:1.6; margin:0; max-width:800px;
+    }
+
+    .grid{
+      display:grid; gap:22px; grid-template-columns:1fr 1fr;
+    }
+    @media(max-width:900px){ .grid{ grid-template-columns:1fr; } }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--panel-br);
+      border-radius:16px;
+      padding:22px;
+      backdrop-filter:blur(10px);
+      transition:transform .35s ease, background .3s ease;
+    }
+    .panel:hover{ transform:translateY(-4px); background:rgba(255,255,255,.10); }
+
+    .card-title{
+      font:800 18px/1.2 Inter; color:var(--ink); margin:0 0 8px;
+    }
+    .text{ color:#d8e9fb; font-size:16px; line-height:1.7; }
+
+    .contact-row{ display:flex; align-items:center; gap:12px; margin:10px 0; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:12px;
+      background:rgba(125,211,252,.18); border:1px solid rgba(125,211,252,.35);
+      color:#e9f8ff; font-weight:800; text-decoration:none;
+    }
+    .ghost{
+      background:transparent; border:1px solid var(--panel-br); color:#e9f6ff;
+    }
+    .small{ font-size:14px; color:var(--muted); margin-top:6px; }
+
+    .form{
+      display:grid; gap:12px;
+    }
+    .input, .textarea{
+      width:100%; color:#eaf6ff; background:rgba(255,255,255,.06);
+      border:1px solid var(--panel-br); border-radius:12px;
+      padding:12px 14px; outline:none;
+    }
+    .input::placeholder, .textarea::placeholder{ color:#a9bfd4; }
+    .textarea{ min-height:120px; resize:vertical; }
+    .submit{
+      cursor:pointer; border:none;
+      padding:12px 18px; border-radius:12px; font-weight:800;
+      background:rgba(125,211,252,.20); border:1px solid rgba(125,211,252,.45);
+      color:#eaf8ff;
+    }
+    .submit:hover{ background:rgba(125,211,252,.30); }
+
+    .fade{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+    .fade.show{ opacity:1; transform:none; }
+
+    .site-header{ z-index:3; }
+  </style>
 </head>
 <body>
+  <!-- фон воды -->
+  <video class="bg-video" autoplay muted loop playsinline poster="images/hero-water.jpg">
+    <source src="images/water-bg.mp4" type="video/mp4"/>
+  </video>
+  <div class="overlay"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- шапка -->
   <header class="site-header">
-    <div class="brand"><div class="logo">💧</div><div class="brand-text">Fresh Systems</div></div>
-    <nav class="menu-panel static">
-      <a href="index.html">Главная</a>
-      <a href="about.html">О компании</a>
+    <a class="brand" href="index.html" aria-label="На главную">FS</a>
+    <nav class="top-nav" aria-label="Основное меню">
+      <a href="technologies.html">Технологии</a>
+      <a href="sanpin.html">СанПиН</a>
+      <a href="taste.html">Почему вода вкусная</a>
       <a href="services.html">Услуги</a>
-      <a href="contact.html">Контакты</a>
+      <a href="contacts.html" class="active">Контакты</a>
     </nav>
+    <button class="menu-toggle" id="menuBtn" aria-label="Меню" aria-expanded="false"><span></span></button>
   </header>
+  <nav class="mobile-drawer" id="drawer" hidden aria-label="Мобильное меню">
+    <a href="technologies.html">Технологии</a>
+    <a href="sanpin.html">СанПиН</a>
+    <a href="taste.html">Почему вода вкусная</a>
+    <a href="services.html">Услуги</a>
+    <a href="contacts.html" class="active">Контакты</a>
+  </nav>
 
-  <section class="section container">
-    <h1>Контакты</h1>
-    <p class="section-intro">Расскажите о вашем объекте — подберём решение и оценим бюджет.</p>
+  <main class="page">
+    <section class="hero container fade">
+      <h1>Свяжитесь с нами</h1>
+      <p>Напишите или позвоните — обсудим воду в вашем доме, подберём решение и подготовим предварительный расчёт.</p>
+    </section>
 
-    <form class="contact-form" action="mailto:info@example.com" method="post" enctype="text/plain">
-      <div class="grid">
-        <input class="input" name="name" placeholder="Имя" required>
-        <input class="input" name="email" type="email" placeholder="Email" required>
-        <input class="input" name="phone" placeholder="Телефон">
-        <input class="input" name="city" placeholder="Город/ЖК">
+    <section class="container grid fade">
+      <!-- Контактные данные -->
+      <div class="panel">
+        <h3 class="card-title">Контакты</h3>
+        <div class="text">
+          <div class="contact-row">
+            <strong>Почта:</strong>
+            <a class="pill" href="mailto:xxxxxxx@xxx.com">xxxxxxx@xxx.com</a>
+          </div>
+          <div class="contact-row">
+            <strong>Телефон:</strong>
+            <a class="pill" href="tel:xxxxxxxxx">xxxxxxxxx</a>
+          </div>
+
+          <div class="small">График: пн–пт, 10:00–19:00 (Мск)</div>
+          <div class="small">Адрес офиса: Москва, ул. Красота, д. 1 (условно)</div>
+
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="pill" href="services.html">Посмотреть услуги</a>
+            <a class="pill ghost" href="technologies.html">Технологии</a>
+          </div>
+        </div>
       </div>
-      <textarea class="input" name="message" rows="5" placeholder="Кратко опишите исходные данные (население дома, потребление, качество исходной воды)…"></textarea>
-      <button class="btn primary" type="submit">Отправить</button>
-    </form>
-  </section>
+
+      <!-- Форма-заглушка -->
+      <div class="panel">
+        <h3 class="card-title">Оставить заявку</h3>
+        <form class="form" onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами по указанным контактам.');">
+          <input class="input" type="text" name="name" placeholder="Ваше имя"/>
+          <input class="input" type="email" name="email" placeholder="E-mail"/>
+          <input class="input" type="tel" name="phone" placeholder="Телефон"/>
+          <textarea class="textarea" name="msg" placeholder="Коротко опишите задачу"></textarea>
+          <button class="submit" type="submit">Отправить</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Карта-заглушка/баннер -->
+    <section class="container fade" style="padding:40px 0 70px;">
+      <div class="panel text" style="text-align:center;">
+        <div class="small" style="margin-bottom:6px;">Скоро здесь появится интерактивная карта</div>
+        <span style="opacity:.8;">Мы добавим схему проезда и точки сервисных центров.</span>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© Fresh Systems, 2025</div>
-      <div class="minor">ИНН / ОГРН • Политика конфиденциальности</div>
+    <div class="footer-inner">
+      <div class="minor">© 2025 Fresh Systems</div>
+      <a href="index.html" class="minor">Главная</a>
     </div>
   </footer>
+
+  <script>
+    /* мобильное меню */
+    (() => {
+      const btn = document.getElementById('menuBtn');
+      const drawer = document.getElementById('drawer');
+      if (!btn || !drawer) return;
+
+      const toggle = (open) => {
+        const o = open ?? !drawer.classList.contains('open');
+        drawer.classList.toggle('open', o);
+        drawer.hidden = !o;
+        btn.setAttribute('aria-expanded', String(o));
+        document.body.classList.toggle('mobile-menu-open', o);
+      };
+      const handle = (e) => { e.preventDefault(); toggle(); };
+      btn.addEventListener('click', handle, { passive:false });
+      btn.addEventListener('touchstart', handle, { passive:false });
+      document.addEventListener('click', (e) => {
+        if (!drawer.classList.contains('open')) return;
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) toggle(false);
+      });
+    })();
+
+    /* плавное появление секций */
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold:.25 });
+    document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>
